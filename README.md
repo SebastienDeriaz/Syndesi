@@ -18,7 +18,7 @@ For example, you want to control 3.3V or 5V pins from your software (or control 
 
 ### Example of Python code
 
-Each "module" would be referenced through either it's IP address (if it has a static one) or a unique code
+Each "module" would be referenced through either its IP address (if it has a static one) or a unique code
 A broadcast packet would be used to discover modules and ask "can i get module with code AABBCCDD ?"
 
 ```python
@@ -51,6 +51,7 @@ The "modules" could be anything basically
 - RF module (produce I and Q modulation)
 - DAC / ADC
 - State space regulation card
+- GPIB interface board (to replace the costly USB-GPIB interfaces)
 
 They all have a unique ID that provides :
 
