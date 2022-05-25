@@ -59,6 +59,12 @@ They all have a unique ID that provides :
 
 A Driver can be associated by knowing this code
 
+## Module driver
+
+A driver is made in C++ and called from python with the ctypes package
+
+static variables can be used to have greater control over the device's behavior
+
 
 ## Ethernet
 
@@ -69,3 +75,50 @@ Each module has an ip address with either :
 - static
 
 An led could be used to tell the user how the module is configured (and a button to reset it)
+
+Possiblity to use W5500 chip that provides 10/100 Mbps Ethernet and SPI communication
+
+
+## Devices naming convention
+
+| SDI       | - | A           | - | 1AB     | - | xxx      | - | 000     |
+|-----------|---|-------------|---|---------|---|----------|---|---------|
+| Base name |   | Form factor |   | Options |   | modifier |   | Version |
+
+### Form factor
+
+- A : Arduino-like
+- B : Compact ?
+- C : ... ?
+- D : Din rail boxes ?
+- ...
+- Z :
+
+### Options
+
+0000'0000'0000'0000'0000'0000
+
+- 0 : SPI
+- 1 : I2C
+- 2 : UART / USART
+- 3 : Digital in
+- 4 : Digital out
+- 5 : Analog in
+- 6 : Analog out
+- 7 : One wire
+- 8 : CanBus
+- 9 :
+- 10 :
+- 11 :
+- 12 :
+- 13 :
+- 14 :
+- 15 :
+- 16 :
+- 17 :
+- 18 :
+- 19 :
+- 20 :
+- 21 :
+- 22 :
+- 23 : synchronisation
