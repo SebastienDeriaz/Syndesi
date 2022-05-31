@@ -18,17 +18,17 @@ For example, you want to control 3.3V or 5V pins from your software (or control 
 
 ### Example of Python code
 
-Each "module" would be referenced through either its IP address (if it has a static one) or a unique code
-A broadcast packet would be used to discover modules and ask "can i get module with code AABBCCDD ?"
+Each interface would be referenced through either its IP address (if it has a static one) or a unique code
+A broadcast packet would be used to discover interfaces and ask "can i get interface with code AABBCCDD ?"
 
 ```python
-from syndesi import device
+from syndesi import interface
 
-my_device = device('AABBCCDD')
+my_interface = interface('AABBCCDD')
 
-my_device.digitalWrite(3, 'HIGH') # Or 1 instead of 'HIGH'
+my_interface.digitalWrite(3, 'HIGH') # Or 1 instead of 'HIGH'
 
-my_device.digitalRead(4)
+my_interface.digitalRead(4)
 
 # etc...
 ```
@@ -39,9 +39,9 @@ my_device.digitalRead(4)
 - Prototyping
 - Automation (?)
 
-### Modules
+### Interfaces
 
-The "modules" could be anything basically
+The Interfaces could be anything basically
 
 - "Arduino" like board
 - I2C / SPI / UART board
@@ -52,6 +52,7 @@ The "modules" could be anything basically
 - DAC / ADC
 - State space regulation card
 - GPIB interface board (to replace the costly USB-GPIB interfaces)
+- Logic test card (X output, Y inputs) for a DUT, basically a hardware testbench
 
 They all have a unique ID that provides :
 
@@ -60,25 +61,37 @@ They all have a unique ID that provides :
 
 A Driver can be associated by knowing this code
 
-## Module driver
+## drivers
 
-A driver is made in C++ and called from python with the ctypes package
+There are two types of drivers :
 
-static variables can be used to have greater control over the device's behavior
+- Device driver in C++ to manage how to communication with each device
+  - static variables can be used to have greater control over the device's behavior
+  - ctypes seems to be the perfect fit
+- High-level (HL) driver to manage what's connected to the device in Python or another high-level language (depends on which language is used)
 
+A High-level driver is stacked over a device driver to provide more functionnalities. For example a driver for a SPI sensor (after an SPI device)
+
+Example of using a high-level driver in python:
+
+```python
+from syndesi import device
+
+my_device = device('AABBCCDD')
+# using device(ID) calls interface(ID) in the background
+```
 
 ## Ethernet
 
-Each module has an ip address with either :
+Each interface has an ip address with either :
 
 - DHCP
 - zeroconf (ip address when there's no network)
 - static
 
-An led could be used to tell the user how the module is configured (and a button to reset it)
+An led could be used to tell the user how the interface is configured (and a button to reset it)
 
 Possiblity to use W5500 chip that provides 10/100 Mbps Ethernet and SPI communication
-
 
 ## Devices naming convention
 
