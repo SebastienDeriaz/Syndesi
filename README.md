@@ -65,9 +65,7 @@ A Driver can be associated by knowing this code
 
 There are two types of drivers :
 
-- Device driver in C++ to manage how to communication with each device
-  - static variables can be used to have greater control over the device's behavior
-  - ctypes seems to be the perfect fit
+- Device driver to manage the low-level communication with the module
 - High-level (HL) driver to manage what's connected to the device in Python or another high-level language (depends on which language is used)
 
 A High-level driver is stacked over a device driver to provide more functionnalities. For example a driver for a SPI sensor (after an SPI device)

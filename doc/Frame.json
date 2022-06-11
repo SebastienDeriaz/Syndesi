@@ -1,0 +1,3 @@
+{signal: [
+  {name: 'Frame', wave:'233.33...2', data:['','head.', 'len', 'cmd', 'data', '']},
+]}
