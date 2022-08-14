@@ -1,3 +1,5 @@
 # Ignore CMake files
 CMakeFiles
 CMakeCache.txt
+Cmake_install.cmake
+
