@@ -1,0 +1,27 @@
+/* THIS FILE IS GENERATED AUTOMATICALLY
+*  DO NOT EDIT
+*  This file has been written by the script >>>file<<<
+*  date : >>>date<<<
+*/
+
+#include "callbacks.hpp"
+
+namespace syndesi {
+
+Callbacks callbacks;
+
+
+void Callbacks::processRequest(cmd_t command, Buffer& payloadBuffer) {
+    switch(command) {
+>>>switch_request<<<
+    }
+}
+
+void Callbacks::processReply(cmd_t command, Buffer& payloadBuffer) {
+    switch(command) {
+>>>switch_reply<<<
+    }
+}
+
+
+} // namespace syndesi

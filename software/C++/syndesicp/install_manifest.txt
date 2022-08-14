@@ -1,0 +1,10 @@
+/usr/local/lib64/libsyndesicp.so.0.1
+/usr/local/lib64/libsyndesicp.so.1
+/usr/local/lib64/libsyndesicp.so
+/usr/local/include/core.hpp
+/usr/local/include/frame.hpp
+/usr/local/include/ipaddress.hpp
+/usr/local/include/payloads.hpp
+/usr/local/include/syndesicp.hpp
+/usr/local/include/syndesi_tools.hpp
+/usr/local/include/syndesi_types.hpp

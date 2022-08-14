@@ -1,0 +1,27 @@
+class >>>alias<<< : public Payload{
+public:
+
+>>>values<<<
+
+    >>>alias<<<() {};
+    >>>alias<<<(const Buffer& buffer) {parse(buffer);};
+private:
+
+>>>command<<<    
+
+>>>constructor<<<
+    void parse(const Buffer& payloadBuffer) {
+        size_t pos = 0;
+>>>parse_function<<<
+    }
+
+    size_t payloadLength() {
+>>>length_function<<<
+    }
+
+    void build(Buffer payloadBuffer) {
+        size_t pos = 0;
+>>>build_function<<<
+    }
+};
+

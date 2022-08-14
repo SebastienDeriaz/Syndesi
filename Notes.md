@@ -18,7 +18,7 @@
 
 Raw data over TCP/IP Because the "make this at time T" option requires more arguments than what Modbus TCP can offer
 
-
+The byte order through network is always big endian (RFC1700)
 
 ## Frames specifications
 
@@ -34,6 +34,14 @@ Raw data over TCP/IP Because the "make this at time T" option requires more argu
 
 
 The last 4 bits are configuration for each command (to select between multiple SPIs for example)
+
+### Low-level command management
+14.08.2022
+
+When a command is received, it is stored in a buffer locally. Then parsed to extract the necessary values, arrays, etc... (each one is stored in a corresponding variable)
+
+Only one command per frame, otherwise it's going to be unnecessarily difficult to manage them
+
 ### Required frames
 
 - SPI read / write with SPI index (0-7). 8 SPI interfaces possible.
@@ -41,3 +49,8 @@ The last 4 bits are configuration for each command (to select between multiple S
 - Discover frame (UDP Broadcast)
 - I2C read / write with I2C index (0-7). 8 I2C interfaces possible.
 - UART read / write with I2C index (0-7). 8 UART interfaces possible.
+
+
+## Usage
+
+device open function : find device on network and auto-assign driver. If the driver cannot be found, the user is asked to assign one manually

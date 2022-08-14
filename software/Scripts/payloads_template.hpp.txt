@@ -1,0 +1,52 @@
+/* THIS FILE IS GENERATED AUTOMATICALLY
+ *  DO NOT EDIT
+ *  This file has been written by the script >>>file<<<
+ *  date : >>>date<<<
+ */
+
+
+#ifndef COMMANDS_H
+#define COMMANDS_H
+
+#include <stdint.h>
+
+#include <vector>
+
+#include "syndesi_tools.hpp"
+#include "syndesi_types.hpp"
+
+
+// true  : copy input buffer contents in each field array
+// false : keep the data in the input buffer and reference through pointer
+#define COPY_ARRAY_ARGUMENTS true
+
+namespace syndesi {
+
+enum commands : cmd_t {
+>>>commands<<<
+};
+
+
+
+class Payload {
+private:
+    virtual void parse(const Buffer& buffer) = 0;
+    virtual void build(Buffer buffer) = 0;
+    virtual size_t payloadLength() = 0;
+    virtual cmd_t getCommand() = 0;
+    
+    
+public:
+    // The fields are public (declared in the derived class)
+
+    
+    friend class Frame;
+    friend class Payloads;
+};
+
+
+>>>payloads<<<
+
+}  // namespace syndesi
+
+#endif  // COMMANDS_H

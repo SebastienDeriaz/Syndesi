@@ -1,0 +1,29 @@
+/* THIS FILE IS GENERATED AUTOMATICALLY
+ *  DO NOT EDIT
+ *  This file has been written by the script >>>file<<<
+ *  date : >>>date<<<
+ */
+
+#ifndef CALLBACKS_H
+#define CALLBACKS_H
+
+#include "syndesi_types.hpp"
+#include "payloads.hpp"
+#include "callbacks_configuration.hpp"
+
+namespace syndesi {
+
+class Callbacks {
+    public:
+        void processRequest(cmd_t command, Buffer& payloadBuffer);
+        void processReply(cmd_t command, Buffer& payloadBuffer);
+
+>>>callbacks<<<
+
+};
+
+extern Callbacks callbacks;
+
+}
+
+#endif // CALLBACKS_H

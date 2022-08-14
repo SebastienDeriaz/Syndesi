@@ -1,0 +1,14 @@
+/* THIS FILE IS GENERATED AUTOMATICALLY
+ *  DO NOT EDIT
+ *  This file has been written by the script >>>file<<<
+ *  date : >>>date<<<
+ */
+
+
+#include "payloads.hpp"
+
+namespace syndesi {
+
+
+
+} //namespace syndesi
