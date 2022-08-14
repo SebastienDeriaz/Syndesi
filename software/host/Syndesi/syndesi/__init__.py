@@ -1,1 +1,0 @@
-from syndesi.device import device
