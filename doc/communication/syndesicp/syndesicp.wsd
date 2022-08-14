@@ -1,0 +1,17 @@
+@startuml
+
+namespace syndesi {
+
+    class Core {
+        +bufferAllocate(int) : char*
+        +parseCommand() : void
+        +parseCommand(char*, int) : void
+    }
+
+
+
+}
+
+
+
+@enduml

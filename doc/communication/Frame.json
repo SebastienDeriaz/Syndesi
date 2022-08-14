@@ -1,0 +1,4 @@
+{signal: [
+  {name: 'direct frame', wave:'233.3.3...2', data:['','head.', 'len (2)', 'cmd (2)', 'data (N)', '']},
+  {name: 'transmit frame', wave:'233.3.3.3...2', data:['','head.', 'ID (8)', 'len (2)', 'cmd (2)', 'data (N)', '']},
+]}
