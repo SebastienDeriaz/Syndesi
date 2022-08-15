@@ -1,7 +1,7 @@
 /* THIS FILE IS GENERATED AUTOMATICALLY
  *  DO NOT EDIT
  *  This file has been written by the script generate_commands.py
- *  date : 22-08-14 08:09:50
+ *  date : 22-08-15 16:39:29
  */
 
 #ifndef CALLBACKS_H
@@ -15,258 +15,53 @@ namespace syndesi {
 
 class Callbacks {
     public:
-        void processRequest(cmd_t command, Buffer& payloadBuffer);
+        Buffer processRequest(cmd_t command, Buffer& payloadBuffer);
         void processReply(cmd_t command, Buffer& payloadBuffer);
 
-#ifdef USE_Command ERROR
-        request : no
-          reply : yes
-   reply fields : [error_code(1/enum)]_REPLY_CALLBACK
-    void Command ERROR
-        request : no
-          reply : yes
-   reply fields : [error_code(1/enum)]_reply_callback(Command ERROR
-        request : no
-          reply : yes
-   reply fields : [error_code(1/enum)]_reply& reply);
+#ifdef USE_ERROR_REPLY_CALLBACK
+    void ERROR_reply_callback(ERROR_reply& reply);
 #endif
-#ifdef USE_Command DEVICE_DISCOVER
-        request : yes
-          reply : yes
- request fields : []
-   reply fields : [ID(20/char), syndesi_protocol_version(1/uint), device_version(1/uint), name_length(1/uint), name(name_length/char), description_length(2/uint), description(description_length/char)]_REQUEST_CALLBACK
-    void Command DEVICE_DISCOVER
-        request : yes
-          reply : yes
- request fields : []
-   reply fields : [ID(20/char), syndesi_protocol_version(1/uint), device_version(1/uint), name_length(1/uint), name(name_length/char), description_length(2/uint), description(description_length/char)]_request_callback(Command DEVICE_DISCOVER
-        request : yes
-          reply : yes
- request fields : []
-   reply fields : [ID(20/char), syndesi_protocol_version(1/uint), device_version(1/uint), name_length(1/uint), name(name_length/char), description_length(2/uint), description(description_length/char)]_request& request, Command DEVICE_DISCOVER
-        request : yes
-          reply : yes
- request fields : []
-   reply fields : [ID(20/char), syndesi_protocol_version(1/uint), device_version(1/uint), name_length(1/uint), name(name_length/char), description_length(2/uint), description(description_length/char)]_reply& reply);
+#ifdef USE_DEVICE_DISCOVER_REQUEST_CALLBACK
+    void DEVICE_DISCOVER_request_callback(DEVICE_DISCOVER_request& request, DEVICE_DISCOVER_reply& reply);
 #endif
-#ifdef USE_Command DEVICE_DISCOVER
-        request : yes
-          reply : yes
- request fields : []
-   reply fields : [ID(20/char), syndesi_protocol_version(1/uint), device_version(1/uint), name_length(1/uint), name(name_length/char), description_length(2/uint), description(description_length/char)]_REPLY_CALLBACK
-    void Command DEVICE_DISCOVER
-        request : yes
-          reply : yes
- request fields : []
-   reply fields : [ID(20/char), syndesi_protocol_version(1/uint), device_version(1/uint), name_length(1/uint), name(name_length/char), description_length(2/uint), description(description_length/char)]_reply_callback(Command DEVICE_DISCOVER
-        request : yes
-          reply : yes
- request fields : []
-   reply fields : [ID(20/char), syndesi_protocol_version(1/uint), device_version(1/uint), name_length(1/uint), name(name_length/char), description_length(2/uint), description(description_length/char)]_reply& reply);
+#ifdef USE_DEVICE_DISCOVER_REPLY_CALLBACK
+    void DEVICE_DISCOVER_reply_callback(DEVICE_DISCOVER_reply& reply);
 #endif
-#ifdef USE_Command REGISTER_READ_16
-        request : yes
-          reply : yes
- request fields : [address(2/uint)]
-   reply fields : [data(2/uint)]_REQUEST_CALLBACK
-    void Command REGISTER_READ_16
-        request : yes
-          reply : yes
- request fields : [address(2/uint)]
-   reply fields : [data(2/uint)]_request_callback(Command REGISTER_READ_16
-        request : yes
-          reply : yes
- request fields : [address(2/uint)]
-   reply fields : [data(2/uint)]_request& request, Command REGISTER_READ_16
-        request : yes
-          reply : yes
- request fields : [address(2/uint)]
-   reply fields : [data(2/uint)]_reply& reply);
+#ifdef USE_REGISTER_READ_16_REQUEST_CALLBACK
+    void REGISTER_READ_16_request_callback(REGISTER_READ_16_request& request, REGISTER_READ_16_reply& reply);
 #endif
-#ifdef USE_Command REGISTER_READ_16
-        request : yes
-          reply : yes
- request fields : [address(2/uint)]
-   reply fields : [data(2/uint)]_REPLY_CALLBACK
-    void Command REGISTER_READ_16
-        request : yes
-          reply : yes
- request fields : [address(2/uint)]
-   reply fields : [data(2/uint)]_reply_callback(Command REGISTER_READ_16
-        request : yes
-          reply : yes
- request fields : [address(2/uint)]
-   reply fields : [data(2/uint)]_reply& reply);
+#ifdef USE_REGISTER_READ_16_REPLY_CALLBACK
+    void REGISTER_READ_16_reply_callback(REGISTER_READ_16_reply& reply);
 #endif
-#ifdef USE_Command REGISTER_WRITE_16
-        request : yes
-          reply : yes
- request fields : [addresss(2/uint), data(2/uint)]
-   reply fields : [status(1/enum)]_REQUEST_CALLBACK
-    void Command REGISTER_WRITE_16
-        request : yes
-          reply : yes
- request fields : [addresss(2/uint), data(2/uint)]
-   reply fields : [status(1/enum)]_request_callback(Command REGISTER_WRITE_16
-        request : yes
-          reply : yes
- request fields : [addresss(2/uint), data(2/uint)]
-   reply fields : [status(1/enum)]_request& request, Command REGISTER_WRITE_16
-        request : yes
-          reply : yes
- request fields : [addresss(2/uint), data(2/uint)]
-   reply fields : [status(1/enum)]_reply& reply);
+#ifdef USE_REGISTER_WRITE_16_REQUEST_CALLBACK
+    void REGISTER_WRITE_16_request_callback(REGISTER_WRITE_16_request& request, REGISTER_WRITE_16_reply& reply);
 #endif
-#ifdef USE_Command REGISTER_WRITE_16
-        request : yes
-          reply : yes
- request fields : [addresss(2/uint), data(2/uint)]
-   reply fields : [status(1/enum)]_REPLY_CALLBACK
-    void Command REGISTER_WRITE_16
-        request : yes
-          reply : yes
- request fields : [addresss(2/uint), data(2/uint)]
-   reply fields : [status(1/enum)]_reply_callback(Command REGISTER_WRITE_16
-        request : yes
-          reply : yes
- request fields : [addresss(2/uint), data(2/uint)]
-   reply fields : [status(1/enum)]_reply& reply);
+#ifdef USE_REGISTER_WRITE_16_REPLY_CALLBACK
+    void REGISTER_WRITE_16_reply_callback(REGISTER_WRITE_16_reply& reply);
 #endif
-#ifdef USE_Command SPI_READ_WRITE
-        request : yes
-          reply : yes
- request fields : [interface_index(1/uint), write_size(2/uint), write_data(write_size/char)]
-   reply fields : [read_size(2/uint), read_data(read_size/char)]_REQUEST_CALLBACK
-    void Command SPI_READ_WRITE
-        request : yes
-          reply : yes
- request fields : [interface_index(1/uint), write_size(2/uint), write_data(write_size/char)]
-   reply fields : [read_size(2/uint), read_data(read_size/char)]_request_callback(Command SPI_READ_WRITE
-        request : yes
-          reply : yes
- request fields : [interface_index(1/uint), write_size(2/uint), write_data(write_size/char)]
-   reply fields : [read_size(2/uint), read_data(read_size/char)]_request& request, Command SPI_READ_WRITE
-        request : yes
-          reply : yes
- request fields : [interface_index(1/uint), write_size(2/uint), write_data(write_size/char)]
-   reply fields : [read_size(2/uint), read_data(read_size/char)]_reply& reply);
+#ifdef USE_SPI_READ_WRITE_REQUEST_CALLBACK
+    void SPI_READ_WRITE_request_callback(SPI_READ_WRITE_request& request, SPI_READ_WRITE_reply& reply);
 #endif
-#ifdef USE_Command SPI_READ_WRITE
-        request : yes
-          reply : yes
- request fields : [interface_index(1/uint), write_size(2/uint), write_data(write_size/char)]
-   reply fields : [read_size(2/uint), read_data(read_size/char)]_REPLY_CALLBACK
-    void Command SPI_READ_WRITE
-        request : yes
-          reply : yes
- request fields : [interface_index(1/uint), write_size(2/uint), write_data(write_size/char)]
-   reply fields : [read_size(2/uint), read_data(read_size/char)]_reply_callback(Command SPI_READ_WRITE
-        request : yes
-          reply : yes
- request fields : [interface_index(1/uint), write_size(2/uint), write_data(write_size/char)]
-   reply fields : [read_size(2/uint), read_data(read_size/char)]_reply& reply);
+#ifdef USE_SPI_READ_WRITE_REPLY_CALLBACK
+    void SPI_READ_WRITE_reply_callback(SPI_READ_WRITE_reply& reply);
 #endif
-#ifdef USE_Command SPI_WRITE_ONLY
-        request : yes
-          reply : yes
- request fields : [interface_index(1/uint), write_size(2/uint), write_data(write_size/char)]
-   reply fields : [status(1/enum)]_REQUEST_CALLBACK
-    void Command SPI_WRITE_ONLY
-        request : yes
-          reply : yes
- request fields : [interface_index(1/uint), write_size(2/uint), write_data(write_size/char)]
-   reply fields : [status(1/enum)]_request_callback(Command SPI_WRITE_ONLY
-        request : yes
-          reply : yes
- request fields : [interface_index(1/uint), write_size(2/uint), write_data(write_size/char)]
-   reply fields : [status(1/enum)]_request& request, Command SPI_WRITE_ONLY
-        request : yes
-          reply : yes
- request fields : [interface_index(1/uint), write_size(2/uint), write_data(write_size/char)]
-   reply fields : [status(1/enum)]_reply& reply);
+#ifdef USE_SPI_WRITE_ONLY_REQUEST_CALLBACK
+    void SPI_WRITE_ONLY_request_callback(SPI_WRITE_ONLY_request& request, SPI_WRITE_ONLY_reply& reply);
 #endif
-#ifdef USE_Command SPI_WRITE_ONLY
-        request : yes
-          reply : yes
- request fields : [interface_index(1/uint), write_size(2/uint), write_data(write_size/char)]
-   reply fields : [status(1/enum)]_REPLY_CALLBACK
-    void Command SPI_WRITE_ONLY
-        request : yes
-          reply : yes
- request fields : [interface_index(1/uint), write_size(2/uint), write_data(write_size/char)]
-   reply fields : [status(1/enum)]_reply_callback(Command SPI_WRITE_ONLY
-        request : yes
-          reply : yes
- request fields : [interface_index(1/uint), write_size(2/uint), write_data(write_size/char)]
-   reply fields : [status(1/enum)]_reply& reply);
+#ifdef USE_SPI_WRITE_ONLY_REPLY_CALLBACK
+    void SPI_WRITE_ONLY_reply_callback(SPI_WRITE_ONLY_reply& reply);
 #endif
-#ifdef USE_Command I2C_READ
-        request : yes
-          reply : yes
- request fields : [interface_index(1/uint), read_size(2/uint)]
-   reply fields : [read_size(2/uint), read_data(read_size/char)]_REQUEST_CALLBACK
-    void Command I2C_READ
-        request : yes
-          reply : yes
- request fields : [interface_index(1/uint), read_size(2/uint)]
-   reply fields : [read_size(2/uint), read_data(read_size/char)]_request_callback(Command I2C_READ
-        request : yes
-          reply : yes
- request fields : [interface_index(1/uint), read_size(2/uint)]
-   reply fields : [read_size(2/uint), read_data(read_size/char)]_request& request, Command I2C_READ
-        request : yes
-          reply : yes
- request fields : [interface_index(1/uint), read_size(2/uint)]
-   reply fields : [read_size(2/uint), read_data(read_size/char)]_reply& reply);
+#ifdef USE_I2C_READ_REQUEST_CALLBACK
+    void I2C_READ_request_callback(I2C_READ_request& request, I2C_READ_reply& reply);
 #endif
-#ifdef USE_Command I2C_READ
-        request : yes
-          reply : yes
- request fields : [interface_index(1/uint), read_size(2/uint)]
-   reply fields : [read_size(2/uint), read_data(read_size/char)]_REPLY_CALLBACK
-    void Command I2C_READ
-        request : yes
-          reply : yes
- request fields : [interface_index(1/uint), read_size(2/uint)]
-   reply fields : [read_size(2/uint), read_data(read_size/char)]_reply_callback(Command I2C_READ
-        request : yes
-          reply : yes
- request fields : [interface_index(1/uint), read_size(2/uint)]
-   reply fields : [read_size(2/uint), read_data(read_size/char)]_reply& reply);
+#ifdef USE_I2C_READ_REPLY_CALLBACK
+    void I2C_READ_reply_callback(I2C_READ_reply& reply);
 #endif
-#ifdef USE_Command I2C_WRITE
-        request : yes
-          reply : yes
- request fields : [interface_index(1/uint), write_size(2/uint), write_data(write_size/char)]
-   reply fields : [status(1/enum)]_REQUEST_CALLBACK
-    void Command I2C_WRITE
-        request : yes
-          reply : yes
- request fields : [interface_index(1/uint), write_size(2/uint), write_data(write_size/char)]
-   reply fields : [status(1/enum)]_request_callback(Command I2C_WRITE
-        request : yes
-          reply : yes
- request fields : [interface_index(1/uint), write_size(2/uint), write_data(write_size/char)]
-   reply fields : [status(1/enum)]_request& request, Command I2C_WRITE
-        request : yes
-          reply : yes
- request fields : [interface_index(1/uint), write_size(2/uint), write_data(write_size/char)]
-   reply fields : [status(1/enum)]_reply& reply);
+#ifdef USE_I2C_WRITE_REQUEST_CALLBACK
+    void I2C_WRITE_request_callback(I2C_WRITE_request& request, I2C_WRITE_reply& reply);
 #endif
-#ifdef USE_Command I2C_WRITE
-        request : yes
-          reply : yes
- request fields : [interface_index(1/uint), write_size(2/uint), write_data(write_size/char)]
-   reply fields : [status(1/enum)]_REPLY_CALLBACK
-    void Command I2C_WRITE
-        request : yes
-          reply : yes
- request fields : [interface_index(1/uint), write_size(2/uint), write_data(write_size/char)]
-   reply fields : [status(1/enum)]_reply_callback(Command I2C_WRITE
-        request : yes
-          reply : yes
- request fields : [interface_index(1/uint), write_size(2/uint), write_data(write_size/char)]
-   reply fields : [status(1/enum)]_reply& reply);
+#ifdef USE_I2C_WRITE_REPLY_CALLBACK
+    void I2C_WRITE_reply_callback(I2C_WRITE_reply& reply);
 #endif
 
 

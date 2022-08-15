@@ -12,13 +12,13 @@
 /*
 * Syndesi unique ID (sdid) allows for the identification of devices and hosts
 * 
-* Long version : 18 bytes long (to fit an IPv6 address alongside a header)
-* | header | reserved | IPv6 or other |
-* | 1 byte |  1 byte  |    16 bytes   |
+* Long version : 17 bytes long (to fit an IPv6 address alongside a header)
+* | header | IPv6 or other |
+* | 1 byte |    16 bytes   |
 *  
-* Short version : 6 bytes long (to fit an IPv4 address alongside a header)
-* | header | reserved | IPv4 or other |
-* | 1 byte | 1 byte   |    4 bytes    |
+* Short version : 5 bytes long (to fit an IPv4 address alongside a header)
+* | header |  IPv4 or other |
+* | 1 byte |     4 bytes    |
 */
 
 #ifndef SDID_H
@@ -68,13 +68,6 @@ class SyndesiID {
         unsigned char value;
     }header;
 
-    union reserved_t {
-        struct {
-            unsigned char reserved : 8;
-        }fields;
-        unsigned char value;
-    }reserved;
-
     union payload_t{
         union short_payload_t{
             char IPv4[4];
@@ -83,8 +76,6 @@ class SyndesiID {
             char IPv6[16];
         }long_payload;
     }payload;
-
-    
 };
 }
 

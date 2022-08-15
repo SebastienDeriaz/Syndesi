@@ -11,10 +11,14 @@ namespace syndesi {
 Callbacks callbacks;
 
 
-void Callbacks::processRequest(cmd_t command, Buffer& payloadBuffer) {
+Buffer Callbacks::processRequest(cmd_t command, Buffer& payloadBuffer) {
+    Buffer replyBuffer;
+    replyBuffer.data = nullptr;
+    replyBuffer.length = 0;
     switch(command) {
 >>>switch_request<<<
     }
+    return replyBuffer;
 }
 
 void Callbacks::processReply(cmd_t command, Buffer& payloadBuffer) {

@@ -1,5 +1,5 @@
 /**
- * @file syndes_types.hpp
+ * @file syndesi_types.hpp
  *
  * @brief Syndesi device types library
  *
@@ -10,16 +10,49 @@
  */
 
 #include <stdint.h>
+#include <cstdlib>
+#include <new>
 
 #ifndef SYNDESI_TYPES_H
 #define SYNDESI_TYPES_H
 
 namespace syndesi {
 
-typedef struct {
-    char* data = NULL;
+typedef struct RawBuffer{
+    void* data = NULL;
     size_t length = 0;
-} Buffer;
+};
+
+/**
+ * @brief Buffer class
+ * 
+ */
+class Buffer {
+    public:
+    /**
+     * @brief Construct a new empty Buffer object with size length
+     * 
+     * @param length 
+     */
+    Buffer(size_t length) {allocate(length);}
+    ~Buffer() {deallocate();}
+
+    void allocate(size_t length);
+
+    void deallocate();
+
+    RawBuffer start();
+
+    size_t length();
+
+    RawBuffer offset(size_t offset);
+
+    private:
+    RawBuffer data;
+}
+
+
+
 
 typedef union {
     uint64_t value;

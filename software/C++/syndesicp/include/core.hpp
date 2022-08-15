@@ -3,8 +3,6 @@
  *
  * @brief Syndesi core
  *
- * @ingroup syndesi
- *
  * @author Sébastien Deriaz
  * @date 09.08.2022
  */

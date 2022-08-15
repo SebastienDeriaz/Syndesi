@@ -1,7 +1,7 @@
 /* THIS FILE IS GENERATED AUTOMATICALLY
 *  DO NOT EDIT
 *  This file has been written by the script generate_commands.py
-*  date : 22-08-14 08:09:50
+*  date : 22-08-15 16:39:29
 */
 
 #include "callbacks.hpp"
@@ -11,7 +11,10 @@ namespace syndesi {
 Callbacks callbacks;
 
 
-void Callbacks::processRequest(cmd_t command, Buffer& payloadBuffer) {
+Buffer Callbacks::processRequest(cmd_t command, Buffer& payloadBuffer) {
+    Buffer replyBuffer;
+    replyBuffer.data = nullptr;
+    replyBuffer.length = 0;
     switch(command) {
 #ifdef USE_DEVICE_DISCOVER_REQUEST_CALLBACK
         case commands::DEVICE_DISCOVER:
@@ -64,6 +67,7 @@ void Callbacks::processRequest(cmd_t command, Buffer& payloadBuffer) {
 #endif
 
     }
+    return replyBuffer;
 }
 
 void Callbacks::processReply(cmd_t command, Buffer& payloadBuffer) {

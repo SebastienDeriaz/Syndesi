@@ -15,7 +15,7 @@ namespace syndesi {
 
 class Callbacks {
     public:
-        void processRequest(cmd_t command, Buffer& payloadBuffer);
+        Buffer processRequest(cmd_t command, Buffer& payloadBuffer);
         void processReply(cmd_t command, Buffer& payloadBuffer);
 
 >>>callbacks<<<

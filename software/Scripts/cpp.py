@@ -6,6 +6,7 @@ from commands import Command
 from os.path import join, dirname
 from utilities import replace_str
 from settings import types
+from typing import List
 
 with open(join(dirname(__file__), "payload_class_template.cpp.txt")) as f:
     CPP_PAYLOAD_TEMPLATE = f.read()
@@ -13,7 +14,7 @@ with open(join(dirname(__file__), "payload_class_template.cpp.txt")) as f:
 TAB = 4*' '
 
 class CPP():
-    def __init__(self, commands_list : list[Command]):
+    def __init__(self, commands_list  : List[Command]):
         """
         Instanciate a CPP code generation class with a list of Command objects
         """
@@ -183,12 +184,12 @@ class CPP():
         output = ''
         for command in self._commands:
             if command.has_request:
-                output += f'#ifdef USE_{command}_REQUEST_CALLBACK\n'
-                output += TAB*' ' + f'void {command}_request_callback({command}_request& request, {command}_reply& reply);\n'
+                output += f'#ifdef USE_{command.alias}_REQUEST_CALLBACK\n'
+                output += TAB*' ' + f'void {command.alias}_request_callback({command.alias}_request& request, {command.alias}_reply& reply);\n'
                 output += f'#endif\n'
             if command.has_reply:
-                output += f'#ifdef USE_{command}_REPLY_CALLBACK\n'
-                output += TAB*' ' + f'void {command}_reply_callback({command}_reply& reply);\n'
+                output += f'#ifdef USE_{command.alias}_REPLY_CALLBACK\n'
+                output += TAB*' ' + f'void {command.alias}_reply_callback({command.alias}_reply& reply);\n'
                 output += f'#endif\n'
         return output
 
