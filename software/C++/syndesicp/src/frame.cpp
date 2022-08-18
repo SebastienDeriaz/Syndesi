@@ -2,82 +2,77 @@
 
 namespace syndesi {
 
-Frame::Frame(Buffer& buffer) { 
-    parse(buffer);
-}
-
-Frame::Frame(Payload& payload) { build(payload); }
-
-
-bool Frame::allocate(const size_t length) {
-    // Free the buffer if it wasn't empty
-    if(frameBuffer.data != nullptr) {
-        freeBuffer();
-    }
-    // Allocate the new buffer
-    frameBuffer.data = (char*)malloc(length);
-    // Test if it was allocated correctly
-    if (frameBuffer.data != nullptr) {
-        frameBuffer.length = length;
-    } else {
-        frameBuffer.length = 0;
-        throw std::bad_alloc();
-    }
-}
-
-void Frame::freeBuffer() {
-    if (frameBuffer.data != NULL) {
-        free(frameBuffer.data);
-        frameBuffer.data = NULL;
-    }
-    frameBuffer.length = 0;
-}
-
-size_t Frame::parse(const Buffer& buffer) {
-    size_t pos = 0;
-    size_t frameLength = 0;
-
-    if (buffer.length >= MINIMUM_FRAME_LENGTH) {
-        // Read length
-        pos += ntoh(buffer.data + pos, (char*)&payloadLength, sizeof(payloadLength));
-        // Read command
-        pos += ntoh(buffer.data + pos, (char*)&command, sizeof(payloadLength));
-        
-        frameLength = payloadLength + sizeof(command) + sizeof(payloadLength);
-        if (frameLength > buffer.length) {
-            frameLength = 0;
-            throw std::length_error("Invalid frame length");
-        }
-    } else {
-        throw std::length_error("Buffer cannot fit a frame");
-    }
-    return frameLength;
-}
-
-Buffer& Frame::getPayloadBuffer() {
-    payloadBuffer.data = frameBuffer.data + sizeof(command) + sizeof(payloadLength);
-    payloadBuffer.length = payloadLength;
-    return payloadBuffer;
-}
-
-Buffer& Frame::build(Payload& payload) {
-    size_t pos = 0;
+Frame::Frame(Payload& payload, unique_ptr<SyndesiID>& id) {
+    _id = move(id);
+    // Set the values
     payloadLength = payload.payloadLength();
     command = payload.getCommand();
-    size_t frameLength =
-        payloadLength + sizeof(command) + sizeof(payloadLength);
-    allocate(frameLength);
-    payload.build(Buffer{.data = frameBuffer.data + headerLength, .length = frameBuffer.length - headerLength});
-    pos += hton((char*)&payloadLength, frameBuffer.data + pos, sizeof(payloadLength));
-    pos += hton((char*)&command, frameBuffer.data + pos, sizeof(command));
 
-    return frameBuffer;
+    // TODO update
+    networkHeader.value = 0;
+    networkHeader.fields.follow = false;
+    networkHeader.fields.request_nReply = true;
+    networkHeader.fields.routing = _id->reroutes() > 0 ? true : false;
+
+    // Calculate the length of the frame
+    size_t addressing_size = _id->getTotalAdressingSize();
+    size_t packetLength = 1 + addressing_size + sizeof(cmd_t) +
+                          sizeof(payloadLength) + payloadLength;
+    size_t pos = 0;
+    
+
+    // Create a buffer
+    _buffer.reset(new Buffer(packetLength));
+    // Write networkHeader
+    pos += hton(reinterpret_cast<byte*>(&networkHeader), _buffer->data(),
+                networkHeader_size);
+    // Write ID(s) (start at addressingHeader_size)
+    Buffer IDBuffer(_buffer.get(), pos, addressing_size);
+    _id.get()->buildAddressingBuffer(&IDBuffer);
+    pos += addressing_size;
+
+    // Write cmd_t
+    pos += hton(reinterpret_cast<byte*>(&command), _buffer.get()->data() + pos,
+                command_size);
+
+    // Write payload length
+    pos += hton(reinterpret_cast<byte*>(&payloadLength),
+                _buffer.get()->data() + pos, payloadLength_size);
+    // Write payload
+    Buffer payloadBuffer(_buffer.get(), pos);
+    payload.build(&payloadBuffer);
+
+    for(size_t i = 0;i<_buffer->length();i++) {
+        printf("%02X", (char)_buffer->data()[i]);
+    }
+}
+
+Frame::Frame(unique_ptr<Buffer>& buffer, unique_ptr<SyndesiID>& id) {
+    _id = move(id);
+    _buffer = std::move(buffer);
+    size_t pos = 0;
+    // Read network header
+    pos += ntoh(_buffer.get()->data() + pos,
+                reinterpret_cast<byte*>(&networkHeader), networkHeader_size);
+    // Check if the frame contains a SyndesiID (to identify a sub-device)
+    if (networkHeader.fields.routing) {
+        // Create a buffer for SyndesiID to read
+        Buffer buffer = Buffer(_buffer.get(), pos);
+        _id->parseAddressingBuffer(&buffer);
+        pos += _id->getTotalAdressingSize();
+    }
+    // Read command
+    pos += ntoh(_buffer->data() + pos, reinterpret_cast<byte*>(&command),
+                command_size);
+    // Read payload length
+    pos += ntoh(_buffer->data() + pos, reinterpret_cast<byte*>(&payloadLength),
+                payloadLength_size);
+
+    _payloadBuffer = make_unique<Buffer>(_buffer.get(), pos);
 }
 
 cmd_t Frame::getCommand() { return command; }
 
-Buffer& Frame::getBuffer() {
-    return frameBuffer;
-}
+Buffer* Frame::getPayloadBuffer() { return _payloadBuffer.get(); }
 
 }  // namespace syndesi

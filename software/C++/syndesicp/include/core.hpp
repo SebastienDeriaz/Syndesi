@@ -15,55 +15,42 @@
 #include "frame.hpp"
 #include "syndesi_types.hpp"
 #include "callbacks.hpp"
+#include "framemanager.hpp"
+#include "network.hpp"
+#include "ipcontroller.hpp"
+#include "uartcontroller.hpp"
+#include "rs485controller.hpp"
 
 namespace syndesi {
 
 class Core {
    private:
 
-    Frame inboundFrame;
+    void factory_init();
 
-
+    /*
+    * Layers
+    */
+   Callbacks callbacks;
+   FrameManager frameManager;
+   Network network;
    public:
-    Core() {
+#ifdef USE_IP_CONTROLLER
+    IPController ipController;
+#endif
+#ifdef USE_UART_CONTROLLER
+    UARTController uartController;        
+#endif
+#ifdef USE_RS485_CONTROLLER
+    RS485Controller rs485Controller;
+#endif
 
-    };
+    //TODO : Find a good place for this
+    void sendRequest(Payload& payload, SyndesiID& id);
+    void sendRequest(Payload& payload, unique_ptr<SyndesiID>& id);
+
+    Core() {factory_init();};
     ~Core(){};
-
-    /**
-     * @brief Allocate a buffer for writing the received data
-     *
-     * @param length length of buffer
-     *
-     * @return char*
-     */
-    Buffer bufferAllocate(size_t length);
-
-    /**
-     * @brief Parse the buffer allocated by bufferAllocate containing a request
-     *
-     * @param host host ip address
-     */
-    void parseRequest(IPAddress host);
-
-    /**
-     * @brief Parse the buffer allocated by bufferAllocate containing a reply
-     *
-     * @param host host ip address
-     */
-    void parseReply(IPAddress host);
-
-    /**
-     * @brief Parse a buffer containing a reply given as parameter (in the case the buffer already
-     * exists)
-     *
-     * @param buffer
-     * @param length
-     */
-    void parseReply(char* buffer, size_t length, IPAddress host);
-
-    // Input buffer
-    Buffer buffer;
 };
 
 }  // namespace syndesi

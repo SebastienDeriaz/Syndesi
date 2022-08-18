@@ -85,51 +85,6 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 .PHONY : rebuild_cache/fast
 
-# Special rule for the target list_install_components
-list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
-.PHONY : list_install_components
-
-# Special rule for the target list_install_components
-list_install_components/fast: list_install_components
-.PHONY : list_install_components/fast
-
-# Special rule for the target install
-install: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/bin/cmake -P cmake_install.cmake
-.PHONY : install
-
-# Special rule for the target install
-install/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/bin/cmake -P cmake_install.cmake
-.PHONY : install/fast
-
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
-
-# Special rule for the target install/local
-install/local/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local/fast
-
-# Special rule for the target install/strip
-install/strip: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip
-
-# Special rule for the target install/strip
-install/strip/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip/fast
-
 # The main all target
 all: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/CMakeFiles /mnt/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp//CMakeFiles/progress.marks
@@ -173,6 +128,54 @@ syndesicp: cmake_check_build_system
 syndesicp/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp.dir/build.make CMakeFiles/syndesicp.dir/build
 .PHONY : syndesicp/fast
+
+src/buffer.o: src/buffer.cpp.o
+.PHONY : src/buffer.o
+
+# target to build an object file
+src/buffer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp.dir/build.make CMakeFiles/syndesicp.dir/src/buffer.cpp.o
+.PHONY : src/buffer.cpp.o
+
+src/buffer.i: src/buffer.cpp.i
+.PHONY : src/buffer.i
+
+# target to preprocess a source file
+src/buffer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp.dir/build.make CMakeFiles/syndesicp.dir/src/buffer.cpp.i
+.PHONY : src/buffer.cpp.i
+
+src/buffer.s: src/buffer.cpp.s
+.PHONY : src/buffer.s
+
+# target to generate assembly for a file
+src/buffer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp.dir/build.make CMakeFiles/syndesicp.dir/src/buffer.cpp.s
+.PHONY : src/buffer.cpp.s
+
+src/callbacks.o: src/callbacks.cpp.o
+.PHONY : src/callbacks.o
+
+# target to build an object file
+src/callbacks.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp.dir/build.make CMakeFiles/syndesicp.dir/src/callbacks.cpp.o
+.PHONY : src/callbacks.cpp.o
+
+src/callbacks.i: src/callbacks.cpp.i
+.PHONY : src/callbacks.i
+
+# target to preprocess a source file
+src/callbacks.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp.dir/build.make CMakeFiles/syndesicp.dir/src/callbacks.cpp.i
+.PHONY : src/callbacks.cpp.i
+
+src/callbacks.s: src/callbacks.cpp.s
+.PHONY : src/callbacks.s
+
+# target to generate assembly for a file
+src/callbacks.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp.dir/build.make CMakeFiles/syndesicp.dir/src/callbacks.cpp.s
+.PHONY : src/callbacks.cpp.s
 
 src/core.o: src/core.cpp.o
 .PHONY : src/core.o
@@ -222,6 +225,126 @@ src/frame.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp.dir/build.make CMakeFiles/syndesicp.dir/src/frame.cpp.s
 .PHONY : src/frame.cpp.s
 
+src/framemanager.o: src/framemanager.cpp.o
+.PHONY : src/framemanager.o
+
+# target to build an object file
+src/framemanager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp.dir/build.make CMakeFiles/syndesicp.dir/src/framemanager.cpp.o
+.PHONY : src/framemanager.cpp.o
+
+src/framemanager.i: src/framemanager.cpp.i
+.PHONY : src/framemanager.i
+
+# target to preprocess a source file
+src/framemanager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp.dir/build.make CMakeFiles/syndesicp.dir/src/framemanager.cpp.i
+.PHONY : src/framemanager.cpp.i
+
+src/framemanager.s: src/framemanager.cpp.s
+.PHONY : src/framemanager.s
+
+# target to generate assembly for a file
+src/framemanager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp.dir/build.make CMakeFiles/syndesicp.dir/src/framemanager.cpp.s
+.PHONY : src/framemanager.cpp.s
+
+src/ipcontroller.o: src/ipcontroller.cpp.o
+.PHONY : src/ipcontroller.o
+
+# target to build an object file
+src/ipcontroller.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp.dir/build.make CMakeFiles/syndesicp.dir/src/ipcontroller.cpp.o
+.PHONY : src/ipcontroller.cpp.o
+
+src/ipcontroller.i: src/ipcontroller.cpp.i
+.PHONY : src/ipcontroller.i
+
+# target to preprocess a source file
+src/ipcontroller.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp.dir/build.make CMakeFiles/syndesicp.dir/src/ipcontroller.cpp.i
+.PHONY : src/ipcontroller.cpp.i
+
+src/ipcontroller.s: src/ipcontroller.cpp.s
+.PHONY : src/ipcontroller.s
+
+# target to generate assembly for a file
+src/ipcontroller.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp.dir/build.make CMakeFiles/syndesicp.dir/src/ipcontroller.cpp.s
+.PHONY : src/ipcontroller.cpp.s
+
+src/network.o: src/network.cpp.o
+.PHONY : src/network.o
+
+# target to build an object file
+src/network.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp.dir/build.make CMakeFiles/syndesicp.dir/src/network.cpp.o
+.PHONY : src/network.cpp.o
+
+src/network.i: src/network.cpp.i
+.PHONY : src/network.i
+
+# target to preprocess a source file
+src/network.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp.dir/build.make CMakeFiles/syndesicp.dir/src/network.cpp.i
+.PHONY : src/network.cpp.i
+
+src/network.s: src/network.cpp.s
+.PHONY : src/network.s
+
+# target to generate assembly for a file
+src/network.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp.dir/build.make CMakeFiles/syndesicp.dir/src/network.cpp.s
+.PHONY : src/network.cpp.s
+
+src/rs485controller.o: src/rs485controller.cpp.o
+.PHONY : src/rs485controller.o
+
+# target to build an object file
+src/rs485controller.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp.dir/build.make CMakeFiles/syndesicp.dir/src/rs485controller.cpp.o
+.PHONY : src/rs485controller.cpp.o
+
+src/rs485controller.i: src/rs485controller.cpp.i
+.PHONY : src/rs485controller.i
+
+# target to preprocess a source file
+src/rs485controller.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp.dir/build.make CMakeFiles/syndesicp.dir/src/rs485controller.cpp.i
+.PHONY : src/rs485controller.cpp.i
+
+src/rs485controller.s: src/rs485controller.cpp.s
+.PHONY : src/rs485controller.s
+
+# target to generate assembly for a file
+src/rs485controller.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp.dir/build.make CMakeFiles/syndesicp.dir/src/rs485controller.cpp.s
+.PHONY : src/rs485controller.cpp.s
+
+src/sdid.o: src/sdid.cpp.o
+.PHONY : src/sdid.o
+
+# target to build an object file
+src/sdid.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp.dir/build.make CMakeFiles/syndesicp.dir/src/sdid.cpp.o
+.PHONY : src/sdid.cpp.o
+
+src/sdid.i: src/sdid.cpp.i
+.PHONY : src/sdid.i
+
+# target to preprocess a source file
+src/sdid.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp.dir/build.make CMakeFiles/syndesicp.dir/src/sdid.cpp.i
+.PHONY : src/sdid.cpp.i
+
+src/sdid.s: src/sdid.cpp.s
+.PHONY : src/sdid.s
+
+# target to generate assembly for a file
+src/sdid.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp.dir/build.make CMakeFiles/syndesicp.dir/src/sdid.cpp.s
+.PHONY : src/sdid.cpp.s
+
 src/syndesi_tools.o: src/syndesi_tools.cpp.o
 .PHONY : src/syndesi_tools.o
 
@@ -246,6 +369,54 @@ src/syndesi_tools.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp.dir/build.make CMakeFiles/syndesicp.dir/src/syndesi_tools.cpp.s
 .PHONY : src/syndesi_tools.cpp.s
 
+src/syndesi_types.o: src/syndesi_types.cpp.o
+.PHONY : src/syndesi_types.o
+
+# target to build an object file
+src/syndesi_types.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp.dir/build.make CMakeFiles/syndesicp.dir/src/syndesi_types.cpp.o
+.PHONY : src/syndesi_types.cpp.o
+
+src/syndesi_types.i: src/syndesi_types.cpp.i
+.PHONY : src/syndesi_types.i
+
+# target to preprocess a source file
+src/syndesi_types.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp.dir/build.make CMakeFiles/syndesicp.dir/src/syndesi_types.cpp.i
+.PHONY : src/syndesi_types.cpp.i
+
+src/syndesi_types.s: src/syndesi_types.cpp.s
+.PHONY : src/syndesi_types.s
+
+# target to generate assembly for a file
+src/syndesi_types.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp.dir/build.make CMakeFiles/syndesicp.dir/src/syndesi_types.cpp.s
+.PHONY : src/syndesi_types.cpp.s
+
+src/uartcontroller.o: src/uartcontroller.cpp.o
+.PHONY : src/uartcontroller.o
+
+# target to build an object file
+src/uartcontroller.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp.dir/build.make CMakeFiles/syndesicp.dir/src/uartcontroller.cpp.o
+.PHONY : src/uartcontroller.cpp.o
+
+src/uartcontroller.i: src/uartcontroller.cpp.i
+.PHONY : src/uartcontroller.i
+
+# target to preprocess a source file
+src/uartcontroller.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp.dir/build.make CMakeFiles/syndesicp.dir/src/uartcontroller.cpp.i
+.PHONY : src/uartcontroller.cpp.i
+
+src/uartcontroller.s: src/uartcontroller.cpp.s
+.PHONY : src/uartcontroller.s
+
+# target to generate assembly for a file
+src/uartcontroller.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp.dir/build.make CMakeFiles/syndesicp.dir/src/uartcontroller.cpp.s
+.PHONY : src/uartcontroller.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -253,21 +424,44 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
-	@echo "... install"
-	@echo "... install/local"
-	@echo "... install/strip"
-	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... syndesicp"
+	@echo "... src/buffer.o"
+	@echo "... src/buffer.i"
+	@echo "... src/buffer.s"
+	@echo "... src/callbacks.o"
+	@echo "... src/callbacks.i"
+	@echo "... src/callbacks.s"
 	@echo "... src/core.o"
 	@echo "... src/core.i"
 	@echo "... src/core.s"
 	@echo "... src/frame.o"
 	@echo "... src/frame.i"
 	@echo "... src/frame.s"
+	@echo "... src/framemanager.o"
+	@echo "... src/framemanager.i"
+	@echo "... src/framemanager.s"
+	@echo "... src/ipcontroller.o"
+	@echo "... src/ipcontroller.i"
+	@echo "... src/ipcontroller.s"
+	@echo "... src/network.o"
+	@echo "... src/network.i"
+	@echo "... src/network.s"
+	@echo "... src/rs485controller.o"
+	@echo "... src/rs485controller.i"
+	@echo "... src/rs485controller.s"
+	@echo "... src/sdid.o"
+	@echo "... src/sdid.i"
+	@echo "... src/sdid.s"
 	@echo "... src/syndesi_tools.o"
 	@echo "... src/syndesi_tools.i"
 	@echo "... src/syndesi_tools.s"
+	@echo "... src/syndesi_types.o"
+	@echo "... src/syndesi_types.i"
+	@echo "... src/syndesi_types.s"
+	@echo "... src/uartcontroller.o"
+	@echo "... src/uartcontroller.i"
+	@echo "... src/uartcontroller.s"
 .PHONY : help
 
 

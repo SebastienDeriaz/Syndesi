@@ -1,7 +1,7 @@
 /* THIS FILE IS GENERATED AUTOMATICALLY
 *  DO NOT EDIT
 *  This file has been written by the script generate_commands.py
-*  date : 22-08-15 16:39:29
+*  date : 22-08-18 12:56:32
 */
 
 #include "callbacks.hpp"
@@ -11,113 +11,121 @@ namespace syndesi {
 Callbacks callbacks;
 
 
-Buffer Callbacks::processRequest(cmd_t command, Buffer& payloadBuffer) {
-    Buffer replyBuffer;
-    replyBuffer.data = nullptr;
-    replyBuffer.length = 0;
-    switch(command) {
+void Callbacks::indication(Frame& frame) {
+    Buffer* requestPayloadBuffer = frame.getPayloadBuffer();
+    Payload* reply = nullptr;
+    Payload* request = nullptr;
+
+    switch(frame.getCommand()) {
 #ifdef USE_DEVICE_DISCOVER_REQUEST_CALLBACK
         case commands::DEVICE_DISCOVER:
-                DEVICE_DISCOVER_request request(payloadBuffer);
-                DEVICE_DISCOVER_reply reply;
-                DEVICE_DISCOVER_request_callback(request, reply);
+            request = new DEVICE_DISCOVER_request(requestPayloadBuffer);
+            reply = new DEVICE_DISCOVER_reply();
+            DEVICE_DISCOVER_request_callback(*(static_cast<DEVICE_DISCOVER_request*>(request)), static_cast<DEVICE_DISCOVER_reply*>(reply));
             break;
 #endif
 #ifdef USE_REGISTER_READ_16_REQUEST_CALLBACK
         case commands::REGISTER_READ_16:
-                REGISTER_READ_16_request request(payloadBuffer);
-                REGISTER_READ_16_reply reply;
-                REGISTER_READ_16_request_callback(request, reply);
+            request = new REGISTER_READ_16_request(requestPayloadBuffer);
+            reply = new REGISTER_READ_16_reply();
+            REGISTER_READ_16_request_callback(*(static_cast<REGISTER_READ_16_request*>(request)), static_cast<REGISTER_READ_16_reply*>(reply));
             break;
 #endif
 #ifdef USE_REGISTER_WRITE_16_REQUEST_CALLBACK
         case commands::REGISTER_WRITE_16:
-                REGISTER_WRITE_16_request request(payloadBuffer);
-                REGISTER_WRITE_16_reply reply;
-                REGISTER_WRITE_16_request_callback(request, reply);
+            request = new REGISTER_WRITE_16_request(requestPayloadBuffer);
+            reply = new REGISTER_WRITE_16_reply();
+            REGISTER_WRITE_16_request_callback(*(static_cast<REGISTER_WRITE_16_request*>(request)), static_cast<REGISTER_WRITE_16_reply*>(reply));
             break;
 #endif
 #ifdef USE_SPI_READ_WRITE_REQUEST_CALLBACK
         case commands::SPI_READ_WRITE:
-                SPI_READ_WRITE_request request(payloadBuffer);
-                SPI_READ_WRITE_reply reply;
-                SPI_READ_WRITE_request_callback(request, reply);
+            request = new SPI_READ_WRITE_request(requestPayloadBuffer);
+            reply = new SPI_READ_WRITE_reply();
+            SPI_READ_WRITE_request_callback(*(static_cast<SPI_READ_WRITE_request*>(request)), static_cast<SPI_READ_WRITE_reply*>(reply));
             break;
 #endif
 #ifdef USE_SPI_WRITE_ONLY_REQUEST_CALLBACK
         case commands::SPI_WRITE_ONLY:
-                SPI_WRITE_ONLY_request request(payloadBuffer);
-                SPI_WRITE_ONLY_reply reply;
-                SPI_WRITE_ONLY_request_callback(request, reply);
+            request = new SPI_WRITE_ONLY_request(requestPayloadBuffer);
+            reply = new SPI_WRITE_ONLY_reply();
+            SPI_WRITE_ONLY_request_callback(*(static_cast<SPI_WRITE_ONLY_request*>(request)), static_cast<SPI_WRITE_ONLY_reply*>(reply));
             break;
 #endif
 #ifdef USE_I2C_READ_REQUEST_CALLBACK
         case commands::I2C_READ:
-                I2C_READ_request request(payloadBuffer);
-                I2C_READ_reply reply;
-                I2C_READ_request_callback(request, reply);
+            request = new I2C_READ_request(requestPayloadBuffer);
+            reply = new I2C_READ_reply();
+            I2C_READ_request_callback(*(static_cast<I2C_READ_request*>(request)), static_cast<I2C_READ_reply*>(reply));
             break;
 #endif
 #ifdef USE_I2C_WRITE_REQUEST_CALLBACK
         case commands::I2C_WRITE:
-                I2C_WRITE_request request(payloadBuffer);
-                I2C_WRITE_reply reply;
-                I2C_WRITE_request_callback(request, reply);
+            request = new I2C_WRITE_request(requestPayloadBuffer);
+            reply = new I2C_WRITE_reply();
+            I2C_WRITE_request_callback(*(static_cast<I2C_WRITE_request*>(request)), static_cast<I2C_WRITE_reply*>(reply));
             break;
 #endif
 
     }
-    return replyBuffer;
+
+    if(reply != nullptr && _frameManager != nullptr) {
+        Frame replyFrame(*reply, frame.getID());
+        _frameManager->response(replyFrame);
+    }
 }
 
-void Callbacks::processReply(cmd_t command, Buffer& payloadBuffer) {
-    switch(command) {
+void Callbacks::confirm(Frame& frame) {
+    Buffer* replyPayloadBuffer = frame.getPayloadBuffer();
+    Payload* reply = nullptr;
+
+    switch(frame.getCommand()) {
 #ifdef USE_ERROR_REPLY_CALLBACK
         case commands::ERROR:
-                ERROR_reply reply(payloadBuffer);
-                ERROR_reply_callback(reply);
+            reply = new ERROR_reply(replyPayloadBuffer);
+            ERROR_reply_callback(*(static_cast<ERROR_reply*>(reply)));
             break;
 #endif
 #ifdef USE_DEVICE_DISCOVER_REPLY_CALLBACK
         case commands::DEVICE_DISCOVER:
-                DEVICE_DISCOVER_reply reply(payloadBuffer);
-                DEVICE_DISCOVER_reply_callback(reply);
+            reply = new DEVICE_DISCOVER_reply(replyPayloadBuffer);
+            DEVICE_DISCOVER_reply_callback(*(static_cast<DEVICE_DISCOVER_reply*>(reply)));
             break;
 #endif
 #ifdef USE_REGISTER_READ_16_REPLY_CALLBACK
         case commands::REGISTER_READ_16:
-                REGISTER_READ_16_reply reply(payloadBuffer);
-                REGISTER_READ_16_reply_callback(reply);
+            reply = new REGISTER_READ_16_reply(replyPayloadBuffer);
+            REGISTER_READ_16_reply_callback(*(static_cast<REGISTER_READ_16_reply*>(reply)));
             break;
 #endif
 #ifdef USE_REGISTER_WRITE_16_REPLY_CALLBACK
         case commands::REGISTER_WRITE_16:
-                REGISTER_WRITE_16_reply reply(payloadBuffer);
-                REGISTER_WRITE_16_reply_callback(reply);
+            reply = new REGISTER_WRITE_16_reply(replyPayloadBuffer);
+            REGISTER_WRITE_16_reply_callback(*(static_cast<REGISTER_WRITE_16_reply*>(reply)));
             break;
 #endif
 #ifdef USE_SPI_READ_WRITE_REPLY_CALLBACK
         case commands::SPI_READ_WRITE:
-                SPI_READ_WRITE_reply reply(payloadBuffer);
-                SPI_READ_WRITE_reply_callback(reply);
+            reply = new SPI_READ_WRITE_reply(replyPayloadBuffer);
+            SPI_READ_WRITE_reply_callback(*(static_cast<SPI_READ_WRITE_reply*>(reply)));
             break;
 #endif
 #ifdef USE_SPI_WRITE_ONLY_REPLY_CALLBACK
         case commands::SPI_WRITE_ONLY:
-                SPI_WRITE_ONLY_reply reply(payloadBuffer);
-                SPI_WRITE_ONLY_reply_callback(reply);
+            reply = new SPI_WRITE_ONLY_reply(replyPayloadBuffer);
+            SPI_WRITE_ONLY_reply_callback(*(static_cast<SPI_WRITE_ONLY_reply*>(reply)));
             break;
 #endif
 #ifdef USE_I2C_READ_REPLY_CALLBACK
         case commands::I2C_READ:
-                I2C_READ_reply reply(payloadBuffer);
-                I2C_READ_reply_callback(reply);
+            reply = new I2C_READ_reply(replyPayloadBuffer);
+            I2C_READ_reply_callback(*(static_cast<I2C_READ_reply*>(reply)));
             break;
 #endif
 #ifdef USE_I2C_WRITE_REPLY_CALLBACK
         case commands::I2C_WRITE:
-                I2C_WRITE_reply reply(payloadBuffer);
-                I2C_WRITE_reply_callback(reply);
+            reply = new I2C_WRITE_reply(replyPayloadBuffer);
+            I2C_WRITE_reply_callback(*(static_cast<I2C_WRITE_reply*>(reply)));
             break;
 #endif
 

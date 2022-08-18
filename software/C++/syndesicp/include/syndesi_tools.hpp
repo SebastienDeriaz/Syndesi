@@ -13,6 +13,8 @@
 #include <cstddef>
 #include <string.h>
 
+using std::byte;
+
 #ifndef SYNDESI_TOOLS_H
 #define SYNDESI_TOOLS_H
 
@@ -26,7 +28,7 @@ namespace syndesi {
      * 
      * @return length of buffer
      */
-    size_t hton(const char* src, char* dest, size_t length);
+    size_t hton(const byte* src, byte* dest, size_t length);
 
     /**
      * @brief Convert network endianness to host
@@ -37,7 +39,7 @@ namespace syndesi {
      * 
      * @return length of buffer
      */
-    size_t ntoh(const char* src, char* dest, size_t length);
+    size_t ntoh(const byte* src, byte* dest, size_t length);
 }  // namespace syndesi
 
 #endif  // SYNDESI_TOOLS_H

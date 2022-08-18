@@ -16,7 +16,7 @@ namespace syndesi {
 
 
 
-size_t hton(const char* src, char* dest, size_t length) {
+size_t hton(const byte* src, byte* dest, size_t length) {
 #if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
     // System's endianness is the same as the network
     memcpy(dest, src, length);
@@ -29,7 +29,7 @@ size_t hton(const char* src, char* dest, size_t length) {
     return length;
 }
 
-size_t ntoh(const char* src, char* dest, size_t length) {
+size_t ntoh(const byte* src, byte* dest, size_t length) {
     // The function is exactly the same as hton, they both exist for clarity reasons
     hton(src, dest, length);
     return length;

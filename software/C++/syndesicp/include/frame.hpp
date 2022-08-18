@@ -9,121 +9,97 @@
  * @date 27.06.2022
  */
 
-/*
-    |       Frame Header       |                       |
-    |----------------|---------|-----------------------|
-    | payload length | command |         payload       |
-    |   2 bytes      | 2 bytes |  payload_length bytes |
-*/
-
-
 #ifndef FRAME_H
 #define FRAME_H
 
 #include <cstdlib>
 #include <iostream>
+#include <memory>
 
 using namespace std;
 
-#include "syndesi_types.hpp"
 #include "payloads.hpp"
+#include "sdid.hpp"
+#include "syndesi_types.hpp"
+
+using std::unique_ptr;
 
 namespace syndesi {
 
 class Frame {
-   private:
-    cmd_t command;
-    payloadLength_t payloadLength;
-    Buffer frameBuffer{.data = NULL, .length = 0};
-    Buffer payloadBuffer{.data = NULL, .length = 0};
+    friend class Network;
+    friend class FrameManager;
 
-    void freeBuffer();
+    union NetworkHeader {
+        struct {
+            // Frame must be re-routed to another device,
+            // this means it contains a sdid after the
+            // network header
+            bool routing : 1;
+            // Signals that another frame is following the current one
+            bool follow : 1;
+            bool request_nReply : 1;  // Request (1) or reply (0)
+            unsigned char reserved : 5;
+        } fields;
+        uint8_t value;
+    };
 
-    static const size_t MINIMUM_FRAME_LENGTH = 4;
-
-    static const size_t headerLength = sizeof(cmd_t) + sizeof(payloadLength_t);
+    static const size_t command_size = sizeof(cmd_t);
+    static const size_t addressingHeader_size = 1;
+    static const size_t payloadLength_size = sizeof(payloadLength_t);
+    static const size_t networkHeader_size = sizeof(NetworkHeader);
 
    public:
     /**
-     * @brief Construct a new empty frame object
+     * @brief Construct a frame from a buffer object
      *
      */
-    Frame(){};
+    Frame(unique_ptr<Buffer>& buffer, unique_ptr<SyndesiID>& id);
+
+    /**
+     * @brief Construct a frame object from a payload and SyndesiID
+     *
+     * @param payload payload
+     * @param id id of device
+     */
+    Frame(Payload& payload, unique_ptr<SyndesiID>& id);
 
     /**
      * @brief Destroy the Frame object
-     * 
-     */
-    ~Frame(){freeBuffer();}
-
-    /**
-     * @brief Construct a new Frame object from a buffer
      *
-     * @details The payload data is written by the payload class by initialized by this function
-     *
-     * @param command
-     * @param payloadLength_t
      */
-    Frame(Buffer& buffer);
+    ~Frame() {}
 
-    /**
-     * @brief Construct a new Frame object from a payload
-     * 
-     * @param payload
-     */
-    Frame(Payload& payload);
+   private:
+    cmd_t command;
+    NetworkHeader networkHeader;
+    payloadLength_t payloadLength;
+    unique_ptr<Buffer> _buffer = nullptr;
+    unique_ptr<SyndesiID> _id = nullptr;
+    
+    // Predefine the payloadBuffer (when creating the frame from the lower layer)
+    unique_ptr<Buffer> _payloadBuffer = nullptr;
 
-
-    /**
-     * @brief Allocate a buffer of length 'length'
-     * 
-     * @param length 
-     * @return true if the buffer was allocated correctly
-     * @return false otherwise
-     */
-    bool allocate(const size_t length);
-
-
-
-
-
-    /**
-     * @brief Retrieve command and payloadLength from a buffer containing a frame
-     * 
-     * @param buffer 
-     * @return size_t the size of the found frame. 0 if no frame was found
-     */
-    size_t parse(const Buffer& buffer);
-
-    /**
-     * @brief Build a frame from a payload
-     * 
-     * @param payload 
-     * 
-     * @return The frame buffer
-     */
-    Buffer& build(Payload& payload);
-
-    /**
-     * @brief Get the frame buffer (for outgoing frame)
-     * 
-     * @return Buffer&
-     */
-    Buffer& getBuffer();
-
-    /**
-     * @brief Get the Payload Buffer (for ingoing frame)
-     * 
-     * @return Buffer& 
-     */
-    Buffer& getPayloadBuffer();
-
+   public:
     /**
      * @brief Get the command ID
-     * 
+     *
      * @return cmd_t
      */
-    cmd_t getCommand();    
+    cmd_t getCommand();
+
+    /**
+     * @brief Get the payload buffer
+     *
+     * @return pointer to buffer
+     */
+    Buffer* getPayloadBuffer();
+
+    /**
+     * @brief Get the SyndesiID
+     *
+     */
+    unique_ptr<SyndesiID>& getID() { return _id; };
 };
 
 }  // namespace syndesi

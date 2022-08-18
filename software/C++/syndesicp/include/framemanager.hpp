@@ -10,8 +10,14 @@
 #ifndef FRAME_MANAGER_H
 #define FRAME_MANAGER_H
 
+#include <functional>
+
 #include "callbacks.hpp"
 #include "syndesi_types.hpp"
+#include <iostream>
+
+using namespace std;
+
 
 namespace syndesi {
 
@@ -20,65 +26,34 @@ namespace syndesi {
  * interface
  *
  */
-class FrameManager {
-    class Frame {
-        // A Frame instance contains a command (cmd_t) and a payload
-       public:
-        /**
-         * @brief Construct a new Frame object from a buffer
-         *
-         * @param buffer
-         */
-        Frame(Buffer& buffer);
+class FrameManager : SAP::IFrameManager_bottom, SAP::IFrameManager_top {
+    friend class Core;
 
-        /**
-         * @brief Get the command ID
-         *
-         * @return cmd_t
-         */
-        cmd_t getCommand();
-        /**
-         * @brief Get the payload buffer
-         *
-         * @return Buffer
-         */
-        Buffer getPayload();
-    };
+    
 
-    Callbacks callbacks;
+   public:
 
+    FrameManager() {};
+    ~FrameManager() {};
+
+   private:
     /*
-     * Interfacing with lower layers
+     * Upper layer
      */
-
-    /**
-     * @brief Method called whenever a request frame is received, called by the
-     * network interface
-     * 
-     * @param frame
+    SAP::ICallbacks_bottom* _callbacks = nullptr;
+    void registerCallbacks(SAP::ICallbacks_bottom* callbacks) {
+        _callbacks = callbacks;
+    };
+    void response(Frame& frame);
+    // From core
+    void request(Frame& frame);
+    /*
+     * Lower layer
      */
-    void onReceiveRequest(Frame& frame);
-    /**
-     * @brief Send request frame (to network interface)
-     * 
-     * @param frame 
-     */
-    void sendRequest(Frame& frame);
-    /**
-     * @brief Method called whenever a reply frame is received, called by the
-     * network interface
-     *
-     * @param frame
-     */
-    void onReceiveReply(Frame& frame);
-    /**
-     * @brief Send reply frame (to network interface)
-     *
-     * @param frame
-     */
-    void sendReply(Frame& frame);
-    
-    
+    SAP::INetwork_top* _network = nullptr;
+    void registerNetwork(SAP::INetwork_top* network) { _network = network; };
+    void indication(Frame& frame);
+    void confirm(Frame& frame);
 };
 
 }  // namespace syndesi
