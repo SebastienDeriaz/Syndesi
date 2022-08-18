@@ -1,10 +1,8 @@
-# Syndesi
-Universal interfacing project
+# Syndesi Project
 
+The goal of the Syndesi project is to provide a system capable of easily interfacing test and measurement devices with a host controller.
 
-This is a WIP project, as of today it is only an idea. If you've got any ideas and/or want to contribute, don't hesitate to contact me via email at sebastien.deriaz1@gmail.com
-
-## The idea
+## Objective
 
 The goal is to create software/hardware project that allows people to interface software **easily** with hardware. Basically the Arduino of interfacing.
 
@@ -37,6 +35,7 @@ my_interface.digitalRead(4)
 - School labs
 - Prototyping
 - Automation (?)
+- Datalogging
 
 ### Interfaces
 
@@ -90,8 +89,6 @@ An led could be used to tell the user how the interface is configured (and a but
 
 Possiblity to use W5500 chip that provides 10/100 Mbps Ethernet and SPI communication
 
-
-
 ## Project structure
 ```
 syndesi
@@ -100,8 +97,8 @@ syndesi
 │
 ├───doc                              documentation
 │   ├───communication                frame format
-│   └───syndesicp                    communication protocol structure
-│
+│   └───software                     communication protocol structure
+│       
 └───software
     ├───C++                          C++ code
     │ ­   ├───syndesicp               Syndesi communication protocol C++
@@ -111,5 +108,5 @@ syndesi
     │ ­   ├───syndesicp               Syndesi communication protocol Python
     │    └───syndesi                 Syndesi host Python
     │    
-    └───Scripts                      Various scripts and declaration
+    └───Scripts                      Various scripts and declarations
 ```
