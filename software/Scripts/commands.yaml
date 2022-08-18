@@ -27,7 +27,8 @@
 # - "uint"     unsigned interger
 # - "float"    single precision (4 bytes)
 # - "double"   double precision (8 bytes)
-# - "char"     character, can be used for strings
+# - "byte"     used for byte arrays
+# - "char"     used for strings (constant length)
 # - "{A,B}"    enum (1 byte)
 # 
 #
@@ -80,7 +81,7 @@ Commands:
     reply_content:
       ID:
         size: 20
-        type: "char"
+        type: "byte"
       syndesi_protocol_version:
         size: 1
         type: "uint"
@@ -139,14 +140,14 @@ Commands:
         type: "uint"
       write_data:
         size: write_size
-        type: "char"
+        type: "byte"
     reply_content:
       read_size:
         size: 2
         type: "uint"
       read_data:
         size: read_size
-        type: "char"
+        type: "byte"
 # SPI write
   - alias: SPI_WRITE_ONLY
     ID: 0x0111
@@ -160,7 +161,7 @@ Commands:
         type: "uint"
       write_data:
         size: write_size
-        type: "char"
+        type: "byte"
     reply_content:
       status:
         size: 1
@@ -182,7 +183,7 @@ Commands:
         type: "uint"
       read_data:
         size: read_size
-        type: "char"
+        type: "byte"
   - alias: I2C_WRITE
     ID: 0x0121
     comment: "Write I2C data (with interface index)"
@@ -195,7 +196,7 @@ Commands:
         type: "uint"
       write_data:
         size: write_size
-        type: "char"
+        type: "byte"
     reply_content:
       status:
         size: 1

@@ -39,24 +39,26 @@ class CPP():
         """ 
 
         cpp_type_conversion = {
-            types.double : lambda field : f"double {field.name};",
-            types.uint : lambda field : f"uint{field.size*8}_t {field.name};",
-            types.int  : lambda field : f"int{field.size*8}_t {field.name};",
-            types.float : lambda field : f"float {field.name}",
-            types.enum : lambda field : f"enum {field.name}_t {field.enum}{field.name};"
+            types.double : lambda field : f"double {field.name};\n",
+            types.uint : lambda field : f"uint{field.size*8}_t {field.name};\n",
+            types.int  : lambda field : f"int{field.size*8}_t {field.name};\n",
+            types.float : lambda field : f"float {field.name};\n",
+            types.enum : lambda field : f"enum {field.name}_t {field.enum}{field.name};\n",
+            types.char : lambda field : f"char {field.name}[{field.size}];\n",
+            types.byte : lambda field : f"byte {field.name}[{field.size}];\n"
         }
 
         output = ''
 
         for command in self._commands:
-            parse = ''
-            build = ''
-            variables = ''
-            argument_constructor = ''
-            arguments = ''
-            fields = ''
-            length = 2*TAB + 'return '
-            for fields in filter(None, [command.request_fields, command.reply_fields]):
+            for fields, is_request in filter(lambda x : x[0] is not None, [(command.request_fields, True), (command.reply_fields, False)]):
+                parse = ''
+                build = ''
+                variables = ''
+                argument_constructor = ''
+                arguments = ''
+                length = ''
+
                 for i, field in enumerate(fields):
                     if i > 0:
                         arguments += ', '
@@ -66,38 +68,40 @@ class CPP():
 
                     if field.type in [types.double, types.int, types.uint, types.float, types.enum]:
                         # Copy with endian conversion
-                        parse += 2*TAB + f"pos += ntoh(payloadBuffer.data + pos, (char*)&{field.name}, {field.size});\n"
-                        build += 2*TAB + f"pos += hton((char*)&{field.name}, payloadBuffer.data + pos, {field.size});\n"
+                        parse += 2*TAB + f"pos += ntoh(payloadBuffer->data() + pos, reinterpret_cast<byte*>(&{field.name}), {field.size});\n"
+                        build += 2*TAB + f"pos += hton(reinterpret_cast<byte*>(&{field.name}), payloadBuffer->data() + pos, {field.size});\n"
                         variables += TAB + cpp_type_conversion[field.type](field)
                         arguments += cpp_type_conversion[field.type](field).replace(';', '')
                         
-                    elif field.type in [types.char]:
+                    elif field.type in [types.char, types.byte]:
                         # Array
-                        parse += "#if COPY_ARRAY_ARGUMENTS\n"
-                        parse += 2*TAB + f"memcpy({field.name}.data, payloadBuffer.data + pos, {field.size});\n"
-                        parse += "#else\n"
-                        parse += 2*TAB + f"{field.name}.data = payloadBuffer.data + pos;\n"
-                        parse += "#endif\n"
-                        parse += 2*TAB + f"{field.name}.length = {field.size};\n"
-
-                        # The build always needs to copy since we don't know the buffer in advance
-                        build += 2*TAB + f"memcpy(payloadBuffer.data + pos, {field.name}.data, {field.size});\n"
+                        if field.fixed_size:
+                            variables += TAB + cpp_type_conversion[field.type](field)
+                            parse += 2*TAB + f"{field.name} = payloadBuffer->data() + pos;"
+                        else:
+                            variables += TAB + f'Buffer {field.name};\n'
+                            parse += 2*TAB + f"{field.name}.fromParent(payloadBuffer, pos, {field.size});"
+                        parse += 2*TAB + f"pos += {field.size};"                            
                     else:
                         raise ValueError(f"Unsupported type : {field.type}")
+                    
+                    length += str(field.size)
                 
-                    output += replace_str(CPP_PAYLOAD_TEMPLATE, {
-                        "alias" : command.alias,
-                        "values" : variables,
-                        "parse_function" : parse,
-                        "length_function" : length,
-                        "build_function"  : build,
-                        #"constructor" : TAB + f"{self.name}({arguments}) : {argument_constructor}{{}}"
-                        "constructor" : '',
-                        "command" : TAB+f"cmd_t getCommand() {{return 0x{command.ID:04X};}}"
-                    })
-                length += str(field.size)
-                argument_constructor += f"{field.name}({field.name})"
-            length += ';'
+                if not length:
+                    length = '0'
+                length += ';'
+
+                output += replace_str(CPP_PAYLOAD_TEMPLATE, {
+                    "alias" : f"{command.alias}_{'request' if is_request else 'reply'}",
+                    "values" : variables,
+                    "parse_function" : parse,
+                    "length_function" : 2*TAB + 'return ' + length,
+                    "build_function"  : build,
+                    #"constructor" : TAB + f"{self.name}({arguments}) : {argument_constructor}{{}}"
+                    "constructor" : '',
+                    "command" : TAB+f"cmd_t getCommand() {{return 0x{command.ID:04X};}}",
+                })
+                #argument_constructor += f"{field.name}({field.name})"
         return output
 
     def defines(self, request):
@@ -151,9 +155,9 @@ class CPP():
                 output += f'#ifdef USE_{command.alias.upper()}_REQUEST_CALLBACK\n'                
                 output += ' '*2*TAB + f'case commands::{command.alias}:\n'
                 #output += ' '*3*TAB + f'if({command}_{command_type} != NULL) {{\n'
-                output += ' '*4*TAB + f'{command.alias}_request request(payloadBuffer);\n'
-                output += ' '*4*TAB + f'{command.alias}_reply reply;\n'
-                output += ' '*4*TAB + f'{command.alias}_request_callback(request, reply);\n'
+                output += ' '*3*TAB + f'request = new {command.alias}_request(requestPayloadBuffer);\n'
+                output += ' '*3*TAB + f'reply = new {command.alias}_reply();\n'
+                output += ' '*3*TAB + f'{command.alias}_request_callback(*(static_cast<{command.alias}_request*>(request)), static_cast<{command.alias}_reply*>(reply));\n'
                 #output += ' '*3*TAB + '}\n'
                 output += ' '*3*TAB + f'break;\n'
                 output += '#endif\n'
@@ -161,8 +165,8 @@ class CPP():
                 output += f'#ifdef USE_{command.alias.upper()}_REPLY_CALLBACK\n'
                 output += ' '*2*TAB + f'case commands::{command.alias}:\n'
                 #output += ' '*3*TAB + f'if({command}_{command_type} != NULL) {{\n'
-                output += ' '*4*TAB + f'{command.alias}_reply reply(payloadBuffer);\n'
-                output += ' '*4*TAB + f'{command.alias}_reply_callback(reply);\n'
+                output += ' '*3*TAB + f'reply = new {command.alias}_reply(replyPayloadBuffer);\n'
+                output += ' '*3*TAB + f'{command.alias}_reply_callback(*(static_cast<{command.alias}_reply*>(reply)));\n'
                 #output += ' '*3*TAB + '}\n'
                 output += ' '*3*TAB + f'break;\n'
                 output += '#endif\n'
@@ -185,7 +189,7 @@ class CPP():
         for command in self._commands:
             if command.has_request:
                 output += f'#ifdef USE_{command.alias}_REQUEST_CALLBACK\n'
-                output += TAB*' ' + f'void {command.alias}_request_callback({command.alias}_request& request, {command.alias}_reply& reply);\n'
+                output += TAB*' ' + f'void {command.alias}_request_callback({command.alias}_request& request, {command.alias}_reply* reply);\n'
                 output += f'#endif\n'
             if command.has_reply:
                 output += f'#ifdef USE_{command.alias}_REPLY_CALLBACK\n'

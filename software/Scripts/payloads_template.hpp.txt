@@ -14,11 +14,8 @@
 
 #include "syndesi_tools.hpp"
 #include "syndesi_types.hpp"
-
-
-// true  : copy input buffer contents in each field array
-// false : keep the data in the input buffer and reference through pointer
-#define COPY_ARRAY_ARGUMENTS true
+#include "buffer.hpp"
+#include <memory>
 
 namespace syndesi {
 
@@ -26,23 +23,16 @@ enum commands : cmd_t {
 >>>commands<<<
 };
 
-
-
 class Payload {
-private:
-    virtual void parse(const Buffer& buffer) = 0;
-    virtual void build(Buffer buffer) = 0;
+   public:
+    virtual void build(Buffer* buffer) = 0;
     virtual size_t payloadLength() = 0;
     virtual cmd_t getCommand() = 0;
-    
-    
-public:
-    // The fields are public (declared in the derived class)
-
-    
-    friend class Frame;
-    friend class Payloads;
 };
+
+
+
+
 
 
 >>>payloads<<<

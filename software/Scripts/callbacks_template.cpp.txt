@@ -11,18 +11,26 @@ namespace syndesi {
 Callbacks callbacks;
 
 
-Buffer Callbacks::processRequest(cmd_t command, Buffer& payloadBuffer) {
-    Buffer replyBuffer;
-    replyBuffer.data = nullptr;
-    replyBuffer.length = 0;
-    switch(command) {
+void Callbacks::indication(Frame& frame) {
+    Buffer* requestPayloadBuffer = frame.getPayloadBuffer();
+    Payload* reply = nullptr;
+    Payload* request = nullptr;
+
+    switch(frame.getCommand()) {
 >>>switch_request<<<
     }
-    return replyBuffer;
+
+    if(reply != nullptr && _frameManager != nullptr) {
+        Frame replyFrame(*reply, frame.getID());
+        _frameManager->response(replyFrame);
+    }
 }
 
-void Callbacks::processReply(cmd_t command, Buffer& payloadBuffer) {
-    switch(command) {
+void Callbacks::confirm(Frame& frame) {
+    Buffer* replyPayloadBuffer = frame.getPayloadBuffer();
+    Payload* reply = nullptr;
+
+    switch(frame.getCommand()) {
 >>>switch_reply<<<
     }
 }

@@ -9,14 +9,19 @@
 
 #include "syndesi_types.hpp"
 #include "payloads.hpp"
-#include "callbacks_configuration.hpp"
+#include "callbacks_config.hpp"
+#include "interfaces.hpp"
 
 namespace syndesi {
 
-class Callbacks {
+class Callbacks : SAP::ICallbacks_bottom{
+    friend class Core;
+    private:
+        SAP::IFrameManager_top* _frameManager = nullptr;
+        void registerFrameManager(SAP::IFrameManager_top* frameManager) {_frameManager = frameManager;};
     public:
-        Buffer processRequest(cmd_t command, Buffer& payloadBuffer);
-        void processReply(cmd_t command, Buffer& payloadBuffer);
+        void indication(Frame& payload);
+        void confirm(Frame& payload);
 
 >>>callbacks<<<
 

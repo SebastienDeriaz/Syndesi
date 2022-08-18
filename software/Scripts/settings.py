@@ -24,6 +24,7 @@ class types(Enum):
     double = auto()
     char = auto()
     enum = auto()
+    byte = auto()
 
 ALLOWED_TYPES = {
     'int' : types.int,
@@ -31,6 +32,7 @@ ALLOWED_TYPES = {
     'float' : types.float,
     'double' : types.double,
     'char' : types.char,
+    'byte' : types.byte,
     # Matches anything that looks like {A,B,C,D}
     '{([a-zA-Z _0-9]+)(,[a-zA-Z _0-9]+)+}' : types.enum
 }

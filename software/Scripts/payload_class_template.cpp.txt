@@ -4,22 +4,21 @@ public:
 >>>values<<<
 
     >>>alias<<<() {};
-    >>>alias<<<(const Buffer& buffer) {parse(buffer);};
+    >>>alias<<<(Buffer* payloadBuffer) {
+        size_t pos = 0;
+        >>>parse_function<<<
+    };
 private:
 
 >>>command<<<    
 
 >>>constructor<<<
-    void parse(const Buffer& payloadBuffer) {
-        size_t pos = 0;
->>>parse_function<<<
-    }
 
     size_t payloadLength() {
 >>>length_function<<<
     }
 
-    void build(Buffer payloadBuffer) {
+    void build(Buffer* payloadBuffer) {
         size_t pos = 0;
 >>>build_function<<<
     }
