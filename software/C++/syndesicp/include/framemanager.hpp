@@ -50,8 +50,8 @@ class FrameManager : SAP::IFrameManager_bottom, SAP::IFrameManager_top {
     /*
      * Lower layer
      */
-    SAP::INetwork_top* _network = nullptr;
-    void registerNetwork(SAP::INetwork_top* network) { _network = network; };
+    SAP::INetwork_top* network = nullptr;
+    void registerNetwork(SAP::INetwork_top* _network) { network = _network;};
     void indication(Frame& frame);
     void confirm(Frame& frame);
 };
