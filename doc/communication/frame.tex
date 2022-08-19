@@ -1,0 +1,123 @@
+\documentclass[tikz, border=2mm, dvipsnames, table]{standalone}
+
+\usepackage[]{xcolor}
+\usepackage{tikz-timing}
+\usetikztiminglibrary{advnodes}
+\usepackage{tcolorbox}
+\usetikzlibrary{positioning}
+
+
+\colorlet{networkheadercolor_base}{ForestGreen}
+\colorlet{networkheadercolor}{networkheadercolor_base!30}
+\colorlet{cmdcolor_base}{OrangeRed}
+\colorlet{cmdcolor}{cmdcolor_base!30}
+\colorlet{payloadcolor_base}{RoyalBlue}
+\colorlet{payloadcolor}{payloadcolor_base!30}
+\colorlet{idcolor_base}{Orange}
+\colorlet{idcolor}{idcolor_base!40}
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=rectangle,draw,inner sep=0pt, minimum size=4mm] (char) {\scriptsize #1};}}
+
+\begin{document}
+\begin{tikzpicture}
+\node (table) at (0,0) {
+\begin{tikztimingtable}[timing/.style={x=1cm,y=0.5cm}, x=2cm, y=0.5cm]
+Standard frame & LN(A0);[fill=networkheadercolor]D{NH}N(B0);[fill=cmdcolor]D{CMD}N(C0);[fill=payloadcolor]D{L}N(D0)3D{Payload}N(E0);[]L\\
+
+\\
+
+Hop frame & LN(A);[fill=networkheadercolor]D{NH}N(B);[fill=idcolor]D{AH}N(C)2D{ID}N(D);[fill=cmdcolor]D{CMD}N(E);[fill=payloadcolor]D{L}N(F)3D{Payload}N(G);[]L\\
+\extracode
+\draw[networkheadercolor_base,|-|] ($(A0.mid)+(0.01,-2)$) -- ($(B0.mid)+(-0.01,-2)$) node[midway,anchor=north] {\circled{H}};
+\draw[cmdcolor_base,|-|] ($(B0.mid)+(0.01,-2)$) -- ($(C0.mid)+(-0.01,-2)$) node[midway,anchor=north] {\circled{C}};
+\draw[payloadcolor_base,|-|] ($(C0.mid)+(0.01,-2)$) -- ($(E0.mid)+(-0.01,-2)$) node[midway,anchor=north] {\circled{P}};
+
+\draw[networkheadercolor_base,|-|] ($(A.mid)+(0.01,-2)$) -- ($(B.mid)+(-0.01,-2)$) node[midway,anchor=north] {\circled{H}};
+\draw[idcolor_base,|-|] ($(B.mid)+(0.01,-2)$) -- ($(D.mid)+(-0.01,-2)$) node[midway,anchor=north] {\circled{I}};
+\draw[cmdcolor_base,|-|] ($(D.mid)+(0.01,-2)$) -- ($(E.mid)+(-0.01,-2)$) node[midway,anchor=north] {\circled{C}};
+\draw[payloadcolor_base,|-|] ($(E.mid)+(0.01,-2)$) -- ($(G.mid)+(-0.01,-2)$) node[midway,anchor=north] {\circled{P}};
+
+\end{tikztimingtable}};
+
+
+
+\tcbset
+    {
+        left=1mm,
+        right=1mm,
+        height=4mm,
+        valign=center,
+        boxrule=0.4pt,
+        colframe=black,
+    }
+    
+\node[anchor=north] at (table.south) {\sffamily\tiny
+\tcbox[colback=networkheadercolor]{NH : Network header}
+\tcbox[colback=idcolor]{AH : Addressing header}
+\tcbox[colback=idcolor]{ID : Addressing ID}
+\tcbox[colback=cmdcolor]{CMD : Command ID}
+\tcbox[colback=payloadcolor]{L : Payload length}
+};
+
+\end{tikzpicture}
+
+\begin{tikzpicture}
+\tikzstyle{host}=[rectangle,draw]
+\tikzstyle{device}=[rectangle,draw]
+\tikzstyle{description}=[]
+\tikzstyle{arrow}=[->,bend left=10]
+\def\sdesc{-3}
+\def\sd{4}
+\def\vsep{-2.5}
+\def\H{\textcolor{networkheadercolor_base}{\circled{H}}}
+\def\I{\textcolor{idcolor_base}{\circled{I}}}
+\def\C{\textcolor{cmdcolor_base}{\circled{C}}}
+\def\P{\textcolor{payloadcolor_base}{\circled{P}}}
+
+
+
+\node[description] (D1) at (\sdesc,0) {Standard};
+\node[host] (H1) at (0,0) {host};
+\node[device] (D1) at (\sd,0) {device};
+\draw[->] (H1) to[arrow] node[midway,anchor=south] {\H\C\P} (D1);
+\draw[->] (D1) to[arrow] node[midway,anchor=north] {\H\C\P} (H1);
+
+
+\node[description] (D1) at (\sdesc,\vsep) {Hop};
+\node[host] (H1) at (0,\vsep) {host};
+\node[device] (D1) at (\sd,\vsep) {main device};
+\node[device] (D2) at ({\sd*2},\vsep) {sub device};
+\draw[->] (H1) to[arrow] node[midway,anchor=south] {\H\I\C\P} (D1);
+\draw[->] (D1) to[arrow] node[midway,anchor=south] {\H\C\P} (D2);
+\draw[->] (D2) to[arrow] node[midway,anchor=north] {\H\C\P} (D1);
+\draw[->] (D1) to[arrow] node[midway,anchor=north] {\H\I\C\P} (H1);
+
+
+\node[description] (D1) at (\sdesc,{\vsep*2}) {Discover with hop};
+\node[host] (H1) at (0,{\vsep*2}) {host};
+\node[device] (D1) at (\sd,{\vsep*2}) {main device};
+\node[device] (D2) at ({\sd*2},{\vsep*2}) {sub device};
+\draw[->] (H1) to[arrow] node[midway,anchor=south] {\H\C\P} (D1);
+\draw[->] (D1) to[arrow] node[midway,anchor=south] {\H\C\P} (D2);
+\draw[->] (D2) to[arrow] node[midway,anchor=north] {\H\C\P} (D1);
+\draw[->] (D1) to[arrow] node[midway,anchor=north] {\H\C\P\ \H\I\C\P} (H1);
+
+\node[description] (D1) at (\sdesc,{\vsep*3}) {Double hop};
+\node[host] (H1) at (0,{\vsep*3}) {host};
+\node[device] (D1) at (\sd,{\vsep*3}) {main device};
+\node[device] (D2) at ({\sd*2},{\vsep*3}) {sub device};
+\node[device] (D3) at ({\sd*3},{\vsep*3}) {sub sub device};
+\draw[->] (H1) to[arrow] node[midway,anchor=south] {\H\I\I\C\P} (D1);
+\draw[->] (D1) to[arrow] node[midway,anchor=south] {\H\I\C\P} (D2);
+\draw[->] (D2) to[arrow] node[midway,anchor=south] {\H\C\P} (D3);
+\draw[->] (D3) to[arrow] node[midway,anchor=north] {\H\C\P} (D2);
+\draw[->] (D2) to[arrow] node[midway,anchor=north] {\H\I\C\P} (D1);
+\draw[->] (D1) to[arrow] node[midway,anchor=north] {\H\I\I\C\P} (H1);
+
+\end{tikzpicture}
+
+
+\end{document}
+
+
