@@ -1,7 +1,7 @@
 /* THIS FILE IS GENERATED AUTOMATICALLY
  *  DO NOT EDIT
  *  This file has been written by the script generate_commands.py
- *  date : 22-08-18 12:56:32
+ *  date : 22-08-20 17:15:02
  */
 
 
@@ -32,7 +32,8 @@ enum commands : cmd_t {
 };
 
 class Payload {
-   public:
+    friend class Frame;
+   protected:
     virtual void build(Buffer* buffer) = 0;
     virtual size_t payloadLength() = 0;
     virtual cmd_t getCommand() = 0;
@@ -44,18 +45,20 @@ class Payload {
 
 
 class ERROR_reply : public Payload{
+friend class Callbacks;
 public:
 
     enum error_code_t {INVALID_FRAME, OTHER}error_code;
 
 
     ERROR_reply() {};
-    ERROR_reply(Buffer* payloadBuffer) {
+private:
+
+ERROR_reply(Buffer* payloadBuffer) {
         size_t pos = 0;
                 pos += ntoh(payloadBuffer->data() + pos, reinterpret_cast<byte*>(&error_code), 1);
 
     };
-private:
 
     cmd_t getCommand() {return 0x0001;}    
 
@@ -73,16 +76,18 @@ private:
 };
 
 class DEVICE_DISCOVER_request : public Payload{
+friend class Callbacks;
 public:
 
 
 
     DEVICE_DISCOVER_request() {};
-    DEVICE_DISCOVER_request(Buffer* payloadBuffer) {
+private:
+
+DEVICE_DISCOVER_request(Buffer* payloadBuffer) {
         size_t pos = 0;
         
     };
-private:
 
     cmd_t getCommand() {return 0x0002;}    
 
@@ -99,6 +104,7 @@ private:
 };
 
 class DEVICE_DISCOVER_reply : public Payload{
+friend class Callbacks;
 public:
 
     Buffer ID;
@@ -111,7 +117,9 @@ public:
 
 
     DEVICE_DISCOVER_reply() {};
-    DEVICE_DISCOVER_reply(Buffer* payloadBuffer) {
+private:
+
+DEVICE_DISCOVER_reply(Buffer* payloadBuffer) {
         size_t pos = 0;
                 ID.fromParent(payloadBuffer, pos, 20);        pos += 20;        pos += ntoh(payloadBuffer->data() + pos, reinterpret_cast<byte*>(&syndesi_protocol_version), 1);
         pos += ntoh(payloadBuffer->data() + pos, reinterpret_cast<byte*>(&device_version), 1);
@@ -119,7 +127,6 @@ public:
         name.fromParent(payloadBuffer, pos, name_length);        pos += name_length;        pos += ntoh(payloadBuffer->data() + pos, reinterpret_cast<byte*>(&description_length), 2);
         description.fromParent(payloadBuffer, pos, description_length);        pos += description_length;
     };
-private:
 
     cmd_t getCommand() {return 0x0002;}    
 
@@ -140,18 +147,20 @@ private:
 };
 
 class REGISTER_READ_16_request : public Payload{
+friend class Callbacks;
 public:
 
     uint16_t address;
 
 
     REGISTER_READ_16_request() {};
-    REGISTER_READ_16_request(Buffer* payloadBuffer) {
+private:
+
+REGISTER_READ_16_request(Buffer* payloadBuffer) {
         size_t pos = 0;
                 pos += ntoh(payloadBuffer->data() + pos, reinterpret_cast<byte*>(&address), 2);
 
     };
-private:
 
     cmd_t getCommand() {return 0x0100;}    
 
@@ -169,18 +178,20 @@ private:
 };
 
 class REGISTER_READ_16_reply : public Payload{
+friend class Callbacks;
 public:
 
     uint16_t data;
 
 
     REGISTER_READ_16_reply() {};
-    REGISTER_READ_16_reply(Buffer* payloadBuffer) {
+private:
+
+REGISTER_READ_16_reply(Buffer* payloadBuffer) {
         size_t pos = 0;
                 pos += ntoh(payloadBuffer->data() + pos, reinterpret_cast<byte*>(&data), 2);
 
     };
-private:
 
     cmd_t getCommand() {return 0x0100;}    
 
@@ -198,20 +209,22 @@ private:
 };
 
 class REGISTER_WRITE_16_request : public Payload{
+friend class Callbacks;
 public:
 
-    uint16_t addresss;
+    uint16_t address;
     uint16_t data;
 
 
     REGISTER_WRITE_16_request() {};
-    REGISTER_WRITE_16_request(Buffer* payloadBuffer) {
+private:
+
+REGISTER_WRITE_16_request(Buffer* payloadBuffer) {
         size_t pos = 0;
-                pos += ntoh(payloadBuffer->data() + pos, reinterpret_cast<byte*>(&addresss), 2);
+                pos += ntoh(payloadBuffer->data() + pos, reinterpret_cast<byte*>(&address), 2);
         pos += ntoh(payloadBuffer->data() + pos, reinterpret_cast<byte*>(&data), 2);
 
     };
-private:
 
     cmd_t getCommand() {return 0x0101;}    
 
@@ -223,25 +236,28 @@ private:
 
     void build(Buffer* payloadBuffer) {
         size_t pos = 0;
-        pos += hton(reinterpret_cast<byte*>(&addresss), payloadBuffer->data() + pos, 2);
+        pos += hton(reinterpret_cast<byte*>(&address), payloadBuffer->data() + pos, 2);
         pos += hton(reinterpret_cast<byte*>(&data), payloadBuffer->data() + pos, 2);
 
     }
 };
 
 class REGISTER_WRITE_16_reply : public Payload{
+friend class Callbacks;
 public:
 
-    enum status_t {OK, NOK}status;
+    enum status_t {OK, NOK};
+    status_t status;
 
 
     REGISTER_WRITE_16_reply() {};
-    REGISTER_WRITE_16_reply(Buffer* payloadBuffer) {
+private:
+
+REGISTER_WRITE_16_reply(Buffer* payloadBuffer) {
         size_t pos = 0;
                 pos += ntoh(payloadBuffer->data() + pos, reinterpret_cast<byte*>(&status), 1);
 
     };
-private:
 
     cmd_t getCommand() {return 0x0101;}    
 
@@ -259,6 +275,7 @@ private:
 };
 
 class SPI_READ_WRITE_request : public Payload{
+friend class Callbacks;
 public:
 
     uint8_t interface_index;
@@ -267,13 +284,14 @@ public:
 
 
     SPI_READ_WRITE_request() {};
-    SPI_READ_WRITE_request(Buffer* payloadBuffer) {
+private:
+
+SPI_READ_WRITE_request(Buffer* payloadBuffer) {
         size_t pos = 0;
                 pos += ntoh(payloadBuffer->data() + pos, reinterpret_cast<byte*>(&interface_index), 1);
         pos += ntoh(payloadBuffer->data() + pos, reinterpret_cast<byte*>(&write_size), 2);
         write_data.fromParent(payloadBuffer, pos, write_size);        pos += write_size;
     };
-private:
 
     cmd_t getCommand() {return 0x0110;}    
 
@@ -292,6 +310,7 @@ private:
 };
 
 class SPI_READ_WRITE_reply : public Payload{
+friend class Callbacks;
 public:
 
     uint16_t read_size;
@@ -299,12 +318,13 @@ public:
 
 
     SPI_READ_WRITE_reply() {};
-    SPI_READ_WRITE_reply(Buffer* payloadBuffer) {
+private:
+
+SPI_READ_WRITE_reply(Buffer* payloadBuffer) {
         size_t pos = 0;
                 pos += ntoh(payloadBuffer->data() + pos, reinterpret_cast<byte*>(&read_size), 2);
         read_data.fromParent(payloadBuffer, pos, read_size);        pos += read_size;
     };
-private:
 
     cmd_t getCommand() {return 0x0110;}    
 
@@ -322,6 +342,7 @@ private:
 };
 
 class SPI_WRITE_ONLY_request : public Payload{
+friend class Callbacks;
 public:
 
     uint8_t interface_index;
@@ -330,13 +351,14 @@ public:
 
 
     SPI_WRITE_ONLY_request() {};
-    SPI_WRITE_ONLY_request(Buffer* payloadBuffer) {
+private:
+
+SPI_WRITE_ONLY_request(Buffer* payloadBuffer) {
         size_t pos = 0;
                 pos += ntoh(payloadBuffer->data() + pos, reinterpret_cast<byte*>(&interface_index), 1);
         pos += ntoh(payloadBuffer->data() + pos, reinterpret_cast<byte*>(&write_size), 2);
         write_data.fromParent(payloadBuffer, pos, write_size);        pos += write_size;
     };
-private:
 
     cmd_t getCommand() {return 0x0111;}    
 
@@ -355,18 +377,20 @@ private:
 };
 
 class SPI_WRITE_ONLY_reply : public Payload{
+friend class Callbacks;
 public:
 
     enum status_t {OK, NOK}status;
 
 
     SPI_WRITE_ONLY_reply() {};
-    SPI_WRITE_ONLY_reply(Buffer* payloadBuffer) {
+private:
+
+SPI_WRITE_ONLY_reply(Buffer* payloadBuffer) {
         size_t pos = 0;
                 pos += ntoh(payloadBuffer->data() + pos, reinterpret_cast<byte*>(&status), 1);
 
     };
-private:
 
     cmd_t getCommand() {return 0x0111;}    
 
@@ -384,6 +408,7 @@ private:
 };
 
 class I2C_READ_request : public Payload{
+friend class Callbacks;
 public:
 
     uint8_t interface_index;
@@ -391,13 +416,14 @@ public:
 
 
     I2C_READ_request() {};
-    I2C_READ_request(Buffer* payloadBuffer) {
+private:
+
+I2C_READ_request(Buffer* payloadBuffer) {
         size_t pos = 0;
                 pos += ntoh(payloadBuffer->data() + pos, reinterpret_cast<byte*>(&interface_index), 1);
         pos += ntoh(payloadBuffer->data() + pos, reinterpret_cast<byte*>(&read_size), 2);
 
     };
-private:
 
     cmd_t getCommand() {return 0x0120;}    
 
@@ -416,6 +442,7 @@ private:
 };
 
 class I2C_READ_reply : public Payload{
+friend class Callbacks;
 public:
 
     uint16_t read_size;
@@ -423,12 +450,13 @@ public:
 
 
     I2C_READ_reply() {};
-    I2C_READ_reply(Buffer* payloadBuffer) {
+private:
+
+I2C_READ_reply(Buffer* payloadBuffer) {
         size_t pos = 0;
                 pos += ntoh(payloadBuffer->data() + pos, reinterpret_cast<byte*>(&read_size), 2);
         read_data.fromParent(payloadBuffer, pos, read_size);        pos += read_size;
     };
-private:
 
     cmd_t getCommand() {return 0x0120;}    
 
@@ -446,6 +474,7 @@ private:
 };
 
 class I2C_WRITE_request : public Payload{
+friend class Callbacks;
 public:
 
     uint8_t interface_index;
@@ -454,13 +483,14 @@ public:
 
 
     I2C_WRITE_request() {};
-    I2C_WRITE_request(Buffer* payloadBuffer) {
+private:
+
+I2C_WRITE_request(Buffer* payloadBuffer) {
         size_t pos = 0;
                 pos += ntoh(payloadBuffer->data() + pos, reinterpret_cast<byte*>(&interface_index), 1);
         pos += ntoh(payloadBuffer->data() + pos, reinterpret_cast<byte*>(&write_size), 2);
         write_data.fromParent(payloadBuffer, pos, write_size);        pos += write_size;
     };
-private:
 
     cmd_t getCommand() {return 0x0121;}    
 
@@ -479,18 +509,20 @@ private:
 };
 
 class I2C_WRITE_reply : public Payload{
+friend class Callbacks;
 public:
 
     enum status_t {OK, NOK}status;
 
 
     I2C_WRITE_reply() {};
-    I2C_WRITE_reply(Buffer* payloadBuffer) {
+private:
+
+I2C_WRITE_reply(Buffer* payloadBuffer) {
         size_t pos = 0;
                 pos += ntoh(payloadBuffer->data() + pos, reinterpret_cast<byte*>(&status), 1);
 
     };
-private:
 
     cmd_t getCommand() {return 0x0121;}    
 

@@ -37,11 +37,17 @@ void Core::factory_init() {
 #endif    
 }
 
+void Core::setCustomPort(unsigned short port) {
+    network.setCustomPort(port);
+}
+
+unsigned short Core::port() {
+    return network.port();
+}
 
 void Core::sendRequest(Payload& payload, SyndesiID& id) {
     // This version is easier but requires a copy of the SyndesiID argument
-    
-    unique_ptr<SyndesiID> uid = make_unique<SyndesiID>(id);
+    unique_ptr<SyndesiID> uid = unique_ptr<SyndesiID>(new SyndesiID(id));
     Frame frame(payload, uid);
     frameManager.request(frame);
 }
@@ -51,4 +57,5 @@ void Core::sendRequest(Payload& payload, unique_ptr<SyndesiID>& id) {
     Frame frame(payload, id);
     frameManager.request(frame);
 }
+
 }  // namespace syndesi

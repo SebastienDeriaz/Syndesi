@@ -41,29 +41,36 @@ Frame::Frame(Payload& payload, unique_ptr<SyndesiID>& id) {
     // Write payload
     Buffer payloadBuffer(_buffer.get(), pos);
     payload.build(&payloadBuffer);
-
-    for(size_t i = 0;i<_buffer->length();i++) {
-        printf("%02X", (char)_buffer->data()[i]);
-    }
 }
 
 Frame::Frame(unique_ptr<Buffer>& buffer, unique_ptr<SyndesiID>& id) {
     _id = move(id);
     _buffer = std::move(buffer);
     size_t pos = 0;
+
+
+    cout << "Create frame from buffer :" << endl;
+    for(int i = 0;i<_buffer->length();i++) {
+        printf("%02X ", ((unsigned char*)(_buffer->data()))[i]);
+    }
+    cout << endl;
+
     // Read network header
     pos += ntoh(_buffer.get()->data() + pos,
                 reinterpret_cast<byte*>(&networkHeader), networkHeader_size);
     // Check if the frame contains a SyndesiID (to identify a sub-device)
     if (networkHeader.fields.routing) {
         // Create a buffer for SyndesiID to read
-        Buffer buffer = Buffer(_buffer.get(), pos);
-        _id->parseAddressingBuffer(&buffer);
+        Buffer addressingBuffer = Buffer(_buffer.get(), pos);
+        _id->parseAddressingBuffer(&addressingBuffer);
         pos += _id->getTotalAdressingSize();
     }
+    cout << "Read command at pos" << pos << endl;
     // Read command
     pos += ntoh(_buffer->data() + pos, reinterpret_cast<byte*>(&command),
                 command_size);
+    
+    cout << "command : " << command << endl;
     // Read payload length
     pos += ntoh(_buffer->data() + pos, reinterpret_cast<byte*>(&payloadLength),
                 payloadLength_size);

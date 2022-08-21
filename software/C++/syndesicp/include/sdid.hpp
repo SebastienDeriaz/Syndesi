@@ -30,6 +30,7 @@
 #include <cstring>
 #include <map>
 #include <memory>
+#include <string>
 
 #include "buffer.hpp"
 #include "syndesi_tools.hpp"
@@ -42,13 +43,34 @@ namespace syndesi {
  *
  */
 class SyndesiID {
-   public:
-    enum address_type_t : unsigned char { IPV4 = 0, IPV6 = 1 };
+    // Friend so that the user can only see the class they're meant to
+    friend class Network;
+    friend class Core;
+    friend class Frame;
+    friend class IPController;
+    friend class UARTController;
+    friend class RS485Controller;
 
-   private:
+    // Constants
     static const int IPv4_size = 4;
     static const int IPv6_size = 16;
+    static const int IPv4_str_max_size = 16;
+    static const string no_address_string;
 
+   
+   public: // Public types
+    
+    enum address_type_t : unsigned char {
+        None = 0,
+        IPV4 = 1,
+        IPV6 = 2};
+
+   private: // Private types
+    union payload_t {
+        unsigned char IPv4[IPv4_size];
+        unsigned char IPv6[IPv6_size];
+    } payload;
+    unsigned short _port;
     union sdid_header_t {
         struct {
             address_type_t address_type : 4;
@@ -61,24 +83,70 @@ class SyndesiID {
     const std::map<address_type_t, size_t> addressSizes = {{IPV4, IPv4_size},
                                                            {IPV6, IPv6_size}};
 
-   public:
-        /**
+   public: // User methods
+    /**
      * @brief Default constructor
      *
      */
     SyndesiID();
 
     /**
-     * @brief Construct a new SyndesiID object from the given buffer and address type
+     * @brief Parse an IPv4 address and check if it is valid or not. The format should be a.b.c.d
      * 
-     * @param buffer 
-     * @param type 
+     * 
+     * @param ip 
+     * 
+     * @return true if the IPv4 address is valid
+     * @return false if the IPv4 address is invalid
+     */
+    bool parseIPv4(string& ip, unsigned short port = 0);
+
+    /**
+     * @brief Create an IPv4 address from a uint32_t value
+     * 
+     * @param ip 32 bit unsigned integer
+     */
+    void fromIPv4(uint32_t ip, unsigned short port = 0);
+
+    /**
+     * @brief Print device ID as string
+     * 
+     * @return string 
+     */
+    string str();
+
+    /**
+     * @brief Get the Address type
+     *
+     * @return address_type_t
+     */
+    address_type_t getAddressType();
+
+    unsigned short getIPPort();
+
+   private:
+    /**
+     * @brief Construct a new SyndesiID object from the given buffer and address
+     * type
+     *
+     * @param buffer
+     * @param type
      */
     SyndesiID(unsigned char* buffer, address_type_t type);
 
+
+    /**
+     * @brief Return a string description of the IPv4 address
+     * 
+     * @return string 
+     */
+    string IPv4str();
+
+    void setIPPort(unsigned short port);
+
     /**
      * @brief Create a sub-SyndesiID object (adds at the end of the list)
-     * 
+     *
      * @param buffer
      * @param type
      */
@@ -89,12 +157,11 @@ class SyndesiID {
      * resulting object is a child of a base SyndesiID object
      *
      * @param buffer
-     * 
-     * @note needs to be public for the recursion to work
+     *
      */
     SyndesiID(Buffer* buffer);
 
-   public:
+   private:
     /**
      * @brief Copy constructor
      *
@@ -110,19 +177,14 @@ class SyndesiID {
      */
     unsigned int reroutes();
 
+   private:
     /**
      * @brief Gets the total adressing size, all addresses combined (recursive)
      *
      */
     size_t getTotalAdressingSize();
 
-    /**
-     * @brief Get the Address type
-     *
-     * @return address_type_t
-     */
-    address_type_t getAddressType();
-
+   private:
     /**
      * @brief Write Syndesi ID(s) to the given buffer
      *
@@ -145,11 +207,6 @@ class SyndesiID {
     // If this object is a next of a previous SyndesiID
     // false only for the master
     bool is_next = false;
-
-    union payload_t {
-        unsigned char IPv4[IPv4_size];
-        unsigned char IPv6[IPv6_size];
-    } payload;
 };
 }  // namespace syndesi
 

@@ -26,11 +26,16 @@ class Network : SAP::INetwork_bottom, SAP::INetwork_top{
      * to the FrameManager
      */
     friend class Core;
+    friend class IPController;
+
+    static const unsigned short syndesi_port = 2608;
 
     private:
 
         // List of pendingConfirm IDs
         std::list<unique_ptr<SyndesiID>> pendingConfirm;
+
+        unsigned short _port = syndesi_port;
 
         /**
          * @brief Look in the pendingConfirm list and determine wether or not the received ID is for a confirm 
@@ -41,6 +46,10 @@ class Network : SAP::INetwork_bottom, SAP::INetwork_top{
          */
         bool inPendingConfirm(SyndesiID& id);
 
+
+    void setCustomPort(unsigned short port);
+    void setDefaultPort();
+    unsigned short port();
 
     /*
     * Upper layer
@@ -56,10 +65,12 @@ class Network : SAP::INetwork_bottom, SAP::INetwork_top{
     /*
     * Lower layer
     */
+#ifdef USE_IP_CONTROLLER
     SAP::IController_top* _ipController;
     void registerIPController(SAP::IController_top* controller) {_ipController = controller;};
     // from protocol
     void IP_indication_or_confirm(unique_ptr<Buffer>& buffer, unique_ptr<SyndesiID>& masterID);
+#endif
 
     SAP::IController_top* _uartController;
     void registerUARTController(SAP::IController_top* controller) {_uartController = controller;};

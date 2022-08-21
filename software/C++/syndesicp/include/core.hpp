@@ -35,6 +35,7 @@ class Core {
    FrameManager frameManager;
    Network network;
    public:
+
 #ifdef USE_IP_CONTROLLER
     IPController ipController;
 #endif
@@ -45,7 +46,9 @@ class Core {
     RS485Controller rs485Controller;
 #endif
 
-    //TODO : Find a good place for this
+    void setCustomPort(unsigned short port);
+    unsigned short port();
+
     void sendRequest(Payload& payload, SyndesiID& id);
     void sendRequest(Payload& payload, unique_ptr<SyndesiID>& id);
 

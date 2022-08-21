@@ -11,6 +11,8 @@
 #define IP_CONTROLLER_H
 
 #include "interfaces.hpp"
+
+#ifdef USE_IP_CONTROLLER 
 #include "buffer.hpp"
 #include <cstddef>
 
@@ -44,5 +46,7 @@ class IPController : public SAP::IController_top {
 
 
 }
+
+#endif // USE_IP_CONTROLLER
 
 #endif // IP_CONTROLLER_H

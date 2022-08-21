@@ -14,11 +14,13 @@ namespace syndesi {
  * Upper layer
  */
 void FrameManager::request(Frame& frame) {
+    cout << "FrameManager : sending request" << endl;
     network->request(frame);
 }
 
 void FrameManager::response(Frame& frame) {
-    network->request(frame);
+    cout << "FrameManager response" << endl;
+    network->response(frame);
 }
 /*
  * Lower layer

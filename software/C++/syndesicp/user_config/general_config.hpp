@@ -7,10 +7,6 @@
 *
 */
 
-#include "settings.hpp"
-
-
-
 /*
 * HOST mode : can send commands (a computer for example)
 */
