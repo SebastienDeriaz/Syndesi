@@ -22,11 +22,13 @@
 
 /*
 * Request callbacks (to be used in device code)
+* Only active if DEVICE_MODE is defined
 */
 >>>request<<<
 
 
 /*
 * Reply callbacks (to be used in host code)
+* Only active if HOST_MODE is defined
 */
 >>>reply<<<

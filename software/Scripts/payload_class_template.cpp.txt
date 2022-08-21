@@ -1,14 +1,16 @@
 class >>>alias<<< : public Payload{
+friend class Callbacks;
 public:
 
 >>>values<<<
 
     >>>alias<<<() {};
-    >>>alias<<<(Buffer* payloadBuffer) {
+private:
+
+>>>alias<<<(Buffer* payloadBuffer) {
         size_t pos = 0;
         >>>parse_function<<<
     };
-private:
 
 >>>command<<<    
 

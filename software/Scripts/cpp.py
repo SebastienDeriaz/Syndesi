@@ -126,9 +126,9 @@ class CPP():
 
         i = 0
         for command in self._commands:
-            if command.has_request:
+            if command.has_request and request:
                 output += f'//#define USE_{command.alias.upper()}_REQUEST_CALLBACK\n'
-            if command.has_reply:
+            if command.has_reply and not request:
                 output += f'//#define USE_{command.alias.upper()}_REPLY_CALLBACK\n'
         return output
 
@@ -152,7 +152,7 @@ class CPP():
 
         for command in self._commands:            
             if request and command.has_request:
-                output += f'#ifdef USE_{command.alias.upper()}_REQUEST_CALLBACK\n'                
+                output += f'#if defined(USE_{command.alias.upper()}_REQUEST_CALLBACK) && defined(DEVICE_MODE)\n'                
                 output += ' '*2*TAB + f'case commands::{command.alias}:\n'
                 #output += ' '*3*TAB + f'if({command}_{command_type} != NULL) {{\n'
                 output += ' '*3*TAB + f'request = new {command.alias}_request(requestPayloadBuffer);\n'
@@ -162,7 +162,7 @@ class CPP():
                 output += ' '*3*TAB + f'break;\n'
                 output += '#endif\n'
             elif not request and command.has_reply:
-                output += f'#ifdef USE_{command.alias.upper()}_REPLY_CALLBACK\n'
+                output += f'#if defined(USE_{command.alias.upper()}_REPLY_CALLBACK) && defined(HOST_MODE)\n'
                 output += ' '*2*TAB + f'case commands::{command.alias}:\n'
                 #output += ' '*3*TAB + f'if({command}_{command_type} != NULL) {{\n'
                 output += ' '*3*TAB + f'reply = new {command.alias}_reply(replyPayloadBuffer);\n'
@@ -188,11 +188,11 @@ class CPP():
         output = ''
         for command in self._commands:
             if command.has_request:
-                output += f'#ifdef USE_{command.alias}_REQUEST_CALLBACK\n'
+                output += f'#if defined(USE_{command.alias}_REQUEST_CALLBACK) && defined(DEVICE_MODE)\n'
                 output += TAB*' ' + f'void {command.alias}_request_callback({command.alias}_request& request, {command.alias}_reply* reply);\n'
                 output += f'#endif\n'
             if command.has_reply:
-                output += f'#ifdef USE_{command.alias}_REPLY_CALLBACK\n'
+                output += f'#if defined(USE_{command.alias}_REPLY_CALLBACK) && defined(HOST_MODE)\n'
                 output += TAB*' ' + f'void {command.alias}_reply_callback({command.alias}_reply& reply);\n'
                 output += f'#endif\n'
         return output
