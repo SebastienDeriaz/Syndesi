@@ -117,7 +117,7 @@ Commands:
     ID: 0x0101
     comment: "Write register (with register index)"
     request_content:
-      addresss:
+      address:
         size: 2
         type: "uint"
       data:
