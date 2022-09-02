@@ -103,7 +103,7 @@ SyndesiID::SyndesiID(SyndesiID& sdid) {
 
 SyndesiID::SyndesiID(Buffer* buffer) {
     // Read the header
-    ntoh(buffer->data(), reinterpret_cast<byte*>(&header), sizeof(header));
+    ntoh(buffer->data(), reinterpret_cast<char*>(&header), sizeof(header));
     // Read the payload
     size_t address_size = addressSizes.at(header.fields.address_type);
     memcpy(reinterpret_cast<void*>(&payload), buffer->data() + sizeof(header),
@@ -140,7 +140,7 @@ void SyndesiID::buildAddressingBuffer(Buffer* buffer) {
     size_t offset = 0;
     if (is_next) {
         // Write itself
-        hton(reinterpret_cast<byte*>(&header), buffer->data(), sizeof(header));
+        hton(reinterpret_cast<char*>(&header), buffer->data(), sizeof(header));
         addressLength = addressSizes.at(header.fields.address_type);
         memcpy(buffer->data() + sizeof(header), &payload, addressLength);
         if (next) {

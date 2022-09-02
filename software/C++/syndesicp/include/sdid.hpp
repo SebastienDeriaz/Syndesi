@@ -50,6 +50,7 @@ class SyndesiID {
     friend class IPController;
     friend class UARTController;
     friend class RS485Controller;
+    friend class Controller;
 
     // Constants
     static const int IPv4_size = 4;
@@ -77,7 +78,7 @@ class SyndesiID {
             bool follow : 1;
             unsigned char reserved : 3;
         } fields;
-        byte value;
+        unsigned char value;
     };
 
     const std::map<address_type_t, size_t> addressSizes = {{IPV4, IPv4_size},

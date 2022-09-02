@@ -10,11 +10,11 @@
 /*
 * HOST mode : can send commands (a computer for example)
 */
-//#define HOST_MODE
+#define HOST_MODE
 
 /*
 * DEVICE mode : can receive commands (like a I²C interface, SPI interface, etc...)
 */
-//#define DEVICE_MODE
+#define DEVICE_MODE
 
 // Both can be activated at the same time to enable HYBRID mode

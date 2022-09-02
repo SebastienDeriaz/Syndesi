@@ -20,7 +20,6 @@ using namespace std;
 
 #include "payloads.hpp"
 #include "sdid.hpp"
-#include "syndesi_types.hpp"
 
 using std::unique_ptr;
 
@@ -29,6 +28,8 @@ namespace syndesi {
 class Frame {
     friend class Network;
     friend class FrameManager;
+
+    
 
     union NetworkHeader {
         struct {
@@ -46,8 +47,11 @@ class Frame {
 
     static const size_t command_size = sizeof(cmd_t);
     static const size_t addressingHeader_size = 1;
-    static const size_t payloadLength_size = sizeof(payloadLength_t);
+    
+   public:
+    typedef uint16_t frameLength_t;
     static const size_t networkHeader_size = sizeof(NetworkHeader);
+    static const size_t frameLength_size = sizeof(frameLength_t);
 
    public:
     /**
@@ -73,7 +77,7 @@ class Frame {
    private:
     cmd_t command;
     NetworkHeader networkHeader;
-    payloadLength_t payloadLength;
+    frameLength_t frameLength;
     unique_ptr<Buffer> _buffer = nullptr;
     unique_ptr<SyndesiID> _id = nullptr;
     

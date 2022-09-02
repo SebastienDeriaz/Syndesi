@@ -1,24 +1,25 @@
 /* THIS FILE IS GENERATED AUTOMATICALLY
  *  DO NOT EDIT
  *  This file has been written by the script generate_commands.py
- *  date : 22-08-20 17:15:02
+ *  date : 22-09-02 21:18:05
  */
 
 #ifndef CALLBACKS_H
 #define CALLBACKS_H
 
-#include "syndesi_types.hpp"
+
 #include "payloads.hpp"
 #include "callbacks_config.hpp"
 #include "interfaces.hpp"
 
 namespace syndesi {
 
-class Callbacks : SAP::ICallbacks_bottom{
+class Callbacks {
     friend class Core;
     private:
         SAP::IFrameManager_top* _frameManager = nullptr;
         void registerFrameManager(SAP::IFrameManager_top* frameManager) {_frameManager = frameManager;};
+        Callbacks();
     public:
         void indication(Frame& payload);
         void confirm(Frame& payload);
@@ -72,7 +73,7 @@ class Callbacks : SAP::ICallbacks_bottom{
 
 };
 
-extern Callbacks callbacks;
+//extern Callbacks callbacks;
 
 }
 
