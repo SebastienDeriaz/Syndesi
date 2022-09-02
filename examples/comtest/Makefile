@@ -328,32 +328,32 @@ home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/fram
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_host.dir/build.make CMakeFiles/syndesicp_host.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/framemanager.cpp.s
 .PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/framemanager.cpp.s
 
-home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/ipcontroller.o: home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/ipcontroller.cpp.o
-.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/ipcontroller.o
+home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/framemanagercallbacks.o: home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/framemanagercallbacks.cpp.o
+.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/framemanagercallbacks.o
 
 # target to build an object file
-home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/ipcontroller.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_device.dir/build.make CMakeFiles/syndesicp_device.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/ipcontroller.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_host.dir/build.make CMakeFiles/syndesicp_host.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/ipcontroller.cpp.o
-.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/ipcontroller.cpp.o
+home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/framemanagercallbacks.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_device.dir/build.make CMakeFiles/syndesicp_device.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/framemanagercallbacks.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_host.dir/build.make CMakeFiles/syndesicp_host.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/framemanagercallbacks.cpp.o
+.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/framemanagercallbacks.cpp.o
 
-home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/ipcontroller.i: home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/ipcontroller.cpp.i
-.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/ipcontroller.i
+home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/framemanagercallbacks.i: home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/framemanagercallbacks.cpp.i
+.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/framemanagercallbacks.i
 
 # target to preprocess a source file
-home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/ipcontroller.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_device.dir/build.make CMakeFiles/syndesicp_device.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/ipcontroller.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_host.dir/build.make CMakeFiles/syndesicp_host.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/ipcontroller.cpp.i
-.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/ipcontroller.cpp.i
+home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/framemanagercallbacks.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_device.dir/build.make CMakeFiles/syndesicp_device.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/framemanagercallbacks.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_host.dir/build.make CMakeFiles/syndesicp_host.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/framemanagercallbacks.cpp.i
+.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/framemanagercallbacks.cpp.i
 
-home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/ipcontroller.s: home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/ipcontroller.cpp.s
-.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/ipcontroller.s
+home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/framemanagercallbacks.s: home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/framemanagercallbacks.cpp.s
+.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/framemanagercallbacks.s
 
 # target to generate assembly for a file
-home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/ipcontroller.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_device.dir/build.make CMakeFiles/syndesicp_device.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/ipcontroller.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_host.dir/build.make CMakeFiles/syndesicp_host.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/ipcontroller.cpp.s
-.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/ipcontroller.cpp.s
+home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/framemanagercallbacks.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_device.dir/build.make CMakeFiles/syndesicp_device.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/framemanagercallbacks.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_host.dir/build.make CMakeFiles/syndesicp_host.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/framemanagercallbacks.cpp.s
+.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/framemanagercallbacks.cpp.s
 
 home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/network.o: home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/network.cpp.o
 .PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/network.o
@@ -382,32 +382,32 @@ home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/netw
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_host.dir/build.make CMakeFiles/syndesicp_host.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/network.cpp.s
 .PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/network.cpp.s
 
-home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/rs485controller.o: home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/rs485controller.cpp.o
-.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/rs485controller.o
+home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/payloads.o: home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/payloads.cpp.o
+.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/payloads.o
 
 # target to build an object file
-home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/rs485controller.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_device.dir/build.make CMakeFiles/syndesicp_device.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/rs485controller.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_host.dir/build.make CMakeFiles/syndesicp_host.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/rs485controller.cpp.o
-.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/rs485controller.cpp.o
+home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/payloads.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_device.dir/build.make CMakeFiles/syndesicp_device.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/payloads.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_host.dir/build.make CMakeFiles/syndesicp_host.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/payloads.cpp.o
+.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/payloads.cpp.o
 
-home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/rs485controller.i: home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/rs485controller.cpp.i
-.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/rs485controller.i
+home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/payloads.i: home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/payloads.cpp.i
+.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/payloads.i
 
 # target to preprocess a source file
-home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/rs485controller.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_device.dir/build.make CMakeFiles/syndesicp_device.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/rs485controller.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_host.dir/build.make CMakeFiles/syndesicp_host.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/rs485controller.cpp.i
-.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/rs485controller.cpp.i
+home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/payloads.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_device.dir/build.make CMakeFiles/syndesicp_device.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/payloads.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_host.dir/build.make CMakeFiles/syndesicp_host.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/payloads.cpp.i
+.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/payloads.cpp.i
 
-home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/rs485controller.s: home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/rs485controller.cpp.s
-.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/rs485controller.s
+home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/payloads.s: home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/payloads.cpp.s
+.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/payloads.s
 
 # target to generate assembly for a file
-home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/rs485controller.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_device.dir/build.make CMakeFiles/syndesicp_device.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/rs485controller.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_host.dir/build.make CMakeFiles/syndesicp_host.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/rs485controller.cpp.s
-.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/rs485controller.cpp.s
+home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/payloads.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_device.dir/build.make CMakeFiles/syndesicp_device.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/payloads.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_host.dir/build.make CMakeFiles/syndesicp_host.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/payloads.cpp.s
+.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/payloads.cpp.s
 
 home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/sdid.o: home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/sdid.cpp.o
 .PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/sdid.o
@@ -463,60 +463,6 @@ home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/synd
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_host.dir/build.make CMakeFiles/syndesicp_host.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/syndesi_tools.cpp.s
 .PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/syndesi_tools.cpp.s
 
-home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/syndesi_types.o: home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/syndesi_types.cpp.o
-.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/syndesi_types.o
-
-# target to build an object file
-home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/syndesi_types.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_device.dir/build.make CMakeFiles/syndesicp_device.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/syndesi_types.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_host.dir/build.make CMakeFiles/syndesicp_host.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/syndesi_types.cpp.o
-.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/syndesi_types.cpp.o
-
-home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/syndesi_types.i: home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/syndesi_types.cpp.i
-.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/syndesi_types.i
-
-# target to preprocess a source file
-home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/syndesi_types.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_device.dir/build.make CMakeFiles/syndesicp_device.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/syndesi_types.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_host.dir/build.make CMakeFiles/syndesicp_host.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/syndesi_types.cpp.i
-.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/syndesi_types.cpp.i
-
-home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/syndesi_types.s: home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/syndesi_types.cpp.s
-.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/syndesi_types.s
-
-# target to generate assembly for a file
-home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/syndesi_types.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_device.dir/build.make CMakeFiles/syndesicp_device.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/syndesi_types.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_host.dir/build.make CMakeFiles/syndesicp_host.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/syndesi_types.cpp.s
-.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/syndesi_types.cpp.s
-
-home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/uartcontroller.o: home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/uartcontroller.cpp.o
-.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/uartcontroller.o
-
-# target to build an object file
-home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/uartcontroller.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_device.dir/build.make CMakeFiles/syndesicp_device.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/uartcontroller.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_host.dir/build.make CMakeFiles/syndesicp_host.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/uartcontroller.cpp.o
-.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/uartcontroller.cpp.o
-
-home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/uartcontroller.i: home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/uartcontroller.cpp.i
-.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/uartcontroller.i
-
-# target to preprocess a source file
-home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/uartcontroller.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_device.dir/build.make CMakeFiles/syndesicp_device.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/uartcontroller.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_host.dir/build.make CMakeFiles/syndesicp_host.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/uartcontroller.cpp.i
-.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/uartcontroller.cpp.i
-
-home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/uartcontroller.s: home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/uartcontroller.cpp.s
-.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/uartcontroller.s
-
-# target to generate assembly for a file
-home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/uartcontroller.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_device.dir/build.make CMakeFiles/syndesicp_device.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/uartcontroller.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_host.dir/build.make CMakeFiles/syndesicp_host.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/uartcontroller.cpp.s
-.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/uartcontroller.cpp.s
-
 host/host.o: host/host.cpp.o
 .PHONY : host/host.o
 
@@ -571,27 +517,21 @@ help:
 	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/framemanager.o"
 	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/framemanager.i"
 	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/framemanager.s"
-	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/ipcontroller.o"
-	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/ipcontroller.i"
-	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/ipcontroller.s"
+	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/framemanagercallbacks.o"
+	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/framemanagercallbacks.i"
+	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/framemanagercallbacks.s"
 	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/network.o"
 	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/network.i"
 	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/network.s"
-	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/rs485controller.o"
-	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/rs485controller.i"
-	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/rs485controller.s"
+	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/payloads.o"
+	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/payloads.i"
+	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/payloads.s"
 	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/sdid.o"
 	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/sdid.i"
 	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/sdid.s"
 	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/syndesi_tools.o"
 	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/syndesi_tools.i"
 	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/syndesi_tools.s"
-	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/syndesi_types.o"
-	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/syndesi_types.i"
-	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/syndesi_types.s"
-	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/uartcontroller.o"
-	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/uartcontroller.i"
-	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/uartcontroller.s"
 	@echo "... host/host.o"
 	@echo "... host/host.i"
 	@echo "... host/host.s"
