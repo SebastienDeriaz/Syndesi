@@ -23,26 +23,6 @@ void Core::factory_init() {
     // Network class
     network.registerFrameManager(&frameManager);
     // IP Controller class (if used)
-#ifdef USE_IP_CONTROLLER
-    network.registerIPController(&ipController);
-    ipController.registerNetwork(&network);
-#endif
-#ifdef USE_UART_CONTROLLER
-    network.registerUARTController(&uartController);
-    uartController.registerNetwork(&network);
-#endif
-#ifdef USE_RS485_CONTROLLER
-    network.registerRS485Controller(&rs485Controller);
-    rs485Controller.registerNetwork(&network);
-#endif    
-}
-
-void Core::setCustomPort(unsigned short port) {
-    network.setCustomPort(port);
-}
-
-unsigned short Core::port() {
-    return network.port();
 }
 
 void Core::sendRequest(Payload& payload, SyndesiID& id) {
@@ -56,6 +36,14 @@ void Core::sendRequest(Payload& payload, unique_ptr<SyndesiID>& id) {
     // This version is easier but requires a copy of the SyndesiID argument
     Frame frame(payload, id);
     frameManager.request(frame);
+}
+
+void Core::init() {
+    network.init();
+}
+
+std::map<cmd_t, string>& Core::commands_names() {
+    return command_names_list;
 }
 
 }  // namespace syndesi

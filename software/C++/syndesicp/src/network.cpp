@@ -39,9 +39,8 @@ void Network::request(Frame& frame) {
 #ifdef USE_IP_CONTROLLER
         case SyndesiID::address_type_t::IPV4:
         case SyndesiID::address_type_t::IPV6:
-            cout << "IPController" << endl;
             frame.getID()->setIPPort(_port);
-            _ipController->request_or_response(frame._buffer, *frame.getID());
+            IPHost->request(frame.getID(), frame._buffer);
             break;
 #endif // USE_IP_CONTROLLER
     }
@@ -50,33 +49,25 @@ void Network::request(Frame& frame) {
 }
 
 void Network::response(Frame& frame) {
-    _ipController->request_or_response(frame._buffer, *frame.getID());
+    IPDevice->response(frame.getID(), frame._buffer);
 }
 /*
  * Lower layer
  */
-#ifdef USE_IP_CONTROLLER
-void Network::IP_indication_or_confirm(unique_ptr<Buffer>& buffer,
-                                       unique_ptr<SyndesiID>& masterID) {
+void Network::indication(unique_ptr<SyndesiID>& id, unique_ptr<Buffer>& buffer) {
                                         
-    Frame frame(buffer, masterID);
-
-    cout << "Frame command ID : " << frame.getCommand() << endl;
-
-#if defined(DEVICE_MODE)
-    cout << "indication" << endl;
-    _frameManager->indication(frame);
-#elif defined(HOST_MODE)
-    cout << "confirm" << endl;
-    _frameManager->confirm(frame);
-#endif
+    Frame frame(buffer, id);
+    _frameManager->indication(frame);    
 }
-#endif
 
-void Network::UART_indication_or_confirm(unique_ptr<Buffer>& buffer,
-                                         unique_ptr<SyndesiID>& masterID) {}
+void Network::confirm(unique_ptr<SyndesiID>& id, unique_ptr<Buffer>& buffer) {
+    Frame frame(buffer, id);
+    _frameManager->confirm(frame);
+}
 
-void Network::RS485_indication_or_confirm(unique_ptr<Buffer>& buffer,
-                                          unique_ptr<SyndesiID>& masterID) {}
+void Network::init() {
+    if(IPDevice != nullptr) IPDevice->init();
+    if(IPHost != nullptr) IPHost->init();
+}
 
 }  // namespace syndesi

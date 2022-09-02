@@ -68,8 +68,8 @@ class CPP():
 
                     if field.type in [types.double, types.int, types.uint, types.float, types.enum]:
                         # Copy with endian conversion
-                        parse += 2*TAB + f"pos += ntoh(payloadBuffer->data() + pos, reinterpret_cast<byte*>(&{field.name}), {field.size});\n"
-                        build += 2*TAB + f"pos += hton(reinterpret_cast<byte*>(&{field.name}), payloadBuffer->data() + pos, {field.size});\n"
+                        parse += 2*TAB + f"pos += ntoh(payloadBuffer->data() + pos, reinterpret_cast<char*>(&{field.name}), {field.size});\n"
+                        build += 2*TAB + f"pos += hton(reinterpret_cast<char*>(&{field.name}), payloadBuffer->data() + pos, {field.size});\n"
                         variables += TAB + cpp_type_conversion[field.type](field)
                         arguments += cpp_type_conversion[field.type](field).replace(';', '')
                         
@@ -157,7 +157,7 @@ class CPP():
                 #output += ' '*3*TAB + f'if({command}_{command_type} != NULL) {{\n'
                 output += ' '*3*TAB + f'request = new {command.alias}_request(requestPayloadBuffer);\n'
                 output += ' '*3*TAB + f'reply = new {command.alias}_reply();\n'
-                output += ' '*3*TAB + f'{command.alias}_request_callback(*(static_cast<{command.alias}_request*>(request)), static_cast<{command.alias}_reply*>(reply));\n'
+                output += ' '*3*TAB + f'_callbacks->{command.alias}_request_callback(*(static_cast<{command.alias}_request*>(request)), static_cast<{command.alias}_reply*>(reply));\n'
                 #output += ' '*3*TAB + '}\n'
                 output += ' '*3*TAB + f'break;\n'
                 output += '#endif\n'
@@ -166,7 +166,7 @@ class CPP():
                 output += ' '*2*TAB + f'case commands::{command.alias}:\n'
                 #output += ' '*3*TAB + f'if({command}_{command_type} != NULL) {{\n'
                 output += ' '*3*TAB + f'reply = new {command.alias}_reply(replyPayloadBuffer);\n'
-                output += ' '*3*TAB + f'{command.alias}_reply_callback(*(static_cast<{command.alias}_reply*>(reply)));\n'
+                output += ' '*3*TAB + f'_callbacks->{command.alias}_reply_callback(*(static_cast<{command.alias}_reply*>(reply)));\n'
                 #output += ' '*3*TAB + '}\n'
                 output += ' '*3*TAB + f'break;\n'
                 output += '#endif\n'
@@ -196,6 +196,28 @@ class CPP():
                 output += TAB*' ' + f'void {command.alias}_reply_callback({command.alias}_reply& reply);\n'
                 output += f'#endif\n'
         return output
+
+
+    def commands_names(self):
+        """
+        Return a C++ map of command name in regard to the command ID
+        {ID 0, name 0},
+        {ID 1, name 1},
+        etc...
+
+        Returns
+        -------
+        names : str
+        """
+        names = ""
+
+        for i, command in enumerate(self._commands):
+            if i > 0:
+                names += ',\n'
+            names += f"{{0x{command.ID:04X}, \"{command.alias}\"}}"
+
+        return names
+            
 
 
 

@@ -13,8 +13,8 @@
 #include <functional>
 
 #include "callbacks.hpp"
-#include "syndesi_types.hpp"
 #include <iostream>
+#include "callbacks.hpp"
 
 using namespace std;
 
@@ -40,8 +40,8 @@ class FrameManager : SAP::IFrameManager_bottom, SAP::IFrameManager_top {
     /*
      * Upper layer
      */
-    SAP::ICallbacks_bottom* _callbacks = nullptr;
-    void registerCallbacks(SAP::ICallbacks_bottom* callbacks) {
+    Callbacks* _callbacks = nullptr;
+    void registerCallbacks(Callbacks* callbacks) {
         _callbacks = callbacks;
     };
     void response(Frame& frame);

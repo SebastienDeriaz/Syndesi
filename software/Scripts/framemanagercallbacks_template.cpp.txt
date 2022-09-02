@@ -4,14 +4,11 @@
 *  date : >>>date<<<
 */
 
-#include "callbacks.hpp"
+#include "framemanager.hpp"
 
 namespace syndesi {
 
-Callbacks callbacks;
-
-
-void Callbacks::indication(Frame& frame) {
+void FrameManager::indication(Frame& frame) {
     Buffer* requestPayloadBuffer = frame.getPayloadBuffer();
     Payload* reply = nullptr;
     Payload* request = nullptr;
@@ -20,13 +17,11 @@ void Callbacks::indication(Frame& frame) {
 >>>switch_request<<<
     }
 
-    if(reply != nullptr && _frameManager != nullptr) {
-        Frame replyFrame(*reply, frame.getID());
-        _frameManager->response(replyFrame);
-    }
+    Frame replyFrame(*reply, frame.getID());
+    response(replyFrame);
 }
 
-void Callbacks::confirm(Frame& frame) {
+void FrameManager::confirm(Frame& frame) {
     Buffer* replyPayloadBuffer = frame.getPayloadBuffer();
     Payload* reply = nullptr;
 

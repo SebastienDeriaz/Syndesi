@@ -9,19 +9,21 @@
 #define COMMANDS_H
 
 #include <stdint.h>
-
-#include <vector>
-
+#include <map>
 #include "syndesi_tools.hpp"
-#include "syndesi_types.hpp"
 #include "buffer.hpp"
 #include <memory>
 
 namespace syndesi {
 
+typedef uint16_t cmd_t;
+
 enum commands : cmd_t {
 >>>commands<<<
 };
+
+
+extern std::map<cmd_t, string> command_names_list;
 
 class Payload {
     friend class Frame;

@@ -13,13 +13,9 @@
 #include <iostream>
 
 #include "frame.hpp"
-#include "syndesi_types.hpp"
 #include "callbacks.hpp"
 #include "framemanager.hpp"
 #include "network.hpp"
-#include "ipcontroller.hpp"
-#include "uartcontroller.hpp"
-#include "rs485controller.hpp"
 
 namespace syndesi {
 
@@ -33,24 +29,17 @@ class Core {
     */
    Callbacks callbacks;
    FrameManager frameManager;
-   Network network;
+   
    public:
 
-#ifdef USE_IP_CONTROLLER
-    IPController ipController;
-#endif
-#ifdef USE_UART_CONTROLLER
-    UARTController uartController;        
-#endif
-#ifdef USE_RS485_CONTROLLER
-    RS485Controller rs485Controller;
-#endif
-
-    void setCustomPort(unsigned short port);
-    unsigned short port();
+    Network network;
 
     void sendRequest(Payload& payload, SyndesiID& id);
     void sendRequest(Payload& payload, unique_ptr<SyndesiID>& id);
+
+    std::map<cmd_t, string>& commands_names();
+
+    void init();
 
     Core() {factory_init();};
     ~Core(){};

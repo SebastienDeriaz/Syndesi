@@ -15,10 +15,11 @@
 #include <cstddef>
 #include <cstdlib>
 #include <iostream>
+#include <iomanip>
 #include <memory>
 #include <stdexcept>
+#include <string.h>
 
-using std::byte;
 using namespace std;
 
 namespace syndesi {
@@ -30,7 +31,7 @@ namespace syndesi {
 class Buffer {
     class rawBuffer {
        private:
-        byte* _data = nullptr;
+        char* _data = nullptr;
         size_t _length = 0;
         // Buffer is defined externaly and not managed
         bool external = false;
@@ -38,7 +39,7 @@ class Buffer {
        public:
         rawBuffer(){};
         rawBuffer(size_t length) {
-            _data = reinterpret_cast<byte*>(malloc(length));
+            _data = (char*)malloc(length);
             if (_data == nullptr) {
                 throw std::bad_alloc();
             } else {
@@ -47,16 +48,16 @@ class Buffer {
         };
         ~rawBuffer() {
             if (_data != nullptr && !external) {
-                free(reinterpret_cast<void*>(_data));
+                free((char*)_data);
             }
         };
-        rawBuffer(byte* buffer, size_t length) {
+        rawBuffer(char* buffer, size_t length) {
             _data = buffer;
             _length = length;
             external = true;
         };
 
-        byte* start() {return _data;};
+        char* start() {return _data;};
         size_t length() const { return _length; };
     };
 
@@ -71,6 +72,7 @@ class Buffer {
     ~Buffer();
     Buffer(Buffer* parent, size_t offset, size_t length = 0);
     Buffer(char* buffer, size_t length);
+    Buffer(string& data);
 
    private:
     size_t _total_offset;
@@ -97,7 +99,7 @@ class Buffer {
      * @param buffer
      * @param length
      */
-    void fromBuffer(byte* buffer, size_t length);
+    void fromBuffer(char* buffer, size_t length);
 
     /**
      * @brief Create a sub-buffer
@@ -113,7 +115,7 @@ class Buffer {
      * @brief Get the raw data pointer
      *
      */
-    byte* data() const { return _data->start() + _offset; };
+    char* data() const { return _data->start() + _offset; };
 
     /**
      * @brief Get the sub-buffer offset (from base buffer)
@@ -121,6 +123,18 @@ class Buffer {
      * @return size_t
      */
     size_t getOffset();
+
+    /**
+     * @brief Export buffer as string
+     * 
+     */
+    string toString();
+
+    /**
+     * @brief Export buffer as hex string (12 F1 8A ...)
+     * 
+     */
+    string toHex();
 };
 }  // namespace syndesi
 

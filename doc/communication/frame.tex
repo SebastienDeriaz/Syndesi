@@ -23,20 +23,26 @@
 \begin{tikzpicture}
 \node (table) at (0,0) {
 \begin{tikztimingtable}[timing/.style={x=1cm,y=0.5cm}, x=2cm, y=0.5cm]
-Standard frame & LN(A0);[fill=networkheadercolor]D{NH}N(B0);[fill=cmdcolor]D{CMD}N(C0);[fill=payloadcolor]D{L}N(D0)3D{Payload}N(E0);[]L\\
-
-\\
-
-Hop frame & LN(A);[fill=networkheadercolor]D{NH}N(B);[fill=idcolor]D{AH}N(C)2D{ID}N(D);[fill=cmdcolor]D{CMD}N(E);[fill=payloadcolor]D{L}N(F)3D{Payload}N(G);[]L\\
+Standard frame & LN(A0);
+[fill=networkheadercolor]D{NH}N(B0)D{L}N(C0);
+[fill=cmdcolor]D{CMD}N(D0);
+[fill=payloadcolor]3D{Payload}N(E0);
+[]L\\\\
+Hop frame & LN(A);
+[fill=networkheadercolor]D{NH}N(B)D{L}N(C);
+[fill=idcolor]D{AH}N(D)2D{ID}N(E);
+[fill=cmdcolor]D{CMD}N(F);
+[fill=payloadcolor]3D{Payload}N(G);
+[]L\\
 \extracode
-\draw[networkheadercolor_base,|-|] ($(A0.mid)+(0.01,-2)$) -- ($(B0.mid)+(-0.01,-2)$) node[midway,anchor=north] {\circled{H}};
-\draw[cmdcolor_base,|-|] ($(B0.mid)+(0.01,-2)$) -- ($(C0.mid)+(-0.01,-2)$) node[midway,anchor=north] {\circled{C}};
-\draw[payloadcolor_base,|-|] ($(C0.mid)+(0.01,-2)$) -- ($(E0.mid)+(-0.01,-2)$) node[midway,anchor=north] {\circled{P}};
+\draw[networkheadercolor_base,|-|] ($(A0.mid)+(0.01,-2)$) -- ($(C0.mid)+(-0.01,-2)$) node[midway,anchor=north] {\circled{H}};
+\draw[cmdcolor_base,|-|] ($(C0.mid)+(0.01,-2)$) -- ($(D0.mid)+(-0.01,-2)$) node[midway,anchor=north] {\circled{C}};
+\draw[payloadcolor_base,|-|] ($(D0.mid)+(0.01,-2)$) -- ($(E0.mid)+(-0.01,-2)$) node[midway,anchor=north] {\circled{P}};
 
-\draw[networkheadercolor_base,|-|] ($(A.mid)+(0.01,-2)$) -- ($(B.mid)+(-0.01,-2)$) node[midway,anchor=north] {\circled{H}};
-\draw[idcolor_base,|-|] ($(B.mid)+(0.01,-2)$) -- ($(D.mid)+(-0.01,-2)$) node[midway,anchor=north] {\circled{I}};
-\draw[cmdcolor_base,|-|] ($(D.mid)+(0.01,-2)$) -- ($(E.mid)+(-0.01,-2)$) node[midway,anchor=north] {\circled{C}};
-\draw[payloadcolor_base,|-|] ($(E.mid)+(0.01,-2)$) -- ($(G.mid)+(-0.01,-2)$) node[midway,anchor=north] {\circled{P}};
+\draw[networkheadercolor_base,|-|] ($(A.mid)+(0.01,-2)$) -- ($(C.mid)+(-0.01,-2)$) node[midway,anchor=north] {\circled{H}};
+\draw[idcolor_base,|-|] ($(C.mid)+(0.01,-2)$) -- ($(E.mid)+(-0.01,-2)$) node[midway,anchor=north] {\circled{I}};
+\draw[cmdcolor_base,|-|] ($(E.mid)+(0.01,-2)$) -- ($(F.mid)+(-0.01,-2)$) node[midway,anchor=north] {\circled{C}};
+\draw[payloadcolor_base,|-|] ($(F.mid)+(0.01,-2)$) -- ($(G.mid)+(-0.01,-2)$) node[midway,anchor=north] {\circled{P}};
 
 \end{tikztimingtable}};
 
@@ -54,10 +60,10 @@ Hop frame & LN(A);[fill=networkheadercolor]D{NH}N(B);[fill=idcolor]D{AH}N(C)2D{I
     
 \node[anchor=north] at (table.south) {\sffamily\tiny
 \tcbox[colback=networkheadercolor]{NH : Network header}
+\tcbox[colback=networkheadercolor]{L : Frame length}
 \tcbox[colback=idcolor]{AH : Addressing header}
 \tcbox[colback=idcolor]{ID : Addressing ID}
 \tcbox[colback=cmdcolor]{CMD : Command ID}
-\tcbox[colback=payloadcolor]{L : Payload length}
 };
 
 \end{tikzpicture}

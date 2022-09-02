@@ -25,7 +25,12 @@ Buffer::Buffer(Buffer* parent, size_t offset, size_t length) {
 }
 
 Buffer::Buffer(char* buffer, size_t length) {
-    _data = make_shared<rawBuffer>(reinterpret_cast<byte*>(buffer), length);
+    _data = make_shared<rawBuffer>(buffer, length);
+}
+
+Buffer::Buffer(string& data) {
+    _data = make_shared<rawBuffer>(data.length());
+    memcpy(_data->start(), data.c_str(), data.length());
 }
 
 void Buffer::fromParent(const Buffer* parent, size_t offset, size_t length) {
@@ -49,7 +54,7 @@ void Buffer::allocate(size_t length) {
 
 void Buffer::deallocate() { _data = nullptr; }
 
-void Buffer::fromBuffer(byte* buffer, size_t length) {
+void Buffer::fromBuffer(char* buffer, size_t length) {
     deallocate();
     _data = make_shared<rawBuffer>(buffer, length);
 }
@@ -72,4 +77,22 @@ size_t Buffer::length() const {
 
 size_t Buffer::getOffset() { return _offset; }
 
-}  // namespace syndesi
+string Buffer::toString() {
+    if(_data != nullptr) {
+        return string(data(), length());
+    }
+    else {
+        return "";
+    }
+}
+
+string Buffer::toHex() {
+    stringstream output;
+    char* start = data();
+    for(size_t i = 0;i<length();i++) {
+        output << hex << start[i] << " ";
+    }
+    return output.str();
+}
+
+}  // namespace syndes

@@ -9,6 +9,9 @@
 
 namespace syndesi {
 
+std::map<cmd_t, string> command_names_list = {
+>>>commands_names<<<
+};
 
 
 } //namespace syndesi
