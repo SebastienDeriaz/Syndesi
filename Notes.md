@@ -54,3 +54,15 @@ Only one command per frame, otherwise it's going to be unnecessarily difficult t
 ## Usage
 
 device open function : find device on network and auto-assign driver. If the driver cannot be found, the user is asked to assign one manually
+
+
+## No controller branch (24.08.2022)
+
+The controllers have been removed. Instead the Network class inherits from controller intefaces (IIPController, IUARTController, etc...)
+
+The methods that need to be implemented by the user are pure virtual and are implemented by the user as if it was the .cpp file
+The methods that need to be called by user are implemented in the Network class
+
+
+
+
