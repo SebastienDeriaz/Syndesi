@@ -25,10 +25,12 @@ COMMANDS_DESCRIPTION_FILE = join(dirname(__file__), "commands.yaml")
 # C++
 PAYLOADS_HPP_TEMPLATE_FILE = join(dirname(__file__), "payloads_template.hpp.txt")
 PAYLOADS_HPP_OUTPUT_FILE = join(dirname(__file__), "../C++/syndesicp/include/payloads.hpp")
+PAYLOADS_CPP_TEMPLATE_FILE = join(dirname(__file__), "payloads_template.cpp.txt")
+PAYLOADS_CPP_OUTPUT_FILE = join(dirname(__file__), "../C++/syndesicp/src/payloads.cpp")
 
 ## Callbacks
-CALLBACKS_CPP_TEMPLATE_FILE = join(dirname(__file__), "callbacks_template.cpp.txt")
-CALLBACKS_CPP_OUTPUT_FILE = join(dirname(__file__), "../C++/syndesicp/src/callbacks.cpp")
+FRAME_MANAGER_CALLBACKS_CPP_TEMPLATE_FILE = join(dirname(__file__), "framemanagercallbacks_template.cpp.txt")
+FRAME_MANAGER_CALLBACKS_CPP_OUTPUT_FILE = join(dirname(__file__), "../C++/syndesicp/src/framemanagercallbacks.cpp")
 CALLBACKS_HPP_TEMPLATE_FILE = join(dirname(__file__), "callbacks_template.hpp.txt")
 CALLBACKS_HPP_OUTPUT_FILE = join(dirname(__file__), "../C++/syndesicp/include/callbacks.hpp")
 CALLBACKS_CONFIGURATION_HPP_TEMPLATE_FILE = join(dirname(__file__), "callbacks_configuration_template.hpp.txt")
@@ -57,6 +59,12 @@ def main():
             "commands" : cpp.commands_enum(),
             "payloads" : cpp.payloads()
         })
+        # Create C++ source
+        replace(PAYLOADS_CPP_TEMPLATE_FILE, PAYLOADS_CPP_OUTPUT_FILE, {
+            "date" : datetime.strftime(datetime.now(), "%y-%m-%d %H:%M:%S"),
+            "file" : Path(__file__).name,
+            "commands_names" : cpp.commands_names()
+        })
 
         # Create C++ callbacks configuration file (for the user to edit)
         replace(CALLBACKS_CONFIGURATION_HPP_TEMPLATE_FILE, CALLBACKS_CONFIGURATION_HPP_OUTPUT_FILE, {
@@ -69,7 +77,7 @@ def main():
         
 
         # Create C++ callbacks source file
-        replace(CALLBACKS_CPP_TEMPLATE_FILE, CALLBACKS_CPP_OUTPUT_FILE, {
+        replace(FRAME_MANAGER_CALLBACKS_CPP_TEMPLATE_FILE, FRAME_MANAGER_CALLBACKS_CPP_OUTPUT_FILE, {
             "date" : datetime.strftime(datetime.now(), "%y-%m-%d %H:%M:%S"),
             "file" : Path(__file__).name,
             "switch_request" : cpp.switch(request=True),

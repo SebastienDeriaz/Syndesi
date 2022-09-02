@@ -1,5 +1,5 @@
 class >>>alias<<< : public Payload{
-friend class Callbacks;
+friend class FrameManager;
 public:
 
 >>>values<<<
@@ -9,7 +9,7 @@ private:
 
 >>>alias<<<(Buffer* payloadBuffer) {
         size_t pos = 0;
-        >>>parse_function<<<
+        >>>parse_function<<< 
     };
 
 >>>command<<<    
