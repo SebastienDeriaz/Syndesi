@@ -1,3 +1,5 @@
+
+
 /*
  DHCP Chat  Server
 
@@ -20,8 +22,16 @@
 
  */
 
+
 #include <SPI.h>
 #include <Ethernet.h>
+
+#include <ArduinoSTL.h>
+#include <memory>
+
+using namespace std;
+
+//unique_ptr<char> test = nullptr;
 
 // Enter a MAC address and IP address for your controller below.
 // The IP address will be dependent on your local network.
@@ -34,16 +44,16 @@ IPAddress myDns(192, 168, 1, 1);
 IPAddress gateway(192, 168, 1, 1);
 IPAddress subnet(255, 255, 0, 0);
 
-#include <syndesicp.hpp>
+//#include <syndesicp.hpp>
 
 
 
-class IPController : SAP::IHostController_top {
+/*class IPController : syndesi::SAP::IHostController_top {
 
 
 
   
-};
+};*/
 
 
 
