@@ -63,7 +63,8 @@ def main():
         replace(PAYLOADS_CPP_TEMPLATE_FILE, PAYLOADS_CPP_OUTPUT_FILE, {
             "date" : datetime.strftime(datetime.now(), "%y-%m-%d %H:%M:%S"),
             "file" : Path(__file__).name,
-            "commands_names" : cpp.commands_names()
+            "commands_names_switch" : cpp.commands_names_switch(),
+            "commands_ids" : cpp.commands_ids()
         })
 
         # Create C++ callbacks configuration file (for the user to edit)

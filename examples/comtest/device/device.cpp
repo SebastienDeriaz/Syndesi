@@ -7,6 +7,8 @@
 #include <cstdio>
 #include <syndesicp.hpp>
 
+#include <iostream>
+
 using namespace std;
 using namespace syndesi;
 
@@ -17,7 +19,7 @@ void callback();
 int new_socket;
 
 syndesi::SyndesiID id;
-class IPController : public syndesi::SAP::IDeviceController_top {
+class IPController : public syndesi::SAP::IController {
     int server_fd;
     int opt = 1;
 
@@ -27,8 +29,8 @@ class IPController : public syndesi::SAP::IDeviceController_top {
     const int addrlen = sizeof(address);
 
    public:
-    IPController(SAP::INetwork_device_bottom* _network)
-        : IDeviceController_top(_network){};
+    IPController(SAP::INetwork_bottom* _network)
+        : IController(_network){};
 
     void init() {
         if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) {
@@ -44,7 +46,7 @@ class IPController : public syndesi::SAP::IDeviceController_top {
 
         address.sin_family = AF_INET;
         address.sin_addr.s_addr = INADDR_ANY;
-        address.sin_port = htons(network->port());
+        //address.sin_port = htons(network->port());
 
         if (bind(server_fd, (struct sockaddr*)&address, sizeof(address)) < 0) {
             perror("bind failed");
@@ -57,8 +59,25 @@ class IPController : public syndesi::SAP::IDeviceController_top {
         }
     }
 
-    size_t readBuffer(char* buffer, size_t length) {
-        int valread = read(new_socket, buffer, length);
+    void write(SyndesiID& deviceID, char* buffer, size_t length) {
+        int sock = 0;
+        struct sockaddr_in serv_addr;
+
+        serv_addr.sin_family = AF_INET;
+        serv_addr.sin_port = htons(id.getIPPort());
+
+        if (inet_pton(AF_INET, id.str(), &serv_addr.sin_addr) <= 0) {
+            printf("\nInvalid address/ Address not supported \n");
+            return;
+        }
+
+        int bytes_sent = send(new_socket, buffer, length, 0);
+
+        
+    }
+
+    size_t read(SyndesiID& deviceID, char* buffer, size_t length) {
+        int valread = ::read(new_socket, buffer, length);
 
         for (int i = 0; i < valread; i++) {
             printf("%02X ", (uint8_t)buffer[i]);
@@ -66,40 +85,16 @@ class IPController : public syndesi::SAP::IDeviceController_top {
         return valread;
     }
 
-    void response(unique_ptr<SyndesiID>& id, unique_ptr<Buffer>& buffer) {
-        int sock = 0;
-        struct sockaddr_in serv_addr;
-
-
-        serv_addr.sin_family = AF_INET;
-        serv_addr.sin_port = htons(id->getIPPort());
-
-        if (inet_pton(AF_INET, id->str().data(), &serv_addr.sin_addr) <= 0) {
-            printf("\nInvalid address/ Address not supported \n");
-            return;
-        }
-
-        int bytes_sent = send(new_socket, buffer->data(), buffer->length(), 0);
-
-        close(new_socket);
+    void close() {
+        ::close(new_socket);
     }
 
     void wait_for_connection() {
-        cout << "Waiting for connection..." << endl;
         if ((new_socket = accept(server_fd, (struct sockaddr*)&address,
                                  (socklen_t*)&addrlen)) < 0) {
             perror("accept");
             exit(EXIT_FAILURE);
         }
-
-        unique_ptr<SyndesiID> id = unique_ptr<SyndesiID>(new SyndesiID());
-        id->fromIPv4(address.sin_addr.s_addr, address.sin_port);
-
-        unique_ptr<Buffer> frameBuffer = readFrame();
-
-        network->indication(id, frameBuffer);
-
-        close(new_socket);
     }
 
     void end() { shutdown(server_fd, SHUT_RDWR); }
@@ -154,7 +149,7 @@ void syndesi::Callbacks::SPI_READ_WRITE_request_callback(
     cout << "    data = " << request.write_data.toHex() << " ("
          << request.write_size << ")" << endl;
     string response = "<SPI_READ_WRITE reply>";
-    reply->read_data = Buffer(response);
+    //reply->read_data = Buffer(response.c_str(), response.length());
     reply->read_size = reply->read_data.length();
 }
 void syndesi::Callbacks::SPI_WRITE_ONLY_request_callback(
@@ -175,7 +170,7 @@ void syndesi::Callbacks::I2C_READ_request_callback(
     cout << "    read size = " << request.read_size << endl;
 
     string response = "<I2C_READ_request reply>";
-    reply->read_data = Buffer(response);
+    //reply->read_data = Buffer(response);
     reply->read_size = reply->read_data.length();
     cout << "    reply data = " << reply->read_data.toHex() << " ("
          << reply->read_size << ")" << endl;

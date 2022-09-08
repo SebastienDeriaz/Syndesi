@@ -13,19 +13,18 @@
 
 namespace syndesi {
 
-const string SyndesiID::no_address_string = "no address";
+const char* SyndesiID::no_address_string = "no address";
 
 /*
  * User methods
  */
 SyndesiID::SyndesiID() {}
 
-bool SyndesiID::parseIPv4(string& ip, unsigned short port) {
-    char* start = ip.data();
+bool SyndesiID::parseIPv4(const char* ip, size_t length, unsigned short port) {
     unsigned int count = 0;
     unsigned char bytes[IPv4_size];
-    for (int i = 0, r = 0; i < IPv4_size; start += r + 1, i++) {
-        if (sscanf(start, "%d%n", &bytes[i], &r) < 0) {
+    for (int i = 0, r = 0; i < IPv4_size; ip += r + 1, i++) {
+        if (sscanf(ip, "%d%n", &bytes[i], &r) < 0) {
             return false;
         }
     }
@@ -43,27 +42,23 @@ void SyndesiID::fromIPv4(uint32_t ip, unsigned short port) {
     header.fields.address_type = IPV4;
 }
 
-string SyndesiID::str() {
-    string output;
+const char* SyndesiID::str() {
     switch (getAddressType()) {
         case IPV4:
-            output = IPv4str();
+            return IPv4str();
             break;
         default:
-            output = no_address_string;
+            return no_address_string;
     }
-    return output;
 }
 
-unsigned short SyndesiID::getIPPort() {
-    return _port;
-}
+unsigned short SyndesiID::getIPPort() { return _port; }
 
 /*
  * Private methods
  */
 
-string SyndesiID::IPv4str() {
+const char* SyndesiID::IPv4str() {
     char output[IPv4_str_max_size] = {0};
     sprintf(output, "%d.%d.%d.%d", payload.IPv4[0], payload.IPv4[1],
             payload.IPv4[2], payload.IPv4[3]);
@@ -77,14 +72,12 @@ SyndesiID::SyndesiID(unsigned char* buffer, address_type_t type) {
     switch (type) {
         case IPV4:
         case IPV6:
-            memcpy((void*)&payload, buffer, addressSizes.at(type));
+            memcpy((void*)&payload, buffer, addressSize(type));
             break;
     }
 }
 
-void SyndesiID::setIPPort(unsigned short port) {
-    _port = port;
-}
+void SyndesiID::setIPPort(unsigned short port) { _port = port; }
 
 void SyndesiID::append(unsigned char* buffer, address_type_t type) {
     if (next) {
@@ -92,7 +85,7 @@ void SyndesiID::append(unsigned char* buffer, address_type_t type) {
         next->append(buffer, type);
     } else {
         // Add here
-        next = unique_ptr<SyndesiID>(new SyndesiID(buffer, type));
+        next = new SyndesiID(buffer, type);
     }
 }
 
@@ -105,13 +98,13 @@ SyndesiID::SyndesiID(Buffer* buffer) {
     // Read the header
     ntoh(buffer->data(), reinterpret_cast<char*>(&header), sizeof(header));
     // Read the payload
-    size_t address_size = addressSizes.at(header.fields.address_type);
+    size_t address_size = addressSize(header.fields.address_type);
     memcpy(reinterpret_cast<void*>(&payload), buffer->data() + sizeof(header),
            address_size);
     is_next = true;
     if (header.fields.follow) {
         Buffer subbuffer = Buffer(buffer, address_size + sizeof(header));
-        next = unique_ptr<SyndesiID>(new SyndesiID(&subbuffer));
+        next = new SyndesiID(&subbuffer);
     }
 }
 
@@ -123,9 +116,18 @@ unsigned int SyndesiID::reroutes() {
     return count;
 }
 
+const size_t SyndesiID::addressSize(address_type_t type) {
+    switch (type) {
+        case IPV4:
+            return IPv4_size;
+        case IPV6:
+            return IPv6_size;
+    }
+}
+
 size_t SyndesiID::getTotalAdressingSize() {
     size_t size = 0;
-    if (is_next) addressSizes.at(header.fields.address_type);
+    if (is_next) addressSize(header.fields.address_type);
     if (next) size += next->getTotalAdressingSize();
     return size;
 }
@@ -141,7 +143,7 @@ void SyndesiID::buildAddressingBuffer(Buffer* buffer) {
     if (is_next) {
         // Write itself
         hton(reinterpret_cast<char*>(&header), buffer->data(), sizeof(header));
-        addressLength = addressSizes.at(header.fields.address_type);
+        addressLength = addressSize(header.fields.address_type);
         memcpy(buffer->data() + sizeof(header), &payload, addressLength);
         if (next) {
             // As long as they are "next"s, write them
@@ -156,6 +158,6 @@ void SyndesiID::buildAddressingBuffer(Buffer* buffer) {
 
 void SyndesiID::parseAddressingBuffer(Buffer* buffer) {
     // Read
-    next = unique_ptr<SyndesiID>(new SyndesiID(buffer));
+    next = new SyndesiID(buffer);
 }
 }  // namespace syndesi

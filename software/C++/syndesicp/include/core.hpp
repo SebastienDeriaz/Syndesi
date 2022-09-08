@@ -10,8 +10,6 @@
 #ifndef CORE_H
 #define CORE_H
 
-#include <iostream>
-
 #include "frame.hpp"
 #include "callbacks.hpp"
 #include "framemanager.hpp"
@@ -35,9 +33,6 @@ class Core {
     Network network;
 
     void sendRequest(Payload& payload, SyndesiID& id);
-    void sendRequest(Payload& payload, unique_ptr<SyndesiID>& id);
-
-    std::map<cmd_t, string>& commands_names();
 
     void init();
 

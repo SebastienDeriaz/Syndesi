@@ -25,19 +25,12 @@ Buffer::Buffer(Buffer* parent, size_t offset, size_t length) {
 }
 
 Buffer::Buffer(char* buffer, size_t length) {
-    _data = make_shared<rawBuffer>(buffer, length);
-}
-
-Buffer::Buffer(string& data) {
-    _data = make_shared<rawBuffer>(data.length());
-    memcpy(_data->start(), data.c_str(), data.length());
+    _data = new rawBuffer(buffer, length);
 }
 
 void Buffer::fromParent(const Buffer* parent, size_t offset, size_t length) {
     if (offset > parent->length()) {
-        throw std::out_of_range(
-            "Cannot create a sub-buffer with offset greater than the parent's "
-            "length");
+        //Cannot create a sub-buffer with offset greater than the parent's length
     }
     _total_offset = parent->_total_offset + offset;
     _data = parent->_data;
@@ -49,14 +42,14 @@ void Buffer::allocate(size_t length) {
     if (_data) {
         deallocate();
     }
-    _data = make_shared<rawBuffer>(length);
+    _data = new rawBuffer(length);
 }
 
 void Buffer::deallocate() { _data = nullptr; }
 
 void Buffer::fromBuffer(char* buffer, size_t length) {
     deallocate();
-    _data = make_shared<rawBuffer>(buffer, length);
+    _data = new rawBuffer(buffer, length);
 }
 
 Buffer Buffer::offset(size_t offset, size_t length) {
@@ -67,7 +60,7 @@ Buffer Buffer::offset(size_t offset, size_t length) {
 
 size_t Buffer::length() const {
     // Set the max length
-    size_t len = _data.get()->length() - _offset;
+    size_t len = _data->length() - _offset;
     // If a clip is defined and it is valid, use it
     if (_clipLength > 0 && _clipLength < len) {
         len = _clipLength;
@@ -77,22 +70,18 @@ size_t Buffer::length() const {
 
 size_t Buffer::getOffset() { return _offset; }
 
-string Buffer::toString() {
-    if(_data != nullptr) {
-        return string(data(), length());
-    }
-    else {
-        return "";
-    }
+char* Buffer::toString() {
+    return data();
 }
 
-string Buffer::toHex() {
-    stringstream output;
+char* Buffer::toHex() {
+    /*stringstream output;
     char* start = data();
     for(size_t i = 0;i<length();i++) {
         output << hex << start[i] << " ";
     }
-    return output.str();
+    return output.str();*/
+    return "";
 }
 
 }  // namespace syndes

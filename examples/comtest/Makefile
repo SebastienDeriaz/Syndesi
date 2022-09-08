@@ -60,7 +60,7 @@ EQUALS = =
 CMAKE_SOURCE_DIR = /home/sebastien/Documents/Projets/Syndesi/Syndesi/examples/comtest
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/sebastien/Documents/Projets/Syndesi/Syndesi/examples/comtest
+CMAKE_BINARY_DIR = /mnt/Documents/Projets/Syndesi/Syndesi/examples/comtest
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/sebastien/Documents/Projets/Syndesi/Syndesi/examples/comtest/CMakeFiles /home/sebastien/Documents/Projets/Syndesi/Syndesi/examples/comtest//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/Documents/Projets/Syndesi/Syndesi/examples/comtest/CMakeFiles /mnt/Documents/Projets/Syndesi/Syndesi/examples/comtest//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/sebastien/Documents/Projets/Syndesi/Syndesi/examples/comtest/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/Documents/Projets/Syndesi/Syndesi/examples/comtest/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -113,7 +113,7 @@ preinstall/fast:
 
 # clear depends
 depend:
-	$(CMAKE_COMMAND) -P /home/sebastien/Documents/Projets/Syndesi/Syndesi/examples/comtest/CMakeFiles/VerifyGlobs.cmake
+	$(CMAKE_COMMAND) -P /mnt/Documents/Projets/Syndesi/Syndesi/examples/comtest/CMakeFiles/VerifyGlobs.cmake
 	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
@@ -219,33 +219,6 @@ home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/buff
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_device.dir/build.make CMakeFiles/syndesicp_device.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/buffer.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_host.dir/build.make CMakeFiles/syndesicp_host.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/buffer.cpp.s
 .PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/buffer.cpp.s
-
-home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/callbacks.o: home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/callbacks.cpp.o
-.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/callbacks.o
-
-# target to build an object file
-home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/callbacks.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_device.dir/build.make CMakeFiles/syndesicp_device.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/callbacks.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_host.dir/build.make CMakeFiles/syndesicp_host.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/callbacks.cpp.o
-.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/callbacks.cpp.o
-
-home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/callbacks.i: home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/callbacks.cpp.i
-.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/callbacks.i
-
-# target to preprocess a source file
-home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/callbacks.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_device.dir/build.make CMakeFiles/syndesicp_device.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/callbacks.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_host.dir/build.make CMakeFiles/syndesicp_host.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/callbacks.cpp.i
-.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/callbacks.cpp.i
-
-home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/callbacks.s: home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/callbacks.cpp.s
-.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/callbacks.s
-
-# target to generate assembly for a file
-home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/callbacks.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_device.dir/build.make CMakeFiles/syndesicp_device.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/callbacks.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/syndesicp_host.dir/build.make CMakeFiles/syndesicp_host.dir/home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/callbacks.cpp.s
-.PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/callbacks.cpp.s
 
 home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/core.o: home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/core.cpp.o
 .PHONY : home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/core.o
@@ -505,9 +478,6 @@ help:
 	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/buffer.o"
 	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/buffer.i"
 	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/buffer.s"
-	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/callbacks.o"
-	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/callbacks.i"
-	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/callbacks.s"
 	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/core.o"
 	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/core.i"
 	@echo "... home/sebastien/Documents/Projets/Syndesi/Syndesi/software/C++/syndesicp/src/core.s"
@@ -546,7 +516,7 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	$(CMAKE_COMMAND) -P /home/sebastien/Documents/Projets/Syndesi/Syndesi/examples/comtest/CMakeFiles/VerifyGlobs.cmake
+	$(CMAKE_COMMAND) -P /mnt/Documents/Projets/Syndesi/Syndesi/examples/comtest/CMakeFiles/VerifyGlobs.cmake
 	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

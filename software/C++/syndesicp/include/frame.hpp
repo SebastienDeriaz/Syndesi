@@ -12,16 +12,10 @@
 #ifndef FRAME_H
 #define FRAME_H
 
-#include <cstdlib>
-#include <iostream>
-#include <memory>
-
 using namespace std;
 
 #include "payloads.hpp"
 #include "sdid.hpp"
-
-using std::unique_ptr;
 
 namespace syndesi {
 
@@ -58,7 +52,7 @@ class Frame {
      * @brief Construct a frame from a buffer object
      *
      */
-    Frame(unique_ptr<Buffer>& buffer, unique_ptr<SyndesiID>& id);
+    Frame(Buffer& buffer, SyndesiID& id);
 
     /**
      * @brief Construct a frame object from a payload and SyndesiID
@@ -66,7 +60,7 @@ class Frame {
      * @param payload payload
      * @param id id of device
      */
-    Frame(Payload& payload, unique_ptr<SyndesiID>& id);
+    Frame(Payload& payload, SyndesiID& id);
 
     /**
      * @brief Destroy the Frame object
@@ -78,11 +72,11 @@ class Frame {
     cmd_t command;
     NetworkHeader networkHeader;
     frameLength_t frameLength;
-    unique_ptr<Buffer> _buffer = nullptr;
-    unique_ptr<SyndesiID> _id = nullptr;
+    Buffer* _buffer = nullptr;
+    SyndesiID* _id = nullptr;
     
     // Predefine the payloadBuffer (when creating the frame from the lower layer)
-    unique_ptr<Buffer> _payloadBuffer = nullptr;
+    Buffer* _payloadBuffer = nullptr;
 
    public:
     /**
@@ -103,7 +97,7 @@ class Frame {
      * @brief Get the SyndesiID
      *
      */
-    unique_ptr<SyndesiID>& getID() { return _id; };
+    SyndesiID& getID() { return *_id; };
 };
 
 }  // namespace syndesi

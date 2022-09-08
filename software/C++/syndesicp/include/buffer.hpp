@@ -11,13 +11,13 @@
 #define BUFFER_H
 
 #include <stdint.h>
-
-#include <cstddef>
-#include <cstdlib>
-#include <iostream>
-#include <iomanip>
-#include <memory>
-#include <stdexcept>
+#include <stdlib.h>
+//#include <cstddef>
+//#include <cstdlib>
+//#include <iostream>
+//#include <iomanip>
+//#include <memory>
+//#include <stdexcept>
 #include <string.h>
 
 using namespace std;
@@ -41,7 +41,7 @@ class Buffer {
         rawBuffer(size_t length) {
             _data = (char*)malloc(length);
             if (_data == nullptr) {
-                throw std::bad_alloc();
+                //throw std::bad_alloc();
             } else {
                 _length = length;
             }
@@ -72,12 +72,11 @@ class Buffer {
     ~Buffer();
     Buffer(Buffer* parent, size_t offset, size_t length = 0);
     Buffer(char* buffer, size_t length);
-    Buffer(string& data);
 
    private:
     size_t _total_offset;
     size_t _offset;
-    shared_ptr<rawBuffer> _data = nullptr;
+    rawBuffer* _data = nullptr;
     size_t _clipLength = 0;
 
    public:
@@ -128,13 +127,13 @@ class Buffer {
      * @brief Export buffer as string
      * 
      */
-    string toString();
+    char* toString();
 
     /**
      * @brief Export buffer as hex string (12 F1 8A ...)
      * 
      */
-    string toHex();
+    char* toHex();
 };
 }  // namespace syndesi
 

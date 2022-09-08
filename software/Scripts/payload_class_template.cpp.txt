@@ -1,7 +1,6 @@
 class >>>alias<<< : public Payload{
 friend class FrameManager;
 public:
-
 >>>values<<<
 
     >>>alias<<<() {};

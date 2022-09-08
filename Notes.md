@@ -65,4 +65,6 @@ The methods that need to be called by user are implemented in the Network class
 
 
 
+## Remark (05.09.2022)
 
+If Ethernet is used as the primary protocol of communication with the devices, it may not work in many schools because of security reasons. Sometimes creating a secondary network on a computer connected to the network is prohibited. A USB to Ethernet bridge could be used to correct this issue (without it being a true Ethernet adapter)
