@@ -1,7 +1,7 @@
 /* THIS FILE IS GENERATED AUTOMATICALLY
  *  DO NOT EDIT
  *  This file has been written by the script generate_commands.py
- *  date : 22-09-02 21:18:05
+ *  date : 22-09-06 09:53:43
  */
 
 
@@ -9,10 +9,9 @@
 #define COMMANDS_H
 
 #include <stdint.h>
-#include <map>
 #include "syndesi_tools.hpp"
 #include "buffer.hpp"
-#include <memory>
+//#include <memory>
 
 namespace syndesi {
 
@@ -31,7 +30,9 @@ enum commands : cmd_t {
 };
 
 
-extern std::map<cmd_t, string> command_names_list;
+extern const cmd_t commandIDArray[];
+
+const char* commandNameByID(cmd_t id);
 
 class Payload {
     friend class Frame;
@@ -49,7 +50,6 @@ class Payload {
 class ERROR_reply : public Payload{
 friend class FrameManager;
 public:
-
     enum error_code_t {INVALID_FRAME, OTHER}error_code;
 
 
@@ -82,7 +82,6 @@ friend class FrameManager;
 public:
 
 
-
     DEVICE_DISCOVER_request() {};
 private:
 
@@ -108,7 +107,6 @@ DEVICE_DISCOVER_request(Buffer* payloadBuffer) {
 class DEVICE_DISCOVER_reply : public Payload{
 friend class FrameManager;
 public:
-
     Buffer ID;
     uint8_t syndesi_protocol_version;
     uint8_t device_version;
@@ -151,7 +149,6 @@ DEVICE_DISCOVER_reply(Buffer* payloadBuffer) {
 class REGISTER_READ_16_request : public Payload{
 friend class FrameManager;
 public:
-
     uint16_t address;
 
 
@@ -182,7 +179,6 @@ REGISTER_READ_16_request(Buffer* payloadBuffer) {
 class REGISTER_READ_16_reply : public Payload{
 friend class FrameManager;
 public:
-
     uint16_t data;
 
 
@@ -213,7 +209,6 @@ REGISTER_READ_16_reply(Buffer* payloadBuffer) {
 class REGISTER_WRITE_16_request : public Payload{
 friend class FrameManager;
 public:
-
     uint16_t address;
     uint16_t data;
 
@@ -247,7 +242,6 @@ REGISTER_WRITE_16_request(Buffer* payloadBuffer) {
 class REGISTER_WRITE_16_reply : public Payload{
 friend class FrameManager;
 public:
-
     enum status_t {OK, NOK}status;
 
 
@@ -278,7 +272,6 @@ REGISTER_WRITE_16_reply(Buffer* payloadBuffer) {
 class SPI_READ_WRITE_request : public Payload{
 friend class FrameManager;
 public:
-
     uint8_t interface_index;
     uint16_t write_size;
     Buffer write_data;
@@ -313,7 +306,6 @@ SPI_READ_WRITE_request(Buffer* payloadBuffer) {
 class SPI_READ_WRITE_reply : public Payload{
 friend class FrameManager;
 public:
-
     uint16_t read_size;
     Buffer read_data;
 
@@ -345,7 +337,6 @@ SPI_READ_WRITE_reply(Buffer* payloadBuffer) {
 class SPI_WRITE_ONLY_request : public Payload{
 friend class FrameManager;
 public:
-
     uint8_t interface_index;
     uint16_t write_size;
     Buffer write_data;
@@ -380,7 +371,6 @@ SPI_WRITE_ONLY_request(Buffer* payloadBuffer) {
 class SPI_WRITE_ONLY_reply : public Payload{
 friend class FrameManager;
 public:
-
     enum status_t {OK, NOK}status;
 
 
@@ -411,7 +401,6 @@ SPI_WRITE_ONLY_reply(Buffer* payloadBuffer) {
 class I2C_READ_request : public Payload{
 friend class FrameManager;
 public:
-
     uint8_t interface_index;
     uint16_t read_size;
 
@@ -445,7 +434,6 @@ I2C_READ_request(Buffer* payloadBuffer) {
 class I2C_READ_reply : public Payload{
 friend class FrameManager;
 public:
-
     uint16_t read_size;
     Buffer read_data;
 
@@ -477,7 +465,6 @@ I2C_READ_reply(Buffer* payloadBuffer) {
 class I2C_WRITE_request : public Payload{
 friend class FrameManager;
 public:
-
     uint8_t interface_index;
     uint16_t write_size;
     Buffer write_data;
@@ -512,7 +499,6 @@ I2C_WRITE_request(Buffer* payloadBuffer) {
 class I2C_WRITE_reply : public Payload{
 friend class FrameManager;
 public:
-
     enum status_t {OK, NOK}status;
 
 

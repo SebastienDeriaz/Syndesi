@@ -10,7 +10,7 @@
  */
 
 #include <stdint.h>
-#include <cstddef>
+//#include <cstddef>
 #include <string.h>
 
 #ifndef SYNDESI_TOOLS_H

@@ -1,7 +1,7 @@
 /* THIS FILE IS GENERATED AUTOMATICALLY
  *  DO NOT EDIT
  *  This file has been written by the script generate_commands.py
- *  date : 22-09-02 21:18:05
+ *  date : 22-09-06 09:53:43
  */
 
 #ifndef CALLBACKS_H
@@ -19,7 +19,7 @@ class Callbacks {
     private:
         SAP::IFrameManager_top* _frameManager = nullptr;
         void registerFrameManager(SAP::IFrameManager_top* frameManager) {_frameManager = frameManager;};
-        Callbacks();
+        Callbacks() {};
     public:
         void indication(Frame& payload);
         void confirm(Frame& payload);

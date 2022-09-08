@@ -11,7 +11,7 @@ project(syndesicp VERSION 0.1 DESCRIPTION "Syndesi communication protocol")
 #add_library(syndesicp SHARED ${LIB_SOURCES} ${LIB_HEADERS})
 add_library(syndesicp SHARED
 src/buffer.cpp
-src/callbacks.cpp
+src/framemanagercallbacks.cpp
 src/core.cpp
 src/frame.cpp
 src/framemanager.cpp

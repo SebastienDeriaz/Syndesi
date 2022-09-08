@@ -9,10 +9,9 @@
 #define COMMANDS_H
 
 #include <stdint.h>
-#include <map>
 #include "syndesi_tools.hpp"
 #include "buffer.hpp"
-#include <memory>
+//#include <memory>
 
 namespace syndesi {
 
@@ -23,7 +22,9 @@ enum commands : cmd_t {
 };
 
 
-extern std::map<cmd_t, string> command_names_list;
+extern const cmd_t commandIDArray[];
+
+const char* commandNameByID(cmd_t id);
 
 class Payload {
     friend class Frame;

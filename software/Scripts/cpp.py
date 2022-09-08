@@ -197,8 +197,7 @@ class CPP():
                 output += f'#endif\n'
         return output
 
-
-    def commands_names(self):
+    def commands_names_switch(self):
         """
         Return a C++ map of command name in regard to the command ID
         {ID 0, name 0},
@@ -212,11 +211,32 @@ class CPP():
         names = ""
 
         for i, command in enumerate(self._commands):
-            if i > 0:
-                names += ',\n'
-            names += f"{{0x{command.ID:04X}, \"{command.alias}\"}}"
+            names += 2*TAB + f"case 0x{command.ID:04X}:\n"
+            names += 3*TAB + f"return \"{command.alias}\";\n"
+            names += 3*TAB + "break;\n"
 
         return names
+
+    def commands_ids(self):
+        """
+        Return a list of commands IDs as such :
+
+        0x0001,
+        0x0101,
+        ...
+        
+        Returns
+        -------
+        output : str
+        """
+        output = ""
+        for i, command in enumerate(self._commands):
+            if i > 0:
+                output += ',\n'
+            output += f"0x{command.ID:04X}"
+        return output
+
+
             
 
 

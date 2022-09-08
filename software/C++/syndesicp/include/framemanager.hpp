@@ -10,10 +10,7 @@
 #ifndef FRAME_MANAGER_H
 #define FRAME_MANAGER_H
 
-#include <functional>
-
 #include "callbacks.hpp"
-#include <iostream>
 #include "callbacks.hpp"
 
 using namespace std;

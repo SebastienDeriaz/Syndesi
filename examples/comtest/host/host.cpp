@@ -12,59 +12,39 @@ using namespace syndesi;
 
 Core core;
 
-class IPController : SAP::IHostController_top {
+class IPController : SAP::IController {
     int sock = 0;
 
-    enum State { IDLE, CONNECTED };
-    State state;
-
    public:
-    IPController(SAP::INetwork_host_bottom* _network)
-        : IHostController_top(_network){};
-    void init() {
-        
-        cout << "init, socket = " << sock << endl;
-    }
+    IPController(SAP::INetwork_bottom* _network) : IController(_network){};
+    void init() { cout << "init, socket = " << sock << endl; }
 
-    void request(unique_ptr<SyndesiID>& id, unique_ptr<Buffer>& buffer) {
-
+    void write(SyndesiID& id, char* buffer, size_t length) {
         if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
             printf("\n Socket creation error \n");
             return;
         }
 
-        cout << "request, sock = " << sock << endl;
         struct sockaddr_in serv_addr;
 
         serv_addr.sin_family = AF_INET;
-        serv_addr.sin_port = htons(id->getIPPort());
+        serv_addr.sin_port = htons(id.getIPPort());
 
-        if (state == IDLE) {
-            if (inet_pton(AF_INET, id->str().data(), &serv_addr.sin_addr) <=
-                0) {
-                printf("\nInvalid address/ Address not supported \n");
-                return;
-            }
-
-            if (connect(sock, (struct sockaddr*)&serv_addr, sizeof(serv_addr)) <
-                0) {
-                printf("\nConnection Failed\n");
-                return;
-            }
-            state = CONNECTED;
-
-            int bytes_sent = send(sock, buffer->data(), buffer->length(), 0);
-            unique_ptr<Buffer> frameBuffer = readFrame();
-            network->confirm(id, frameBuffer);
-
-            cout << "closing socket" << endl;
-            close(sock);
-            state = IDLE;
+        if (inet_pton(AF_INET, id.str(), &serv_addr.sin_addr) <= 0) {
+            printf("\nInvalid address/ Address not supported \n");
+            return;
         }
-    }
 
-    size_t readBuffer(char* buffer, size_t length) {
-        int valread = read(sock, buffer, length);
+        if (connect(sock, (struct sockaddr*)&serv_addr, sizeof(serv_addr)) <
+            0) {
+            printf("\nConnection Failed\n");
+            return;
+        }
+
+        int bytes_sent = send(sock, buffer, length, 0);
+    }
+    size_t read(SyndesiID& id, char* buffer, size_t length) {
+        int valread = ::read(sock, buffer, length);
 
         for (int i = 0; i < valread; i++) {
             printf("%02X ", (uint8_t)buffer[i]);
@@ -72,11 +52,12 @@ class IPController : SAP::IHostController_top {
         return valread;
     }
 
-    void setCustomPort(unsigned short port) { network->setCustomPort(port); }
-};
+    void close() {
+        ::close(sock);
+    }
 
-/*void callback(syndesi::REGISTER_READ_16_request& request,
-              syndesi::REGISTER_READ_16_reply& reply);*/
+    //void setCustomPort(unsigned short port) { network->setCustomPort(port); }
+};
 
 /**
  * @brief Send command with the desired ID
@@ -119,7 +100,7 @@ int main() {
         // before taking new
 
         ip = "127.0.0.1";
-        deviceID.parseIPv4(ip);
+        deviceID.parseIPv4(ip.c_str(), ip.length());
 
         switch (choice) {
             case 1:
@@ -127,7 +108,7 @@ int main() {
                 do {
                     cout << "Please enter an IPv4 address : ";
                     cin >> ip;
-                    validIPAddress = deviceID.parseIPv4(ip);
+                    validIPAddress = deviceID.parseIPv4(ip.c_str(), ip.length());
                     if (!validIPAddress) {
                         cout << "Invalid IP address" << endl;
                     }
@@ -137,13 +118,14 @@ int main() {
                 unsigned short customPort;
                 cout << "Enter custom port : ";
                 cin >> customPort;
-                controller.setCustomPort(customPort);
+                //controller.setCustomPort(customPort);
                 break;
             case 3:
                 // List commands
-                for(auto const& [cmd, name] : core.commands_names()) {
+
+                /*for (auto const& [cmd, name] : ) {
                     printf("  0x%04X : %s\n", cmd, name.c_str());
-                }
+                }*/
 
                 break;
             case 4:
@@ -207,13 +189,15 @@ void syndesi::Callbacks::REGISTER_READ_16_reply_callback(
 }
 void syndesi::Callbacks::DEVICE_DISCOVER_reply_callback(
     syndesi::DEVICE_DISCOVER_reply& reply) {
-        cout << "DEVICE_DISCOVER_reply_callback" << endl;
-        cout << "    description = " << reply.description.toString() << " (" << reply.description.length() << ")" << endl;
-        cout << "    device version = " << reply.device_version << endl;
-        cout << "    ID = " << reply.ID.toHex() << endl;
-        cout << "    name = " << reply.name.toString() << endl;
-        cout << "    syndesi protocol version = " << reply.syndesi_protocol_version << endl;
-    }
+    cout << "DEVICE_DISCOVER_reply_callback" << endl;
+    cout << "    description = " << reply.description.toString() << " ("
+         << reply.description.length() << ")" << endl;
+    cout << "    device version = " << reply.device_version << endl;
+    cout << "    ID = " << reply.ID.toHex() << endl;
+    cout << "    name = " << reply.name.toString() << endl;
+    cout << "    syndesi protocol version = " << reply.syndesi_protocol_version
+         << endl;
+}
 void syndesi::Callbacks::REGISTER_WRITE_16_reply_callback(
     syndesi::REGISTER_WRITE_16_reply& reply) {
     cout << "REGISTER_WRITE_16_reply_callback" << endl;
@@ -230,21 +214,23 @@ void syndesi::Callbacks::REGISTER_WRITE_16_reply_callback(
 }
 void syndesi::Callbacks::SPI_READ_WRITE_reply_callback(
     syndesi::SPI_READ_WRITE_reply& reply) {
-        cout << "SPI_READ_WRITE_reply_callback" << endl;
-        cout << "    read data = " << reply.read_data.toHex() << " (" << reply.read_data.length() << ")" << endl;
-    }
+    cout << "SPI_READ_WRITE_reply_callback" << endl;
+    cout << "    read data = " << reply.read_data.toHex() << " ("
+         << reply.read_data.length() << ")" << endl;
+}
 void syndesi::Callbacks::SPI_WRITE_ONLY_reply_callback(
     syndesi::SPI_WRITE_ONLY_reply& reply) {
-        cout << "SPI_WRITE_ONLY_reply_callback" << endl;
-        cout << "    status = " << reply.status << endl;
-    }
+    cout << "SPI_WRITE_ONLY_reply_callback" << endl;
+    cout << "    status = " << reply.status << endl;
+}
 void syndesi::Callbacks::I2C_READ_reply_callback(
     syndesi::I2C_READ_reply& reply) {
-        cout << "I2C_READ_reply_callback" << endl;
-        cout << "    read data = " << reply.read_data.toHex() << " (" << reply.read_data.length() << ")" << endl;
-    }
+    cout << "I2C_READ_reply_callback" << endl;
+    cout << "    read data = " << reply.read_data.toHex() << " ("
+         << reply.read_data.length() << ")" << endl;
+}
 void syndesi::Callbacks::I2C_WRITE_reply_callback(
     syndesi::I2C_WRITE_reply& reply) {
-        cout << "I2C_WRITE_reply_callback" << endl;
-        cout << "    status = " << reply.status << endl;
-    }
+    cout << "I2C_WRITE_reply_callback" << endl;
+    cout << "    status = " << reply.status << endl;
+}

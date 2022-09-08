@@ -19,7 +19,7 @@ class Callbacks {
     private:
         SAP::IFrameManager_top* _frameManager = nullptr;
         void registerFrameManager(SAP::IFrameManager_top* frameManager) {_frameManager = frameManager;};
-        Callbacks();
+        Callbacks() {};
     public:
         void indication(Frame& payload);
         void confirm(Frame& payload);

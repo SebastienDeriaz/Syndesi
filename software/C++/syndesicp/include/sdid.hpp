@@ -25,12 +25,9 @@
 #define SDID_H
 
 #include <stdint.h>
+//#include <string.h>
 
-#include <cstddef>
-#include <cstring>
-#include <map>
-#include <memory>
-#include <string>
+#include <stdio.h>
 
 #include "buffer.hpp"
 #include "syndesi_tools.hpp"
@@ -56,7 +53,7 @@ class SyndesiID {
     static const int IPv4_size = 4;
     static const int IPv6_size = 16;
     static const int IPv4_str_max_size = 16;
-    static const string no_address_string;
+    static const char* no_address_string;
 
    
    public: // Public types
@@ -81,8 +78,10 @@ class SyndesiID {
         unsigned char value;
     };
 
-    const std::map<address_type_t, size_t> addressSizes = {{IPV4, IPv4_size},
-                                                           {IPV6, IPv6_size}};
+    const size_t addressSize(address_type_t type);
+
+    /*const std::map<address_type_t, size_t> addressSizes = {{IPV4, IPv4_size},
+                                                           {IPV6, IPv6_size}};*/
 
    public: // User methods
     /**
@@ -100,7 +99,7 @@ class SyndesiID {
      * @return true if the IPv4 address is valid
      * @return false if the IPv4 address is invalid
      */
-    bool parseIPv4(string& ip, unsigned short port = 0);
+    bool parseIPv4(const char* ip, size_t length, unsigned short port = 0);
 
     /**
      * @brief Create an IPv4 address from a uint32_t value
@@ -114,7 +113,7 @@ class SyndesiID {
      * 
      * @return string 
      */
-    string str();
+    const char* str();
 
     /**
      * @brief Get the Address type
@@ -141,7 +140,7 @@ class SyndesiID {
      * 
      * @return string 
      */
-    string IPv4str();
+    const char* IPv4str();
 
     void setIPPort(unsigned short port);
 
@@ -202,7 +201,7 @@ class SyndesiID {
 
    private:
     // Next SyndesiID in case there's one (re-routing)
-    unique_ptr<SyndesiID> next = nullptr;
+    SyndesiID* next = nullptr;
     sdid_header_t header;
 
     // If this object is a next of a previous SyndesiID

@@ -8,29 +8,23 @@
  */
 
 #include "network.hpp"
+
 #include "general_config.hpp"
 
 namespace syndesi {
 
-void Network::setCustomPort(unsigned short port) {
-    _port = port;
-}
+void Network::setCustomPort(unsigned short port) { _port = port; }
 
-void Network::setDefaultPort() {
-    _port = syndesi_port;
-}
+void Network::setDefaultPort() { _port = syndesi_port; }
 
-unsigned short Network::port() {
-    return _port;
-}
+unsigned short Network::port() { return _port; }
 
 /*
  * From upper layer
  */
 void Network::request(Frame& frame) {
     Frame::NetworkHeader networkHeader;
-    networkHeader.fields.routing =
-        frame._id.get()->reroutes() > 0 ? true : false;
+    networkHeader.fields.routing = frame.getID().reroutes() > 0 ? true : false;
     networkHeader.fields.request_nReply = true;
     networkHeader.fields.reserved = 0;
 
@@ -39,35 +33,43 @@ void Network::request(Frame& frame) {
 #ifdef USE_IP_CONTROLLER
         case SyndesiID::address_type_t::IPV4:
         case SyndesiID::address_type_t::IPV6:
-            frame.getID()->setIPPort(_port);
-            IPHost->request(frame.getID(), frame._buffer);
+            frame.getID().setIPPort(_port);
+            IPController->write(frame.getID(), frame._buffer->data(),
+                                frame._buffer->length());
+
+            // The controllerDataAvailable method will take care of the confirm
+
+            readFrame(IPController);
             break;
-#endif // USE_IP_CONTROLLER
+#endif  // USE_IP_CONTROLLER
     }
     // Add the ID to the pendingConfirmList
     // pendingConfirm.push_front(frame.getID());
 }
 
 void Network::response(Frame& frame) {
-    IPDevice->response(frame.getID(), frame._buffer);
+    // IPController->response(&frame.getID(), frame._buffer);
 }
+
 /*
  * Lower layer
  */
-void Network::indication(unique_ptr<SyndesiID>& id, unique_ptr<Buffer>& buffer) {
-                                        
-    Frame frame(buffer, id);
-    _frameManager->indication(frame);    
+void Network::readFrame(SAP::IController* controller) {
+    // Start by reading the first few bytes of the frame to know the length,
+    // then read the rest of it. If multiple frames are present in the buffer,
+    // they will be treated separately
+    controller->read()
+
+
 }
 
-void Network::confirm(unique_ptr<SyndesiID>& id, unique_ptr<Buffer>& buffer) {
-    Frame frame(buffer, id);
-    _frameManager->confirm(frame);
+void Network::controllerDataAvailable(SAP::IController* controller) {
+    readFrame(controller);
+
 }
 
 void Network::init() {
-    if(IPDevice != nullptr) IPDevice->init();
-    if(IPHost != nullptr) IPHost->init();
+    if (IPController != nullptr) IPController->init();
 }
 
 }  // namespace syndesi

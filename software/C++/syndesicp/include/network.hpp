@@ -12,8 +12,6 @@
 
 #include <stdint.h>
 
-#include <list>
-
 #include "frame.hpp"
 #include "framemanager.hpp"
 #include "interfaces.hpp"
@@ -22,9 +20,7 @@
 using namespace std;
 
 namespace syndesi {
-class Network : SAP::INetwork_top,
-                public SAP::INetwork_device_bottom,
-                public SAP::INetwork_host_bottom {
+class Network : SAP::INetwork_top, public SAP::INetwork_bottom {
     /**
      * @brief Network frame instance
      * @note contains a network header and a payload. The payload is forwarded
@@ -32,13 +28,13 @@ class Network : SAP::INetwork_top,
      */
     friend class Core;
     friend class IPController;
-    friend class SAP::IController_top;
+    friend class SAP::IController;
 
     static const unsigned short syndesi_port = 2608;
 
    private:
     // List of pendingConfirm IDs
-    std::list<unique_ptr<SyndesiID>> pendingConfirm;
+    // std::list<SyndesiID*> pendingConfirm;
 
     unsigned short _port = syndesi_port;
 
@@ -53,7 +49,6 @@ class Network : SAP::INetwork_top,
     bool inPendingConfirm(SyndesiID& id);
 
     void setCustomPort(unsigned short port);
-    
 
     /*
      * Upper layer
@@ -70,20 +65,23 @@ class Network : SAP::INetwork_top,
     /*
      * Lower layers
      */
-    void indication(unique_ptr<SyndesiID>& id, unique_ptr<Buffer>& buffer);
-    void confirm(unique_ptr<SyndesiID>& id, unique_ptr<Buffer>& buffer);
-    void registerIPDeviceController(SAP::IDeviceController_top* controller) {
-        IPDevice = controller;
-    }
-    void registerIPHostController(SAP::IHostController_top* controller)  {
-        IPHost = controller;
+    void controllerDataAvailable (SAP::IController* controller);
+
+    void registerIPController(SAP::IController* controller) {
+        IPController = controller;
     }
 
+    /**
+     * @brief Read a frame from the given controller
+     * 
+     * @param controller 
+     */
+    void readFrame(SAP::IController* controller);
+
    public:
-    SAP::IDeviceController_top* IPDevice = nullptr;
-    SAP::IHostController_top* IPHost = nullptr;
-    //SAP::IController_top* UARTController;
-    //SAP::IController_top* RS485Controller;
+    SAP::IController* IPController = nullptr;
+    // SAP::IController_top* UARTController;
+    // SAP::IController_top* RS485Controller;
 
     void setDefaultPort();
     unsigned short port();
