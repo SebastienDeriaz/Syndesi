@@ -2,6 +2,7 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <unistd.h>
+#include <sys/ioctl.h>
 
 #include <iostream>
 #include <limits>
@@ -12,8 +13,9 @@ using namespace syndesi;
 
 Core core;
 
-class IPController : SAP::IController {
+class IPController : public SAP::IController {
     int sock = 0;
+    SyndesiID deviceID;
 
    public:
     IPController(SAP::INetwork_bottom* _network) : IController(_network){};
@@ -30,7 +32,7 @@ class IPController : SAP::IController {
         serv_addr.sin_family = AF_INET;
         serv_addr.sin_port = htons(id.getIPPort());
 
-        if (inet_pton(AF_INET, id.str(), &serv_addr.sin_addr) <= 0) {
+        if (inet_pton(AF_INET, id.str().c_str(), &serv_addr.sin_addr) <= 0) {
             printf("\nInvalid address/ Address not supported \n");
             return;
         }
@@ -43,17 +45,31 @@ class IPController : SAP::IController {
 
         int bytes_sent = send(sock, buffer, length, 0);
     }
-    size_t read(SyndesiID& id, char* buffer, size_t length) {
+    
+    size_t read(char* buffer, size_t length) {
         int valread = ::read(sock, buffer, length);
-
-        for (int i = 0; i < valread; i++) {
+        /*for (int i = 0; i < valread; i++) {
             printf("%02X ", (uint8_t)buffer[i]);
-        }
+        }*/
         return valread;
     }
 
     void close() {
         ::close(sock);
+    }
+
+    SyndesiID& getSyndesiID() {
+        return deviceID;
+    }
+
+
+    void waitForData() {
+        int count = 0;
+        do {
+            ioctl(sock, FIONREAD, &count);
+        }while(count <= 0);
+        printf("count = %d", count);
+        dataAvailable();
     }
 
     //void setCustomPort(unsigned short port) { network->setCustomPort(port); }
@@ -94,10 +110,7 @@ int main() {
         cout << " 4) Send command" << endl;
         cout << " 0) exit" << endl;
         cout << " choice : " << flush;
-        // cin >> choice;
         scanf("%d", &choice);
-        // cin.ignore(numeric_limits<streamsize>::max(), '\n'); //clear buffer
-        // before taking new
 
         ip = "127.0.0.1";
         deviceID.parseIPv4(ip.c_str(), ip.length());
@@ -120,22 +133,17 @@ int main() {
                 cin >> customPort;
                 //controller.setCustomPort(customPort);
                 break;
-            case 3:
-                // List commands
-
-                /*for (auto const& [cmd, name] : ) {
-                    printf("  0x%04X : %s\n", cmd, name.c_str());
-                }*/
-
-                break;
             case 4:
                 syndesi::cmd_t commandID;
                 if (validIPAddress) {
                     cout << "Please enter a command ID (hex) : 0x";
                     commandID = 0x0101;
                     cin >> hex >> commandID;
-                    while (!sendCommand(commandID))
-                        ;
+                    while (!sendCommand(commandID));
+                    // Wait for the controller to receive data
+                    controller.waitForData();
+
+                    
                 } else {
                     cout << "Enter a valid address" << endl;
                 }

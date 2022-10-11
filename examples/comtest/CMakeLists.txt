@@ -1,3 +1,6 @@
+set(CMAKE_C_COMPILER "gcc")
+set(CMAKE_CXX_COMPILER "g++")
+
 cmake_minimum_required(VERSION 3.20)
 
 project(syndesicp_communication VERSION 0.1)
@@ -33,10 +36,12 @@ target_compile_definitions(syndesicp_host PUBLIC -DHOST_MODE=1)
 add_executable(host host/host.cpp)
 set_target_properties(host PROPERTIES RUNTIME_OUTPUT_DIRECTORY host)
 target_link_libraries(host syndesicp_host)
+target_compile_features(host PRIVATE cxx_std_17)
 
 add_executable(device device/device.cpp)
 set_target_properties(device PROPERTIES RUNTIME_OUTPUT_DIRECTORY device)
 target_link_libraries(device syndesicp_device)
+target_compile_features(device PRIVATE cxx_std_17)
 
 
 get_property(dirs DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
