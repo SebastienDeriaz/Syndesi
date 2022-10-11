@@ -1,7 +1,7 @@
 /* THIS FILE IS GENERATED AUTOMATICALLY
 *  DO NOT EDIT
 *  This file has been written by the script generate_commands.py
-*  date : 22-09-06 09:53:43
+*  date : 22-09-19 15:43:04
 */
 
 #include "framemanager.hpp"
@@ -66,7 +66,7 @@ void FrameManager::indication(Frame& frame) {
 
     }
 
-    Frame replyFrame(*reply, frame.getID());
+    Frame replyFrame(*reply, frame.getID(), false);
     response(replyFrame);
 }
 

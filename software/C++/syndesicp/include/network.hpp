@@ -76,7 +76,7 @@ class Network : SAP::INetwork_top, public SAP::INetwork_bottom {
      * 
      * @param controller 
      */
-    void readFrame(SAP::IController* controller);
+    Frame readFrame(SyndesiID& id, SAP::IController* controller);
 
    public:
     SAP::IController* IPController = nullptr;

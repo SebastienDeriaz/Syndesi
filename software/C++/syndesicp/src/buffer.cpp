@@ -30,7 +30,8 @@ Buffer::Buffer(char* buffer, size_t length) {
 
 void Buffer::fromParent(const Buffer* parent, size_t offset, size_t length) {
     if (offset > parent->length()) {
-        //Cannot create a sub-buffer with offset greater than the parent's length
+        // Cannot create a sub-buffer with offset greater than the parent's
+        // length
     }
     _total_offset = parent->_total_offset + offset;
     _data = parent->_data;
@@ -70,18 +71,17 @@ size_t Buffer::length() const {
 
 size_t Buffer::getOffset() { return _offset; }
 
-char* Buffer::toString() {
-    return data();
-}
+char* Buffer::toString() { return data(); }
 
-char* Buffer::toHex() {
+string_t Buffer::toHex() {
+    string_t output;
     /*stringstream output;
     char* start = data();
     for(size_t i = 0;i<length();i++) {
         output << hex << start[i] << " ";
     }
     return output.str();*/
-    return "";
+    return output;
 }
 
-}  // namespace syndes
+}  // namespace syndesi

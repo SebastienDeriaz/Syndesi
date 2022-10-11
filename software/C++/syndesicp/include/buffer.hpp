@@ -12,17 +12,24 @@
 
 #include <stdint.h>
 #include <stdlib.h>
-//#include <cstddef>
-//#include <cstdlib>
-//#include <iostream>
-//#include <iomanip>
-//#include <memory>
-//#include <stdexcept>
-#include <string.h>
 
 using namespace std;
 
 namespace syndesi {
+
+#ifdef ARDUINO
+typedef String string_t;
+#else
+#include <string>
+typedef std::string string_t;
+#endif
+
+#ifdef ARDUINO
+// Use the String class
+#define INT_TO_STRING(x) (x)
+#else
+#define INT_TO_STRING(x) to_string(x)
+#endif
 
 /**
  * @brief Buffer class
@@ -41,7 +48,7 @@ class Buffer {
         rawBuffer(size_t length) {
             _data = (char*)malloc(length);
             if (_data == nullptr) {
-                //throw std::bad_alloc();
+                // throw std::bad_alloc();
             } else {
                 _length = length;
             }
@@ -57,7 +64,7 @@ class Buffer {
             external = true;
         };
 
-        char* start() {return _data;};
+        char* start() { return _data; };
         size_t length() const { return _length; };
     };
 
@@ -74,8 +81,8 @@ class Buffer {
     Buffer(char* buffer, size_t length);
 
    private:
-    size_t _total_offset;
-    size_t _offset;
+    size_t _total_offset = 0;
+    size_t _offset = 0;
     rawBuffer* _data = nullptr;
     size_t _clipLength = 0;
 
@@ -125,13 +132,13 @@ class Buffer {
 
     /**
      * @brief Export buffer as string
-     * 
+     *
      */
     char* toString();
 
     /**
      * @brief Export buffer as hex string (12 F1 8A ...)
-     * 
+     *
      */
     char* toHex();
 };

@@ -25,16 +25,17 @@
 #define SDID_H
 
 #include <stdint.h>
-//#include <string.h>
-
 #include <stdio.h>
+
+
 
 #include "buffer.hpp"
 #include "syndesi_tools.hpp"
 
-using namespace std;
-
 namespace syndesi {
+
+
+
 /**
  * @brief Syndesi unique identifier for hosts and devices
  *
@@ -52,7 +53,7 @@ class SyndesiID {
     // Constants
     static const int IPv4_size = 4;
     static const int IPv6_size = 16;
-    static const int IPv4_str_max_size = 16;
+    static const int IPv4_str_max_size = 16 + 1;
     static const char* no_address_string;
 
    
@@ -79,9 +80,6 @@ class SyndesiID {
     };
 
     const size_t addressSize(address_type_t type);
-
-    /*const std::map<address_type_t, size_t> addressSizes = {{IPV4, IPv4_size},
-                                                           {IPV6, IPv6_size}};*/
 
    public: // User methods
     /**
@@ -113,7 +111,9 @@ class SyndesiID {
      * 
      * @return string 
      */
-    const char* str();
+    string_t str();
+
+    
 
     /**
      * @brief Get the Address type
@@ -140,7 +140,7 @@ class SyndesiID {
      * 
      * @return string 
      */
-    const char* IPv4str();
+    string_t IPv4str();
 
     void setIPPort(unsigned short port);
 
@@ -169,7 +169,7 @@ class SyndesiID {
      */
     SyndesiID(SyndesiID& sdid);
 
-    SyndesiID& operator=(const SyndesiID&) = default;
+    //SyndesiID& operator=(const SyndesiID&) = default;
 
     /**
      * @brief Count the number re-routes (recursive)

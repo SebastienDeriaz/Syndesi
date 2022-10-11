@@ -27,7 +27,7 @@ void Core::factory_init() {
 
 void Core::sendRequest(Payload& payload, SyndesiID& id) {
     // This version is easier but requires a copy of the SyndesiID argument
-    Frame frame(payload, id);
+    Frame frame(payload, id, true);
     frameManager.request(frame);
 }
 

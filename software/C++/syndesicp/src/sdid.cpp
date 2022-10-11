@@ -42,7 +42,7 @@ void SyndesiID::fromIPv4(uint32_t ip, unsigned short port) {
     header.fields.address_type = IPV4;
 }
 
-const char* SyndesiID::str() {
+string_t SyndesiID::str() {
     switch (getAddressType()) {
         case IPV4:
             return IPv4str();
@@ -58,10 +58,14 @@ unsigned short SyndesiID::getIPPort() { return _port; }
  * Private methods
  */
 
-const char* SyndesiID::IPv4str() {
-    char output[IPv4_str_max_size] = {0};
-    sprintf(output, "%d.%d.%d.%d", payload.IPv4[0], payload.IPv4[1],
-            payload.IPv4[2], payload.IPv4[3]);
+string_t SyndesiID::IPv4str() {
+    string_t output;
+    for(int i = 0;i < IPv4_size;i++) {
+        if (i > 0) {
+            output += ".";
+        }
+        output += INT_TO_STRING(payload.IPv4[i]);
+    }
     return output;
 }
 
@@ -122,6 +126,8 @@ const size_t SyndesiID::addressSize(address_type_t type) {
             return IPv4_size;
         case IPV6:
             return IPv6_size;
+        default:
+            return 0;
     }
 }
 

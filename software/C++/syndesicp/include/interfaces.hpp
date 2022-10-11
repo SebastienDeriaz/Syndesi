@@ -65,16 +65,21 @@ class IController {
 
     /*
      * Callable by the user
-     */
+     */ 
    public:
-    void dataAvailable() { network->controllerDataAvailable(this); }
+    void dataAvailable() { network->controllerDataAvailable(this);}
+
+   protected:
+    unsigned short IPPort() { return network->port(); };
+    void setCustomIPPort(unsigned short port) { network->setCustomPort(port); };
 
     /*
      * Implemented by the user
      */
    protected:
     virtual void init() = 0;
-    virtual size_t read(SyndesiID& deviceID, char* buffer, size_t length) = 0;
+    virtual SyndesiID& getSyndesiID() = 0;
+    virtual size_t read(char* buffer, size_t length) = 0;
     virtual void write(SyndesiID& deviceID, char* buffer, size_t length) = 0;
     virtual void close() = 0;
 };

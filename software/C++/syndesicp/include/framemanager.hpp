@@ -11,7 +11,6 @@
 #define FRAME_MANAGER_H
 
 #include "callbacks.hpp"
-#include "callbacks.hpp"
 
 using namespace std;
 
@@ -25,8 +24,6 @@ namespace syndesi {
  */
 class FrameManager : SAP::IFrameManager_bottom, SAP::IFrameManager_top {
     friend class Core;
-
-    
 
    public:
 

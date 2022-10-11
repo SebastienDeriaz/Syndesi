@@ -23,8 +23,6 @@ class Frame {
     friend class Network;
     friend class FrameManager;
 
-    
-
     union NetworkHeader {
         struct {
             // Frame must be re-routed to another device,
@@ -41,7 +39,7 @@ class Frame {
 
     static const size_t command_size = sizeof(cmd_t);
     static const size_t addressingHeader_size = 1;
-    
+
    public:
     typedef uint16_t frameLength_t;
     static const size_t networkHeader_size = sizeof(NetworkHeader);
@@ -49,18 +47,18 @@ class Frame {
 
    public:
     /**
-     * @brief Construct a frame from a buffer object
-     *
-     */
-    Frame(Buffer& buffer, SyndesiID& id);
-
-    /**
      * @brief Construct a frame object from a payload and SyndesiID
      *
      * @param payload payload
      * @param id id of device
      */
-    Frame(Payload& payload, SyndesiID& id);
+    Frame(Payload& payload, SyndesiID& id, bool isRequest);
+
+    /**
+     * @brief Construct a frame from a buffer object
+     *
+     */
+    Frame(Buffer& buffer, SyndesiID& id);
 
     /**
      * @brief Destroy the Frame object
@@ -74,8 +72,9 @@ class Frame {
     frameLength_t frameLength;
     Buffer* _buffer = nullptr;
     SyndesiID* _id = nullptr;
-    
-    // Predefine the payloadBuffer (when creating the frame from the lower layer)
+
+    // Predefine the payloadBuffer (when creating the frame from the lower
+    // layer)
     Buffer* _payloadBuffer = nullptr;
 
    public:
