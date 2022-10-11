@@ -18,6 +18,7 @@ from utilities import replace, replace_str
 from commands import Command
 from settings import YAML_ALIAS_KEY, YAML_COMMANDS_LIST_KEY, YAML_SETTINGS_KEY
 from cpp import CPP
+from md import MD
 import re
 
 # Files
@@ -40,6 +41,9 @@ CALLBACKS_CONFIGURATION_HPP_OUTPUT_FILE = join(dirname(__file__), "../C++/syndes
 COMMANDS_PY_TEMPLATE_FILE = join(dirname(__file__), "payloads_template.py")
 COMMANDS_PY_OUTPUT_FILE = join(dirname(__file__), "../Python/syndesi/syndesi/payloads.py")
 
+# Markdown
+COMMANDS_LIST_MD_TEMPLATE_FILE = join(dirname(__file__), "commands_list_template.md")
+COMMANDS_LIST_MD_OUTPUT_FILE = join(dirname(__file__), "../../doc/communication/commands_list.md")
 
 def main():
     # Read the description file
@@ -52,6 +56,7 @@ def main():
         settings = desc_content[YAML_SETTINGS_KEY]
 
         cpp = CPP(commands)
+        md = MD(commands)
         # Create C++ header
         replace(PAYLOADS_HPP_TEMPLATE_FILE, PAYLOADS_HPP_OUTPUT_FILE, {
             "date" : datetime.strftime(datetime.now(), "%y-%m-%d %H:%M:%S"),
@@ -91,6 +96,15 @@ def main():
             "file" : Path(__file__).name,
             "callbacks" : cpp.callbacks()
         })
+
+        replace(COMMANDS_LIST_MD_TEMPLATE_FILE, COMMANDS_LIST_MD_OUTPUT_FILE, {
+            "date" : datetime.strftime(datetime.now(), "%y-%m-%d %H:%M:%S"),
+            "file" : Path(__file__).name,
+            "list" : md.commands_list()
+        })
+
+        
+
 
         # # Create Python module
         # replace(COMMANDS_PY_TEMPLATE_FILE, COMMANDS_PY_OUTPUT_FILE, {

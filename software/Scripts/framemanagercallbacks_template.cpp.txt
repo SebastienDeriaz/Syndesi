@@ -17,7 +17,7 @@ void FrameManager::indication(Frame& frame) {
 >>>switch_request<<<
     }
 
-    Frame replyFrame(*reply, frame.getID());
+    Frame replyFrame(*reply, frame.getID(), false);
     response(replyFrame);
 }
 
