@@ -4,3 +4,4 @@
 # Ignore build folder
 build
 
+Makefile
